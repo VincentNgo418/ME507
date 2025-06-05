@@ -1,0 +1,4 @@
+../Core/Src/motor_driver.c:11:9:new_motor	48	static
+../Core/Src/motor_driver.c:24:6:brake	16	static
+../Core/Src/motor_driver.c:31:6:coast	16	static
+../Core/Src/motor_driver.c:37:6:set_duty	16	static
