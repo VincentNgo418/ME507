@@ -1,51 +1,48 @@
 /*
  * motor_driver.c
  *
- *  Created on: Apr 24, 2025
- *      Author: Vincent
+ *  Created on: Apr 28, 2025
+ *      Author: Jason
  */
 
+
+
 #include "motor_driver.h"
+#include "main.h"
 
-//constructor
-motor_t new_motor(TIM_HandleTypeDef* timer,uint32_t forward_channel, uint32_t backward_channel) {
-    motor_t motor;
-    motor.pulse = 0;
-    motor.max_pulse = 4799;
-    motor.timer = timer;
-    motor.forward_channel = forward_channel;
-    motor.backward_channel = backward_channel;
-    HAL_TIM_PWM_Start(timer, forward_channel);
-    HAL_TIM_PWM_Start(timer, backward_channel);
-    return motor;
+extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim5;
+
+motor_t motor_1 = {
+    .PWM_CHANNEL_1 = TIM_CHANNEL_3,
+    .PWM_CHANNEL_2 = TIM_CHANNEL_4,
+    .htim = &htim5
+};
+
+motor_t motor_2 = {
+    .PWM_CHANNEL_1 = TIM_CHANNEL_1,
+    .PWM_CHANNEL_2 = TIM_CHANNEL_2,
+    .htim = &htim3
+};
+
+
+
+void set_duty(motor_t* motor, uint32_t pulse_1, uint32_t pulse_2) {
+    __HAL_TIM_SET_COMPARE(motor->htim, motor->PWM_CHANNEL_1, pulse_1);
+    __HAL_TIM_SET_COMPARE(motor->htim, motor->PWM_CHANNEL_2, pulse_2);
 }
 
-//brake
-void brake(motor_t* motor) {
-    __HAL_TIM_SET_COMPARE(motor->timer, motor->forward_channel, motor->max_pulse);
-	__HAL_TIM_SET_COMPARE(motor->timer, motor->backward_channel, motor->max_pulse);
+
+
+void motor_brake(motor_t* motor) {
+    __HAL_TIM_SET_COMPARE(motor->htim, motor->PWM_CHANNEL_1, 4799);
+    __HAL_TIM_SET_COMPARE(motor->htim, motor->PWM_CHANNEL_2, 4799);
+}
+
+void motor_disable(motor_t* motor) {
+    __HAL_TIM_SET_COMPARE(motor->htim, motor->PWM_CHANNEL_1, 0);
+    __HAL_TIM_SET_COMPARE(motor->htim, motor->PWM_CHANNEL_2, 0);
 }
 
 
-//coasting
-void coast(motor_t* motor) {
-    __HAL_TIM_SET_COMPARE(motor->timer, motor->forward_channel, 0);
-	__HAL_TIM_SET_COMPARE(motor->timer, motor->backward_channel, 0);
-}
 
-//set motor speed
-void set_duty(motor_t* motor, float percentage) {
-    if(percentage < 0 && percentage >= -100) {
-    	percentage = -percentage;
-        __HAL_TIM_SET_COMPARE(motor->timer, motor->forward_channel, 0);
-        __HAL_TIM_SET_COMPARE(motor->timer, motor->backward_channel, percentage*motor->max_pulse/100);
-
-    }
-    else if(percentage >=0 && percentage <= 100) {
-        __HAL_TIM_SET_COMPARE(motor->timer, motor->forward_channel, percentage*motor->max_pulse/100);
-        __HAL_TIM_SET_COMPARE(motor->timer, motor->backward_channel, 0);
-    }
-    else{
-        //do nothing for now
-    }
-}

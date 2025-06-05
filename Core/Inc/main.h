@@ -37,6 +37,12 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
 
+typedef struct my_struct {
+	int32_t 		field_1;
+	uint16_t 		field_2;
+	TIM_HandleTypeDef* htim;
+} my_struct_t;
+
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/

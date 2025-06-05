@@ -18,14 +18,14 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "bno055.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdio.h>
 #include "motor_driver.h"
-#include <re.h>
-#include <string.h>
-#include <stdbool.h>
+#include "stm32f4xx_hal.h"
+#include "servo_driver.h"
+
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,33 +44,17 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-I2C_HandleTypeDef hi2c2;
-I2C_HandleTypeDef hi2c3;
-
 TIM_HandleTypeDef htim1;
-TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
-TIM_HandleTypeDef htim4;
 TIM_HandleTypeDef htim5;
 
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-char huartLog[100] = {0};
-float pulse[2] = {0};
-uint16_t len;
 
-//UART vars
-char cmdBuf[5] = {0};
-uint16_t cmdIdx = 0;
-char rxBuf[2] = {0}; //must be at least 2 for some reason (likely due to enter key)
-char newLine[2] = {'\n','\r'};
-uint16_t rxNum = 1;
-re_t motCmdPat;
-uint16_t matchLen;
+uint8_t tx_buf[64];
+uint8_t rx_buf[64];
 
-//Motor vars
-//
 
 /* USER CODE END PV */
 
@@ -78,13 +62,9 @@ uint16_t matchLen;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
-static void MX_TIM2_Init(void);
-static void MX_I2C3_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM3_Init(void);
-static void MX_TIM4_Init(void);
 static void MX_TIM5_Init(void);
-static void MX_I2C2_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -124,46 +104,41 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART1_UART_Init();
-  MX_TIM2_Init();
-  MX_I2C3_Init();
   MX_TIM1_Init();
   MX_TIM3_Init();
-  MX_TIM4_Init();
   MX_TIM5_Init();
-  MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
 
+  HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start_IT(&htim5, TIM_CHANNEL_3);
+  HAL_TIM_PWM_Start_IT(&htim5, TIM_CHANNEL_4);
 
+  HAL_TIM_PWM_Start_IT(&htim1,TIM_CHANNEL_4);
 
-  motCmdPat = re_compile("M[0-1][A-F0-9_][A-F0-9_]");
-
-
-  len = sprintf(huartLog, "hello\r\n");
-  HAL_UART_Transmit(&huart1, (uint8_t*)huartLog,len,1000);
-
-  motor_t motor1 = new_motor(&htim3, TIM_CHANNEL_1, TIM_CHANNEL_2);
-  motor_t motor2 = new_motor(&htim5, TIM_CHANNEL_3, TIM_CHANNEL_4);
-
-
-  if( HAL_UART_Receive_IT (&huart1,(uint8_t*) rxBuf, rxNum) != 0x00U) {
-	  len = sprintf(huartLog, "UART error\r\n");
-	  HAL_UART_Transmit(&huart1, (uint8_t*)huartLog,len,1000);
-
-  }
-
+  HAL_UART_Receive_IT(&huart1, rx_buf, 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+
+
   while (1)
   {
-	  HAL_Delay(1000);
 
-	  set_duty(&motor1, pulse[0]);
-	  set_duty(&motor2, pulse[1]);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
+	char msg[] = "Hello from STM32\r\n";
+	HAL_UART_Transmit(&huart1, (uint8_t*)msg, sizeof(msg) - 1, HAL_MAX_DELAY);
+	HAL_Delay(1000);
+
+
+
+
+
   }
   /* USER CODE END 3 */
 }
@@ -185,13 +160,12 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 8;
-  RCC_OscInitStruct.PLL.PLLN = 96;
+  RCC_OscInitStruct.PLL.PLLN = 100;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 4;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -215,74 +189,6 @@ void SystemClock_Config(void)
 }
 
 /**
-  * @brief I2C2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_I2C2_Init(void)
-{
-
-  /* USER CODE BEGIN I2C2_Init 0 */
-
-  /* USER CODE END I2C2_Init 0 */
-
-  /* USER CODE BEGIN I2C2_Init 1 */
-
-  /* USER CODE END I2C2_Init 1 */
-  hi2c2.Instance = I2C2;
-  hi2c2.Init.ClockSpeed = 100000;
-  hi2c2.Init.DutyCycle = I2C_DUTYCYCLE_2;
-  hi2c2.Init.OwnAddress1 = 0;
-  hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c2.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c2.Init.OwnAddress2 = 0;
-  hi2c2.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c2.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-  if (HAL_I2C_Init(&hi2c2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN I2C2_Init 2 */
-
-  /* USER CODE END I2C2_Init 2 */
-
-}
-
-/**
-  * @brief I2C3 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_I2C3_Init(void)
-{
-
-  /* USER CODE BEGIN I2C3_Init 0 */
-
-  /* USER CODE END I2C3_Init 0 */
-
-  /* USER CODE BEGIN I2C3_Init 1 */
-
-  /* USER CODE END I2C3_Init 1 */
-  hi2c3.Instance = I2C3;
-  hi2c3.Init.ClockSpeed = 100000;
-  hi2c3.Init.DutyCycle = I2C_DUTYCYCLE_2;
-  hi2c3.Init.OwnAddress1 = 0;
-  hi2c3.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c3.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c3.Init.OwnAddress2 = 0;
-  hi2c3.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c3.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-  if (HAL_I2C_Init(&hi2c3) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN I2C3_Init 2 */
-
-  /* USER CODE END I2C3_Init 2 */
-
-}
-
-/**
   * @brief TIM1 Initialization Function
   * @param None
   * @retval None
@@ -302,7 +208,7 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 0;
+  htim1.Init.Prescaler = 28;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim1.Init.Period = 65535;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -321,18 +227,9 @@ static void MX_TIM1_Init(void)
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
   sConfigOC.Pulse = 0;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
   sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-  {
-    Error_Handler();
-  }
   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
   {
     Error_Handler();
@@ -352,55 +249,6 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 2 */
   HAL_TIM_MspPostInit(&htim1);
-
-}
-
-/**
-  * @brief TIM2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM2_Init(void)
-{
-
-  /* USER CODE BEGIN TIM2_Init 0 */
-
-  /* USER CODE END TIM2_Init 0 */
-
-  TIM_Encoder_InitTypeDef sConfig = {0};
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
-
-  /* USER CODE BEGIN TIM2_Init 1 */
-
-  /* USER CODE END TIM2_Init 1 */
-  htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 0;
-  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 4294967295;
-  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  sConfig.EncoderMode = TIM_ENCODERMODE_TI1;
-  sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
-  sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
-  sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
-  sConfig.IC1Filter = 0;
-  sConfig.IC2Polarity = TIM_ICPOLARITY_RISING;
-  sConfig.IC2Selection = TIM_ICSELECTION_DIRECTTI;
-  sConfig.IC2Prescaler = TIM_ICPSC_DIV1;
-  sConfig.IC2Filter = 0;
-  if (HAL_TIM_Encoder_Init(&htim2, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM2_Init 2 */
-
-  /* USER CODE END TIM2_Init 2 */
 
 }
 
@@ -450,67 +298,10 @@ static void MX_TIM3_Init(void)
   {
     Error_Handler();
   }
-  if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
-  {
-    Error_Handler();
-  }
   /* USER CODE BEGIN TIM3_Init 2 */
 
   /* USER CODE END TIM3_Init 2 */
   HAL_TIM_MspPostInit(&htim3);
-
-}
-
-/**
-  * @brief TIM4 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM4_Init(void)
-{
-
-  /* USER CODE BEGIN TIM4_Init 0 */
-
-  /* USER CODE END TIM4_Init 0 */
-
-  TIM_Encoder_InitTypeDef sConfig = {0};
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
-
-  /* USER CODE BEGIN TIM4_Init 1 */
-
-  /* USER CODE END TIM4_Init 1 */
-  htim4.Instance = TIM4;
-  htim4.Init.Prescaler = 0;
-  htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim4.Init.Period = 65535;
-  htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  sConfig.EncoderMode = TIM_ENCODERMODE_TI1;
-  sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
-  sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
-  sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
-  sConfig.IC1Filter = 0;
-  sConfig.IC2Polarity = TIM_ICPOLARITY_RISING;
-  sConfig.IC2Selection = TIM_ICSELECTION_DIRECTTI;
-  sConfig.IC2Prescaler = TIM_ICPSC_DIV1;
-  sConfig.IC2Filter = 0;
-  if (HAL_TIM_Encoder_Init(&htim4, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim4, &sMasterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM4_Init 2 */
-
-  /* USER CODE END TIM4_Init 2 */
 
 }
 
@@ -607,32 +398,14 @@ static void MX_USART1_UART_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
   /* USER CODE BEGIN MX_GPIO_Init_1 */
 
   /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin : PC14 */
-  GPIO_InitStruct.Pin = GPIO_PIN_14;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PB13 */
-  GPIO_InitStruct.Pin = GPIO_PIN_13;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
@@ -641,93 +414,95 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-void Motor_Command_Parse(char* cmdBuf) {
-	int32_t duty = 0;
-
-	//format string to that sscanf can read it
-	char hex[4] = {'0','x','0','0'};
-	hex[2] = cmdBuf[2];
-	hex[3] = cmdBuf[3];
-
-	//parse string, save value in duty
-	sscanf(hex, "%i", (int*) &duty);
-
-	//MAP (0,255) to (-100, 100)
-	//if duty < -100 (maps to 156) or duty > 100 (maps to 100) invalid range
-	if(duty < 156 && duty > 100) {
-		len = sprintf(huartLog, "Duty value was not between -100 (9C) and 100 (64) \r\n");
-		HAL_UART_Transmit(&huart1, (uint8_t*)huartLog,len,1000);
-	}
-	else {
-		if (duty >= 156) {
-			duty = duty - 256;
-		}
-
-		//set duty of corresponding motor
-		if (cmdBuf[1] == '0') {
-			pulse[0] = duty;
-			len = sprintf(huartLog, "Motor 0 set to %i\r\n",(int) duty);
-			HAL_UART_Transmit(&huart1, (uint8_t*)huartLog,len,1000);
-		}
-		if (cmdBuf[1] == '1') {
-			pulse[1] = duty;
-			len = sprintf(huartLog, "Motor 1 set to %i\r\n",(int) duty);
-			HAL_UART_Transmit(&huart1, (uint8_t*)huartLog,len,1000);
-		}
-	}
-
-}
-
-void HAL_UART_RxCpltCallback (UART_HandleTypeDef * huart) {
-
-	//receive data
-    HAL_UART_Transmit(&huart1, (uint8_t*)rxBuf,strlen(rxBuf),1000);
-
-    //compile command in cmdBuf
-    cmdBuf[cmdIdx] = rxBuf[0];
-    cmdIdx++;
-
-    //if received is newline, then parse the accumulated content
-    if (rxBuf[0] == '\r') {
-
-    	HAL_UART_Transmit(&huart1, (uint8_t*)newLine,2,1000);
-    	//use a flag to make sure the CMD is only parsed once
-    	bool regexMatchFlag = false;
-
-    	//check that the data is in correct format
-    	if (re_matchp(motCmdPat, cmdBuf, (int*)&matchLen) != -1) {
-
-    		len = sprintf(huartLog, "yep\r\n");
-    		HAL_UART_Transmit(&huart1, (uint8_t*)huartLog,len,1000);
-    		HAL_UART_Transmit(&huart1, (uint8_t*)cmdBuf,strlen(cmdBuf),1000);
-    		//call a function that will parse it and activate motors
-    		Motor_Command_Parse(cmdBuf);
-    		regexMatchFlag = true;
-    	}
-
-    	//if cmd did not match anything, print error
-    	if (!regexMatchFlag) {
-    		len = sprintf(huartLog, "Your command did not match any known commands\r\n");
-    		HAL_UART_Transmit(&huart1, (uint8_t*)huartLog,len,1000);
-
-    	}
 
 
-    	//clear buffer
-    	for( int i=0; i < strlen(cmdBuf); i++) {
-    		cmdBuf[0] = 0;
-    	}
-    	//reset idx var
-    	cmdIdx = 0;
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+    if (huart->Instance == USART1)
+    {
+        char c = rx_buf[0];
+        static char cmd_buffer[64];
+        static uint8_t cmd_index = 0;
 
+        if (c == '\r' || c == '\n')  // End of command
+        {
+            cmd_buffer[cmd_index] = '\0';
+
+            if (cmd_index >= 4)
+            {
+                if (cmd_buffer[0] == 'M')
+                {
+                    // Motor command
+                    if (cmd_buffer[1] < '1' || cmd_buffer[1] > '2') {
+                        HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Motor Number\r\n", 23, 1000);
+                    } else {
+                        uint8_t motor_num = cmd_buffer[1] - '0';
+                        char hex_string[3] = { cmd_buffer[2], cmd_buffer[3], '\0' };
+                        int8_t duty = (int8_t)strtol(hex_string, NULL, 16);
+                        if (duty > 127) duty -= 256;
+                        if (duty > 100) duty = 100;
+                        if (duty < -100) duty = -100;
+                        int16_t pulse = (duty * 4799) / 100;
+                        if (pulse < 0) pulse = -pulse;
+
+                        if (motor_num == 1)
+                            set_duty(&motor_1, (duty >= 0) ? pulse : 0, (duty < 0) ? pulse : 0);
+                        else
+                            set_duty(&motor_2, (duty >= 0) ? pulse : 0, (duty < 0) ? pulse : 0);
+
+                        sprintf((char*)tx_buf, "Motor %d set to duty %d\r\n", motor_num, duty);
+                        HAL_UART_Transmit(&huart1, tx_buf, strlen((char*)tx_buf), 1000);
+                    }
+                }
+                else if (cmd_buffer[0] == 'S')
+                {
+                    // Servo command
+                    if (cmd_buffer[1] < '1' || cmd_buffer[1] > '2') {
+                        HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Servo Number\r\n", 23, 1000);
+                    } else {
+                        uint8_t servo_num = cmd_buffer[1] - '0';
+                        char hex_string[3] = { cmd_buffer[2], cmd_buffer[3], '\0' };
+                        int8_t duty = (int8_t)strtol(hex_string, NULL, 16);
+                        if (duty > 127) duty -= 256;
+                        if (duty > 100) duty = 100;
+                        if (duty < -100) duty = 100;
+                        // int16_t pulse_us = (duty * 5) + 1500;
+                        int16_t pulse = duty * (8275 - 1655) / 100 + 1655;
+                        if (pulse < 0) {
+                        	HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Duty\r\n", 23, 1000);
+                        }
+
+                        if (servo_num == 1)
+                            servo_duty(&servo_1, (duty >= 0) ? pulse : 0);
+                        else
+                            ; // placeholder for servo_2
+
+                        sprintf((char*)tx_buf, "Servo %d set to duty %d\r\n", servo_num, duty);
+                        HAL_UART_Transmit(&huart1, tx_buf, strlen((char*)tx_buf), 1000);
+                    }
+                }
+                else
+                {
+                    HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Command\r\n", 18, 1000);
+                }
+            }
+            else
+            {
+                HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Command\r\n", 18, 1000);
+            }
+
+            cmd_index = 0; // reset for next command
+        }
+        else
+        {
+            if (cmd_index < sizeof(cmd_buffer) - 1)
+                cmd_buffer[cmd_index++] = c;
+        }
+
+        // Continue receiving next character
+        HAL_UART_Receive_IT(&huart1, rx_buf, 1);
     }
-
-
-
-
-    HAL_UART_Receive_IT (&huart1,(uint8_t*) rxBuf, rxNum);
 }
-
 
 
 

@@ -1,34 +1,25 @@
-/*
- * motor_driver.h
- *
- *  Created on: Apr 24, 2025
- *      Author: Vincent, Jason
- */
-#include <stdint.h>
-#include <stm32f4xx_hal.h>
-#ifndef INC_MOTOR_DRIVER_H_
-#define INC_MOTOR_DRIVER_H_
+#ifndef MOTOR_DRIVER_H
+#define MOTOR_DRIVER_H
+
+#include "stm32f4xx_hal.h"
 
 
-// Define the struct template
-typedef struct {
-    TIM_HandleTypeDef*  timer;
-    uint32_t   forward_channel;
-    uint32_t  backward_channel;
-    uint16_t  pulse;
-    uint16_t  max_pulse;
+typedef struct motor {
+    uint32_t       PWM_CHANNEL_1;
+    uint32_t       PWM_CHANNEL_2;
+    TIM_HandleTypeDef* htim;
 } motor_t;
 
-//constructor
-motor_t new_motor(TIM_HandleTypeDef* timer,uint32_t forward_channel, uint32_t backward_channel);
 
-//brake
-void brake(motor_t* motor);
+extern motor_t motor_1;
+extern motor_t motor_2;
 
-//coasting
-void coast(motor_t* motor);
 
-//set motor speed
-void set_duty(motor_t* motor, float percentage);
+void set_duty(motor_t* motor, uint32_t pulse_1, uint32_t pulse_2);
+void motor_brake(motor_t* motor);
+void motor_disable(motor_t* motor);
 
-#endif /* INC_MOTOR_DRIVER_H_ */
+#endif // MOTOR_DRIVER_H
+
+
+
