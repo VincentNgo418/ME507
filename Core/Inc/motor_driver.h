@@ -15,6 +15,15 @@ typedef struct motor_d {
     TIM_HandleTypeDef* htim;
 } motor_dual;
 
+typedef struct controller{
+    float Kp;
+    float Ki;
+    float integral;
+    int32_t setpoint;
+} PI_Controller;
+
+
+
 
 extern motor_t motor_1;
 extern motor_t motor_2;

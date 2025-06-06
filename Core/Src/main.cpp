@@ -17,13 +17,37 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "motor_driver.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "stm32f4xx_hal.h"
+#include "main.h"
+#include "motor_driver.h"
 #include "servo_driver.h"
+#include <string.h>   // for strlen, strcmp, etc.
+#include <stdio.h>    // for sprintf
+#include <stdlib.h>
+
+#ifdef __cplusplus
+}
+#endif
+
+#include <ctype.h>
+#include "fsm.h"
+
+#ifdef __cplusplus
+  FSM fsm;
+#endif
+
+
+
+
 
 
 /* USER CODE END Includes */
@@ -122,26 +146,35 @@ int main(void)
   MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
 
+
+  // SERVO MOTOR
   HAL_TIM_PWM_Start_IT(&htim1,TIM_CHANNEL_4);
 
-  HAL_TIM_Encoder_Start_IT(&htim2,TIM_CHANNEL_ALL);
-  /*HAL_TIM_ENCODER_Start_IT(&htim2,TIM_CHANNEL_2);*/
 
+  // BASE MOTOR
+  HAL_TIM_Encoder_Start_IT(&htim2,TIM_CHANNEL_ALL);
+
+  // POLOLU 2
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_2);
+
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_3);
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_4);
 
+
+  // LAUNCHER MOTOR
   HAL_TIM_Encoder_Start_IT(&htim4,TIM_CHANNEL_ALL);
-  /*HAL_TIM_ENCODER_Start_IT(&htim4,TIM_CHANNEL_2);*/
 
 
+  // POLOLU 1
   HAL_TIM_PWM_Start_IT(&htim5, TIM_CHANNEL_3);
   HAL_TIM_PWM_Start_IT(&htim5, TIM_CHANNEL_4);
 
 
 
   HAL_UART_Receive_IT(&huart1, rx_buf, 1);
+
+
 
   int16_t last_count1 = 0;
   int16_t last_count2 = 0;
@@ -152,29 +185,17 @@ int main(void)
 
 
 
+
   while (1)
   {
 
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
 
-	/*char msg[] = "Hello from STM32\r\n";
-	HAL_UART_Transmit(&huart1, (uint8_t*)msg, sizeof(msg) - 1, HAL_MAX_DELAY);
-	HAL_Delay(1000);
-	*/
 
-	int16_t current_count1 = __HAL_TIM_GET_COUNTER(&htim2); // Encoder 1 (e.g., motor 1)
-	int16_t current_count2 = __HAL_TIM_GET_COUNTER(&htim4); // Encoder 2 (e.g., motor 2)
-
-	if (current_count1 != last_count1 || current_count2 != last_count2) {
-	     char msg[64];
-	     sprintf(msg, "Enc1: %d\tEnc2: %d\r\n", current_count1, current_count2);
-	     HAL_UART_Transmit(&huart1, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-
-	     last_count1 = current_count1;
-	     last_count2 = current_count2;
-	  }
+	  fsm.run();
+	  //HAL_UART_Transmit(&huart1, (uint8_t*)"FSM RUNNING\r\n", 13, HAL_MAX_DELAY);
+	  HAL_Delay(2000);
 
 
 
@@ -659,6 +680,8 @@ static void MX_GPIO_Init(void)
 
 
 
+#include <ctype.h>  // for toupper()
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
     if (huart->Instance == USART1)
@@ -671,12 +694,39 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
         {
             cmd_buffer[cmd_index] = '\0';
 
+            // Convert to uppercase for consistent parsing
+            for (uint8_t i = 0; i < cmd_index; i++) {
+                cmd_buffer[i] = toupper((unsigned char)cmd_buffer[i]);
+            }
+
+            // Process full command
             if (cmd_index >= 4)
             {
-                if (cmd_buffer[0] == 'M')
+                // === FSM STATE TRANSITION ===
+                if (strncmp(cmd_buffer, "MODE", 4) == 0)
                 {
-                    // Motor command
-                    if (cmd_buffer[1] < '1' || cmd_buffer[1] > '2') {
+                    uint8_t mode = cmd_buffer[4] - '0';
+                    switch (mode) {
+                        case 0: fsm.set_state(FSM::S0_INIT); break;
+                        case 1: fsm.set_state(FSM::S1_IDLE); break;
+                        case 2: fsm.set_state(FSM::S2_MANUAL_STEP_INPUT); break;
+                        case 3: fsm.set_state(FSM::S3_MANUAL_TARGET); break;
+                        case 4: fsm.set_state(FSM::S4_AUTOMATIC); break;
+                        default:
+                            HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Mode\r\n", 15, 1000);
+                            break;
+                    }
+
+                    sprintf((char*)tx_buf, "FSM state: %d\r\n", fsm.get_state());
+                    HAL_UART_Transmit(&huart1, tx_buf, strlen((char*)tx_buf), 1000);
+                }
+
+                // === MOTOR COMMAND: M1FF / M2FF ===
+                else if (cmd_buffer[0] == 'M')
+                {
+                    if (fsm.get_state() != FSM::S2_MANUAL_STEP_INPUT) {
+                        HAL_UART_Transmit(&huart1, (uint8_t*)"Motor command not allowed in this state\r\n", 41, 1000);
+                    } else if (cmd_buffer[1] < '1' || cmd_buffer[1] > '2') {
                         HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Motor Number\r\n", 23, 1000);
                     } else {
                         uint8_t motor_num = cmd_buffer[1] - '0';
@@ -697,10 +747,13 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
                         HAL_UART_Transmit(&huart1, tx_buf, strlen((char*)tx_buf), 1000);
                     }
                 }
+
+                // === SERVO COMMAND: S1XX / S2XX ===
                 else if (cmd_buffer[0] == 'S')
                 {
-                    // Servo command
-                    if (cmd_buffer[1] < '1' || cmd_buffer[1] > '2') {
+                    if (fsm.get_state() != FSM::S2_MANUAL_STEP_INPUT) {
+                        HAL_UART_Transmit(&huart1, (uint8_t*)"Servo command not allowed in this state\r\n", 41, 1000);
+                    } else if (cmd_buffer[1] < '1' || cmd_buffer[1] > '2') {
                         HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Servo Number\r\n", 23, 1000);
                     } else {
                         uint8_t servo_num = cmd_buffer[1] - '0';
@@ -708,11 +761,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
                         int8_t duty = (int8_t)strtol(hex_string, NULL, 16);
                         if (duty > 127) duty -= 256;
                         if (duty > 100) duty = 100;
-                        if (duty < -100) duty = 100;
-                        // int16_t pulse_us = (duty * 5) + 1500;
+                        if (duty < -100) duty = -100;
+
                         int16_t pulse = duty * (8275 - 1655) / 100 + 1655;
                         if (pulse < 0) {
-                        	HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Duty\r\n", 23, 1000);
+                            HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Duty\r\n", 15, 1000);
                         }
 
                         if (servo_num == 1)
@@ -724,17 +777,32 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
                         HAL_UART_Transmit(&huart1, tx_buf, strlen((char*)tx_buf), 1000);
                     }
                 }
-                else
+
+                // === MOVEMENT COMMANDS (W/A/S/D) ===
+                else if (fsm.get_state() == FSM::S2_MANUAL_STEP_INPUT || fsm.get_state() == FSM::S3_MANUAL_TARGET)
                 {
+                    char dir = cmd_buffer[0];
+                    switch (dir) {
+                        case 'W': HAL_UART_Transmit(&huart1, (uint8_t*)"Move Up\r\n", 9, 1000); break;
+                        case 'A': HAL_UART_Transmit(&huart1, (uint8_t*)"Move Left\r\n", 11, 1000); break;
+                        case 'S': HAL_UART_Transmit(&huart1, (uint8_t*)"Move Down\r\n", 11, 1000); break;
+                        case 'D': HAL_UART_Transmit(&huart1, (uint8_t*)"Move Right\r\n", 12, 1000); break;
+                        default:
+                            HAL_UART_Transmit(&huart1, (uint8_t*)"Unknown Direction\r\n", 20, 1000);
+                            break;
+                    }
+                }
+
+                // === INVALID COMMAND ===
+                else {
                     HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Command\r\n", 18, 1000);
                 }
             }
-            else
-            {
+            else {
                 HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Command\r\n", 18, 1000);
             }
 
-            cmd_index = 0; // reset for next command
+            cmd_index = 0; // reset buffer
         }
         else
         {
@@ -742,10 +810,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
                 cmd_buffer[cmd_index++] = c;
         }
 
-        // Continue receiving next character
+        // Enable next UART RX interrupt
         HAL_UART_Receive_IT(&huart1, rx_buf, 1);
     }
 }
+
 
 
 
