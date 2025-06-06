@@ -178,6 +178,11 @@ int main(void)
 
   int16_t last_count1 = 0;
   int16_t last_count2 = 0;
+
+
+
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -192,7 +197,7 @@ int main(void)
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
 
-
+	  set_duty_dual(&Pololu_1, 0, 4999);
 	  fsm.run();
 	  //HAL_UART_Transmit(&huart1, (uint8_t*)"FSM RUNNING\r\n", 13, HAL_MAX_DELAY);
 	  HAL_Delay(2000);
@@ -452,7 +457,7 @@ static void MX_TIM3_Init(void)
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 0;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 65535;
+  htim3.Init.Period = 4999;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
@@ -562,7 +567,7 @@ static void MX_TIM5_Init(void)
   htim5.Instance = TIM5;
   htim5.Init.Prescaler = 0;
   htim5.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim5.Init.Period = 65535;
+  htim5.Init.Period = 4999;
   htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_PWM_Init(&htim5) != HAL_OK)
