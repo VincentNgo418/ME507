@@ -8,13 +8,13 @@ C_SRCS += \
 ../Core/Drivers/BNO055/bno055.c \
 ../Core/Drivers/BNO055/bno055_hal.c 
 
-OBJS += \
-./Core/Drivers/BNO055/bno055.o \
-./Core/Drivers/BNO055/bno055_hal.o 
-
 C_DEPS += \
 ./Core/Drivers/BNO055/bno055.d \
 ./Core/Drivers/BNO055/bno055_hal.d 
+
+OBJS += \
+./Core/Drivers/BNO055/bno055.o \
+./Core/Drivers/BNO055/bno055_hal.o 
 
 
 # Each subdirectory must supply rules for building sources it contributes

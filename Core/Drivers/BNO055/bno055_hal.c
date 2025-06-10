@@ -8,6 +8,7 @@
 
 #include "stm32f4xx_hal.h"
 #include "bno055.h"
+#include "bno055_hal.h"
 
 extern I2C_HandleTypeDef hi2c3;
 

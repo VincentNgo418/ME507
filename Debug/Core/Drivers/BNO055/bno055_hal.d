@@ -29,7 +29,8 @@ Core/Drivers/BNO055/bno055_hal.o: ../Core/Drivers/BNO055/bno055_hal.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Drivers/BNO055/bno055.h
+ ../Core/Drivers/BNO055/bno055.h ../Core/Drivers/BNO055/bno055_hal.h \
+ ../Core/Inc/../Drivers/BNO055/bno055.h
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:
@@ -61,3 +62,5 @@ Core/Drivers/BNO055/bno055_hal.o: ../Core/Drivers/BNO055/bno055_hal.c \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 ../Core/Drivers/BNO055/bno055.h:
+../Core/Drivers/BNO055/bno055_hal.h:
+../Core/Inc/../Drivers/BNO055/bno055.h:

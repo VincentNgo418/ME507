@@ -2202,6 +2202,7 @@ struct bno055_sic_matrix_t
 #define BNO055_SET_BITSLICE(regvar, bitname, val) \
     ((regvar & ~bitname##_MSK) | ((val << bitname##_POS) & bitname##_MSK))
 
+
 /*************************************************/
 /**\name FUNCTION DECLARATION    */
 /*************************************************/
@@ -2209,6 +2210,9 @@ struct bno055_sic_matrix_t
 /**\name INITIALIZATION AND REVISION ID FUNCTIONS */
 /**************************************************/
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 /*!
  *  @brief
  *  This API is used for initialize
@@ -8134,5 +8138,9 @@ BNO055_RETURN_FUNCTION_TYPE bno055_get_gyro_any_motion_awake_durn(u8 *gyro_awake
  *
  */
 BNO055_RETURN_FUNCTION_TYPE bno055_set_gyro_any_motion_awake_durn(u8 gyro_awake_durn_u8);
+
+#ifdef __cplusplus
+} // End of extern "C" block
+#endif
 
 #endif
