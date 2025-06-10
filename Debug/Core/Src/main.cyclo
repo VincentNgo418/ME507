@@ -1,19 +1,19 @@
 ../Core/Inc/fsm.h:29:19:FSM::system_state_t FSM::get_state() const	1
-../Core/Src/main.cpp:135:5:int main()	1
-../Core/Src/main.cpp:239:6:void SystemClock_Config()	3
-../Core/Src/main.cpp:286:13:void MX_I2C2_Init()	2
-../Core/Src/main.cpp:320:13:void MX_I2C3_Init()	2
-../Core/Src/main.cpp:354:13:void MX_TIM1_Init()	7
-../Core/Src/main.cpp:427:13:void MX_TIM2_Init()	3
-../Core/Src/main.cpp:476:13:void MX_TIM3_Init()	7
-../Core/Src/main.cpp:537:13:void MX_TIM4_Init()	3
-../Core/Src/main.cpp:586:13:void MX_TIM5_Init()	5
-../Core/Src/main.cpp:639:13:void MX_USART1_UART_Init()	2
-../Core/Src/main.cpp:672:13:void MX_GPIO_Init()	1
-../Core/Src/main.cpp:722:6:void HAL_UART_RxCpltCallback(UART_HandleTypeDef*)	39
-../Core/Src/main.cpp:856:6:void initialize_IMU()	7
-../Core/Src/main.cpp:912:6:void log_IMU()	2
-../Core/Src/main.cpp:936:6:void log_LIDAR()	1
-../Core/Src/main.cpp:956:6:void Error_Handler()	1
-../Core/Src/main.cpp:965:1:void __static_initialization_and_destruction_0()	1
-../Core/Src/main.cpp:965:1:cpp)	1
+../Core/Src/main.cpp:135:5:int main()	3
+../Core/Src/main.cpp:262:6:void SystemClock_Config()	3
+../Core/Src/main.cpp:309:13:void MX_I2C2_Init()	2
+../Core/Src/main.cpp:343:13:void MX_I2C3_Init()	2
+../Core/Src/main.cpp:377:13:void MX_TIM1_Init()	7
+../Core/Src/main.cpp:450:13:void MX_TIM2_Init()	3
+../Core/Src/main.cpp:499:13:void MX_TIM3_Init()	7
+../Core/Src/main.cpp:560:13:void MX_TIM4_Init()	3
+../Core/Src/main.cpp:609:13:void MX_TIM5_Init()	5
+../Core/Src/main.cpp:662:13:void MX_USART1_UART_Init()	2
+../Core/Src/main.cpp:695:13:void MX_GPIO_Init()	1
+../Core/Src/main.cpp:744:6:void HAL_UART_RxCpltCallback(UART_HandleTypeDef*)	39
+../Core/Src/main.cpp:878:6:void initialize_IMU()	7
+../Core/Src/main.cpp:934:6:void log_IMU()	2
+../Core/Src/main.cpp:958:6:void log_LIDAR()	1
+../Core/Src/main.cpp:978:6:void Error_Handler()	1
+../Core/Src/main.cpp:987:1:void __static_initialization_and_destruction_0()	1
+../Core/Src/main.cpp:987:1:cpp)	1

@@ -203,14 +203,17 @@ int main(void)
 
 
 
+  //set_duty_dual(&Pololu_2, 0, 2500);
+  motor_d_set_pos(&Pololu_2, &pos_controller_1, 1000);
 
-
+  sprintf((char*)log_buf, "Motor Pos: %d Motor goal: %d \r\n", motor_d_get_pos(&Pololu_2), pos_controller_1.setpoint);
+  HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
-
+  uint16_t step_counter;
+  uint16_t enc_val;
 
 
   while (1)
@@ -218,13 +221,33 @@ int main(void)
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
 
-	  HAL_Delay(500);
-	  log_IMU();
-	  log_LIDAR();
-	  set_duty_dual(&Pololu_1, 0, 4999);
+	  HAL_Delay(10);
+	  //log_IMU();
+	  //log_LIDAR();
+	  //enc_val = __HAL_TIM_GET_COUNTER(Pololu_2.enc);
+
+	  motor_d_update_pos(&Pololu_2, &pos_controller_1);
+	  //sprintf((char*)log_buf, "Motor Pos: %d \r\n", enc_val);
+	  //HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
+
 	  fsm.run();
 	  //HAL_UART_Transmit(&huart1, (uint8_t*)"FSM RUNNING\r\n", 13, HAL_MAX_DELAY);
+	  step_counter += 1;
 
+	  if(step_counter % 10 == 0) {
+		  sprintf((char*)log_buf, "CH1 effort: %d CH2 effort: %d error: %d \r\n",
+				  htim3.Instance->CCR1,
+				  htim3.Instance->CCR2,
+				  pos_controller_1.setpoint-htim4.Instance->CNT);
+		  HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
+	  }
+
+	  if(step_counter >= 500) {
+		  step_counter = 1;
+		  motor_d_set_pos(&Pololu_2, &pos_controller_1, 1000);
+		  sprintf((char*)log_buf, "Motor Pos: %d Motor goal: %d \r\n", motor_d_get_pos(&Pololu_2), pos_controller_1.setpoint);
+		  HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
+	  }
 
 
 
@@ -718,7 +741,6 @@ static void MX_GPIO_Init(void)
 
 
 #include <ctype.h>  // for toupper()
-
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
     if (huart->Instance == USART1)

@@ -1,6 +1,8 @@
-../Core/Src/motor_driver.c:59:6:set_duty	4
-../Core/Src/motor_driver.c:63:6:set_duty_dual	7
-../Core/Src/motor_driver.c:68:6:motor_brake_dual	7
-../Core/Src/motor_driver.c:74:6:motor_d_set_position	24
-../Core/Src/motor_driver.c:109:6:motor_brake	4
-../Core/Src/motor_driver.c:113:6:motor_disable	4
+../Core/Src/motor_driver.c:70:6:set_duty	4
+../Core/Src/motor_driver.c:74:6:set_duty_dual	7
+../Core/Src/motor_driver.c:79:6:motor_brake_dual	7
+../Core/Src/motor_driver.c:87:6:motor_d_update_pos	26
+../Core/Src/motor_driver.c:124:6:motor_d_set_pos	1
+../Core/Src/motor_driver.c:129:10:motor_d_get_pos	1
+../Core/Src/motor_driver.c:133:6:motor_brake	4
+../Core/Src/motor_driver.c:137:6:motor_disable	4

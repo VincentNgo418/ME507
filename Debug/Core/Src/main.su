@@ -1,19 +1,19 @@
 ../Core/Inc/fsm.h:29:19:FSM::system_state_t FSM::get_state() const	16	static
-../Core/Src/main.cpp:135:5:int main()	16	static
-../Core/Src/main.cpp:239:6:void SystemClock_Config()	88	static
-../Core/Src/main.cpp:286:13:void MX_I2C2_Init()	8	static
-../Core/Src/main.cpp:320:13:void MX_I2C3_Init()	8	static
-../Core/Src/main.cpp:354:13:void MX_TIM1_Init()	80	static
-../Core/Src/main.cpp:427:13:void MX_TIM2_Init()	56	static
-../Core/Src/main.cpp:476:13:void MX_TIM3_Init()	48	static
-../Core/Src/main.cpp:537:13:void MX_TIM4_Init()	56	static
-../Core/Src/main.cpp:586:13:void MX_TIM5_Init()	48	static
-../Core/Src/main.cpp:639:13:void MX_USART1_UART_Init()	8	static
-../Core/Src/main.cpp:672:13:void MX_GPIO_Init()	48	static
-../Core/Src/main.cpp:722:6:void HAL_UART_RxCpltCallback(UART_HandleTypeDef*)	40	static
-../Core/Src/main.cpp:856:6:void initialize_IMU()	16	static
-../Core/Src/main.cpp:912:6:void log_IMU()	24	static
-../Core/Src/main.cpp:936:6:void log_LIDAR()	24	static
-../Core/Src/main.cpp:956:6:void Error_Handler()	4	static,ignoring_inline_asm
-../Core/Src/main.cpp:965:1:void __static_initialization_and_destruction_0()	8	static
-../Core/Src/main.cpp:965:1:cpp)	8	static
+../Core/Src/main.cpp:135:5:int main()	24	static
+../Core/Src/main.cpp:262:6:void SystemClock_Config()	88	static
+../Core/Src/main.cpp:309:13:void MX_I2C2_Init()	8	static
+../Core/Src/main.cpp:343:13:void MX_I2C3_Init()	8	static
+../Core/Src/main.cpp:377:13:void MX_TIM1_Init()	80	static
+../Core/Src/main.cpp:450:13:void MX_TIM2_Init()	56	static
+../Core/Src/main.cpp:499:13:void MX_TIM3_Init()	48	static
+../Core/Src/main.cpp:560:13:void MX_TIM4_Init()	56	static
+../Core/Src/main.cpp:609:13:void MX_TIM5_Init()	48	static
+../Core/Src/main.cpp:662:13:void MX_USART1_UART_Init()	8	static
+../Core/Src/main.cpp:695:13:void MX_GPIO_Init()	48	static
+../Core/Src/main.cpp:744:6:void HAL_UART_RxCpltCallback(UART_HandleTypeDef*)	40	static
+../Core/Src/main.cpp:878:6:void initialize_IMU()	16	static
+../Core/Src/main.cpp:934:6:void log_IMU()	24	static
+../Core/Src/main.cpp:958:6:void log_LIDAR()	24	static
+../Core/Src/main.cpp:978:6:void Error_Handler()	4	static,ignoring_inline_asm
+../Core/Src/main.cpp:987:1:void __static_initialization_and_destruction_0()	8	static
+../Core/Src/main.cpp:987:1:cpp)	8	static
