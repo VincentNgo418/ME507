@@ -1,4 +1,5 @@
-Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
+Core/Src/servo_driver.o: ../Core/Src/servo_driver.c \
+ ../Core/Inc/servo_driver.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -29,11 +30,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/motor_driver.h ../Core/Inc/servo_driver.h \
- ../Core/Src/../Drivers/BNO055/bno055.h \
- ../Core/Src/../Drivers/BNO055/bno055_hal.h \
- ../Core/Src/../Drivers/BNO055/bno055.h
-../Core/Inc/main.h:
+ ../Core/Inc/main.h
+../Core/Inc/servo_driver.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:
@@ -64,8 +62,4 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
-../Core/Inc/motor_driver.h:
-../Core/Inc/servo_driver.h:
-../Core/Src/../Drivers/BNO055/bno055.h:
-../Core/Src/../Drivers/BNO055/bno055_hal.h:
-../Core/Src/../Drivers/BNO055/bno055.h:
+../Core/Inc/main.h:

@@ -1,0 +1,4 @@
+../Core/Drivers/BNO055/bno055_hal.c:14:4:BNO055_I2C_bus_write	2
+../Core/Drivers/BNO055/bno055_hal.c:22:4:BNO055_I2C_bus_read	2
+../Core/Drivers/BNO055/bno055_hal.c:30:6:BNO055_delay_msec	1
+../Core/Drivers/BNO055/bno055_hal.c:36:6:BNO055_setup	1
