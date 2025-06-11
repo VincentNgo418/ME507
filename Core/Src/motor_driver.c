@@ -9,6 +9,7 @@
 
 #include "motor_driver.h"
 #include "main.h"
+#include "servo_driver.h"
 
 extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim5;
@@ -67,7 +68,7 @@ PI_Controller pos_controller_1 = {
 
 // Controller 1
 PI_Controller pos_controller_2 = {
-    .Kp = 3.25f,
+    .Kp = 3.4f,
     .Ki = 0.0f,
     .integral = 0,
     .setpoint = 0,
@@ -88,9 +89,32 @@ void set_duty_dual(motor_dual* motor_d, uint32_t pulse_1, uint32_t pulse_2) {
 }
 
 void motor_brake_dual(motor_dual* motor_d) {
-	__HAL_TIM_SET_COMPARE(motor_d->htim, motor_d->PWM_CHANNEL_1, 4799);
-	__HAL_TIM_SET_COMPARE(motor_d->htim, motor_d->PWM_CHANNEL_2, 4799);
+	__HAL_TIM_SET_COMPARE(motor_d->htim, motor_d->PWM_CHANNEL_1, 4999);
+	__HAL_TIM_SET_COMPARE(motor_d->htim, motor_d->PWM_CHANNEL_2, 4999);
 }
+
+
+void step_motor_forward(void) {
+	set_duty_dual(&Pololu_2, 2500, 0);
+	HAL_Delay(50);
+	motor_brake_dual(&Pololu_2);
+}
+
+void step_motor_backward(void) {
+	set_duty_dual(&Pololu_2, 0, 2500);
+	HAL_Delay(50);
+	motor_brake_dual(&Pololu_2);
+}
+
+void launch(void) {
+
+	servo_duty(&servo_1,8275);
+	HAL_Delay(300);
+	servo_duty(&servo_1,1655);
+
+
+}
+
 //Sets
 //@param motor_dual*, a motor with two PWM inputs
 //@param PI_Controller*, controller
@@ -132,7 +156,7 @@ void motor_d_update_pos(motor_dual* motor_d, PI_Controller* ctrl) {
 		pulse = ctrl->prevPulse - 2000;
 	}
 
-	const int16_t PULSE_LIMIT = 3200;
+	const int16_t PULSE_LIMIT = 3500;
     //saturate pulse
     if (pulse > PULSE_LIMIT) pulse = PULSE_LIMIT;
     if (pulse < -PULSE_LIMIT) pulse = -PULSE_LIMIT;

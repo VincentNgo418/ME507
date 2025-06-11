@@ -17,6 +17,8 @@ servo_t servo_1 = {
 	.htim = &htim1
 };
 
+
+
 void servo_duty(servo_t* servo, uint32_t pulse_1) {
     __HAL_TIM_SET_COMPARE(servo->htim, servo->PWM_CHANNEL, pulse_1);
 }

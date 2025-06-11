@@ -67,7 +67,9 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 
 /* USER CODE BEGIN Private defines */
-
+extern volatile uint16_t distance_cm;
+extern volatile int16_t heading;
+extern volatile uint16_t intensity_value;
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

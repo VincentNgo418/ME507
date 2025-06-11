@@ -34,6 +34,10 @@ extern motor_dual Pololu_1;
 extern motor_dual Pololu_2;
 extern PI_Controller pos_controller_1;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void set_duty(motor_t* motor, uint32_t pulse_1);
 void motor_brake(motor_t* motor);
 void motor_disable(motor_t* motor);
@@ -44,6 +48,14 @@ void motor_d_update_pos(motor_dual* motor_d, PI_Controller* ctrl);
 void motor_d_set_pos(motor_dual* motor_d, PI_Controller* ctrl, int32_t pos);
 uint32_t motor_d_get_pos(motor_dual* motor_d);
 
+
+void step_motor_backward(void);
+void step_motor_forward(void);
+void launch(void);
+
+#ifdef __cplusplus
+} // End of extern "C" block
+#endif
 
 #endif // MOTOR_DRIVER_H
 

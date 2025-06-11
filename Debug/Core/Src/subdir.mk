@@ -12,7 +12,6 @@ CPP_SRCS += \
 ../Core/Src/system_stm32f4xx.cpp 
 
 C_SRCS += \
-../Core/Src/main.c \
 ../Core/Src/motor_driver.c \
 ../Core/Src/re.c \
 ../Core/Src/servo_driver.c \
@@ -23,7 +22,6 @@ C_SRCS += \
 ../Core/Src/system_stm32f4xx.c 
 
 C_DEPS += \
-./Core/Src/main.d \
 ./Core/Src/motor_driver.d \
 ./Core/Src/re.d \
 ./Core/Src/servo_driver.d \

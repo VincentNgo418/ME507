@@ -17,7 +17,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-
+#include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -28,6 +28,7 @@ extern "C" {
 
 #include "stm32f4xx_hal.h"
 #include "main.h"
+#include "fsm.h"
 #include "motor_driver.h"
 #include "servo_driver.h"
 #include <string.h>   // for strlen, strcmp, etc.
@@ -39,7 +40,6 @@ extern "C" {
 #endif
 
 #include <ctype.h>
-#include "fsm.h"
 
 #ifdef __cplusplus
   FSM fsm;
@@ -52,6 +52,7 @@ extern "C" {
 
 #include "../Drivers/BNO055/bno055.h"
 #include "../Drivers/BNO055/bno055_hal.h"
+
 
 /* USER CODE END Includes */
 
@@ -94,17 +95,19 @@ uint8_t rx_buf[64];
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
-static void MX_TIM2_Init(void);
 static void MX_I2C3_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_TIM4_Init(void);
 static void MX_TIM5_Init(void);
 static void MX_I2C2_Init(void);
+static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 static void initialize_IMU(void);
 static void log_IMU(void);
 static void log_LIDAR(void);
+void poll_LIDAR(void);
+void poll_IMU(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -116,6 +119,7 @@ struct bno055_t IMU;
 //BNO055 initialize readout variables
 struct bno055_accel_t accel_data;
 struct bno055_euler_t euler_data;
+volatile int16_t heading;
 HAL_I2C_StateTypeDef state;
 uint8_t op_mode;
 uint8_t pow_mode;
@@ -123,9 +127,9 @@ uint8_t sys_stat;
 
 //TFLuna initialize readout variables
 uint8_t distance_data[2];
-uint16_t distance_cm;
+volatile uint16_t distance_cm;
 uint8_t intensity_data[2];
-uint16_t intensity_value;
+volatile uint16_t intensity_value;
 /* USER CODE END 0 */
 
 /**
@@ -156,16 +160,15 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  MX_TIM3_Init();
   MX_GPIO_Init();
   MX_USART1_UART_Init();
-  MX_TIM2_Init();
   MX_I2C3_Init();
   MX_TIM1_Init();
-
+  MX_TIM3_Init();
   MX_TIM4_Init();
   MX_TIM5_Init();
   MX_I2C2_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
 
@@ -221,9 +224,12 @@ int main(void)
   uint16_t enc_val;
   htim4.Instance->CNT = 0;
 
+
+
   while (1)
   {
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
 
 	  HAL_Delay(50);
@@ -239,24 +245,31 @@ int main(void)
 	  if(step_counter % 10 == 0) {
 		  //log_IMU();
 		  //log_LIDAR();
-
-		  sprintf((char*)log_buf, "CH1 effort: %d CH2 effort: %d error: %d setpoint: %d, pos: %d\r\n",
+		  poll_LIDAR();
+		  poll_IMU();
+		 /*sprintf((char*)log_buf, "CH1 effort: %d CH2 effort: %d error: %d setpoint: %d, pos: %d\r\n",
 				  htim3.Instance->CCR1,
 				  htim3.Instance->CCR2,
 				  pos_controller_1.setpoint-htim4.Instance->CNT,
 				  pos_controller_1.setpoint,
 				  htim4.Instance->CNT);
-		  HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 500);
+		  HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 500);*/
 	  }
 
 
 
-	  if(step_counter >= 2000) {
+	  if(step_counter >= 1000) {
 		  step_counter = 1;
-		  //motor_d_set_pos(&Pololu_2, &pos_controller_1, 1500);
-		  //sprintf((char*)log_buf, "Motor Pos: %d Motor goal: %d \r\n", motor_d_get_pos(&Pololu_2), pos_controller_1.setpoint);
-		  //HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
+		  /*motor_d_set_pos(&Pololu_2, &pos_controller_1, 1500);
+		  sprintf((char*)log_buf, "Motor Pos: %d Motor goal: %d \r\n", motor_d_get_pos(&Pololu_2), pos_controller_1.setpoint);
+		  HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);*/
 	  }
+/*
+	  if(step_counter == 900) {
+		  motor_d_set_pos(&Pololu_2, &pos_controller_1, -1500);
+		  sprintf((char*)log_buf, "Motor Pos: %d Motor goal: %d \r\n", motor_d_get_pos(&Pololu_2), pos_controller_1.setpoint);
+		  HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
+	  }*/
 
 
   }
@@ -286,7 +299,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = 8;
-  RCC_OscInitStruct.PLL.PLLN = 96;
+  RCC_OscInitStruct.PLL.PLLN = 100;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 4;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -397,9 +410,9 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 1 */
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 0;
+  htim1.Init.Prescaler = 28;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 4999;
+  htim1.Init.Period = 65535;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -416,18 +429,9 @@ static void MX_TIM1_Init(void)
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
   sConfigOC.Pulse = 0;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
   sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-  {
-    Error_Handler();
-  }
   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
   {
     Error_Handler();
@@ -630,7 +634,7 @@ static void MX_TIM5_Init(void)
   htim5.Instance = TIM5;
   htim5.Init.Prescaler = 0;
   htim5.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim5.Init.Period = 4999;
+  htim5.Init.Period = 65535;
   htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_PWM_Init(&htim5) != HAL_OK)
@@ -714,9 +718,6 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7|GPIO_PIN_9, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : PC14 */
@@ -724,13 +725,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PA7 PA9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_7|GPIO_PIN_9;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PB13 */
   GPIO_InitStruct.Pin = GPIO_PIN_13;
@@ -747,6 +741,7 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 
+bool flywheel = false;
 
 #include <ctype.h>  // for toupper()
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
@@ -757,161 +752,219 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
         static char cmd_buffer[64];
         static uint8_t cmd_index = 0;
 
-        if (c == '\r' || c == '\n')  // End of command
+        // === CONTINUOUS DIRECTION INPUT FOR MANUAL MODE (MODE2) ===
+        if (fsm.get_state() == FSM::S2_MANUAL_STEP_INPUT)
+        {
+
+            switch (toupper(c)) {
+                case 'A':
+                    fsm.set_move_dir(-1);
+                    motor_d_set_pos(&Pololu_2, &pos_controller_1, -500);
+                    //HAL_UART_Transmit(&huart1, (uint8_t*)"← Left\r\n", 8, 1000);
+                    break;
+                case 'S':
+                    fsm.set_move_dir(1);
+                    motor_brake_dual(&Pololu_2);
+                    //HAL_UART_Transmit(&huart1, (uint8_t*)"→ Right\r\n", 9, 1000);
+                    break;
+                case 'D':
+                    fsm.set_move_dir(0);
+                    motor_d_set_pos(&Pololu_2, &pos_controller_1,500);
+                    //HAL_UART_Transmit(&huart1, (uint8_t*)"■ Stop\r\n", 8, 1000);
+                    break;
+                case 'T':
+                    fsm.set_move_dir(0);
+                    set_duty(&motor_1, 0);
+                    servo_duty(&servo_1,2655);
+                    fsm.set_state(FSM::S1_IDLE);
+
+                    HAL_UART_Transmit(&huart1, (uint8_t*)"Exited Manual Mode\r\n", 21, 1000);
+                    break;
+                case 'Q':
+                	HAL_UART_Transmit(&huart1, (uint8_t*)"Boom\r\n", 6, 1000);
+                	servo_duty(&servo_1,6000);
+
+                	break;
+                case 'E':
+                	HAL_UART_Transmit(&huart1, (uint8_t*)"Reset\r\n",7,1000);
+                	servo_duty(&servo_1,2655);
+                	break;
+                case 'R':
+                	HAL_UART_Transmit(&huart1, (uint8_t*)"Toggle Flywheel\r\n",7,1000);
+                	if (flywheel) {
+                		set_duty(&motor_1, 0);
+                		flywheel = false;
+                	} else {
+                		set_duty(&motor_1, 2500);
+                		flywheel = true;
+                	}
+                	break;
+                case 'H':
+                	fsm.set_home_heading((int16_t)euler_data.h);
+                	HAL_UART_Transmit(&huart1, (uint8_t*)"Captured Home\r\n",15,1000);
+                	break;
+                default:
+                    // allow multi-char commands to go through if needed
+                    break;
+            }
+
+            // Early return if it's a single-key control character
+            if (strchr("ASDT", toupper(c))) {
+                HAL_UART_Receive_IT(&huart1, rx_buf, 1);
+                return;
+            }
+        }
+
+        // === MULTI-CHARACTER COMMAND HANDLING ===
+        else if (c == '\r' || c == '\n')  // End of command
         {
             cmd_buffer[cmd_index] = '\0';
 
-            // Convert to uppercase for consistent parsing
+            // Convert to uppercase
             for (uint8_t i = 0; i < cmd_index; i++) {
                 cmd_buffer[i] = toupper((unsigned char)cmd_buffer[i]);
             }
 
-            // Process full command
-            if (cmd_index >= 4)
+            // FSM STATE TRANSITION
+            if (strncmp(cmd_buffer, "MODE", 4) == 0)
             {
-                // === FSM STATE TRANSITION ===
-                if (strncmp(cmd_buffer, "MODE", 4) == 0)
-                {
-                    uint8_t mode = cmd_buffer[4] - '0';
-                    switch (mode) {
-                        case 0: fsm.set_state(FSM::S0_INIT); break;
-                        case 1: fsm.set_state(FSM::S1_IDLE); break;
-                        case 2: fsm.set_state(FSM::S2_MANUAL_STEP_INPUT); break;
-                        case 3: fsm.set_state(FSM::S3_MANUAL_TARGET); break;
-                        case 4: fsm.set_state(FSM::S4_AUTOMATIC); break;
-                        default:
-                            HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Mode\r\n", 15, 1000);
-                            break;
+                uint8_t mode = cmd_buffer[4] - '0';
+                switch (mode) {
+                    case 0: fsm.set_state(FSM::S0_INIT); break;
+                    case 1: {
+                    	char msg3[] = "Mode 2: Manual Control Mode 3: Manual Target Mode 4: Automatic";
+                    	HAL_UART_Transmit(&huart1, (uint8_t*)msg3, strlen(msg3), 1000);
+                    	fsm.set_state(FSM::S1_IDLE);
+                    	break;
                     }
+                    case 2: {
+                    	char msg2[] = "A: Move Left | D: Move Right | S: Stop | Q: Launch | E: Reset | T: Exit | R: Toggle Flywheels | H: Home\r\n";
+                    	HAL_UART_Transmit(&huart1, (uint8_t*)msg2, strlen(msg2), 1000);
+                    	fsm.set_state(FSM::S2_MANUAL_STEP_INPUT);
+                    	break;
+                    }
+                    case 3: {
+                    	char msg4[] = "Set Position: FXXXX, R: Turn Flywheels On, F: Turn Off Flywheels, Q: Launch, E: Reset, T: Exit\r\n";
+                    	HAL_UART_Transmit(&huart1, (uint8_t*)msg4, strlen(msg4), 1000);
+                    	fsm.set_state(FSM::S3_MANUAL_TARGET);
+                    	break;
+                    }
+                    case 4: {
 
-                    sprintf((char*)tx_buf, "FSM state: %d\r\n", fsm.get_state());
+                    	//char msg5[] = "Automatic Mode: Press Q to Start";
+                    	//HAL_UART_Transmit(&huart1, (uint8_t*)msg5, strlen(msg5), 1000);
+                    	fsm.set_state(FSM::S4_AUTOMATIC);
+                    	break;
+                    }
+                    default:
+                        HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Mode\r\n", 15, 1000);
+                        break;
+                }
+
+                sprintf((char*)tx_buf, "FSM state: %d\r\n", fsm.get_state());
+                HAL_UART_Transmit(&huart1, tx_buf, strlen((char*)tx_buf), 1000);
+            }
+
+            // MOTOR COMMAND: M1FF, M2FF
+            else if (cmd_buffer[0] == 'M')
+            {
+                if (fsm.get_state() != FSM::S3_MANUAL_TARGET) {
+                    HAL_UART_Transmit(&huart1, (uint8_t*)"Motor command not allowed\r\n", 28, 1000);
+                } else if (cmd_buffer[1] < '1' || cmd_buffer[1] > '3') {
+                    HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Motor Number\r\n", 23, 1000);
+                } else {
+                    uint8_t motor_num = cmd_buffer[1] - '0';
+                    char hex_string[3] = { cmd_buffer[2], cmd_buffer[3], '\0' };
+                    int8_t duty = (int8_t)strtol(hex_string, NULL, 16);
+                    if (duty > 127) duty -= 256;
+                    if (duty > 100) duty = 100;
+                    if (duty < -100) duty = -100;
+                    int16_t pulse = (duty * 4799) / 100;
+                    if (pulse < 0) pulse = -pulse;
+
+                    if (motor_num == 1)
+                        set_duty(&motor_1, (duty >= 0) ? pulse : 0);
+                    else if (motor_num == 2)
+                        set_duty(&motor_2, (duty >= 0) ? pulse : 0);
+
+                    sprintf((char*)tx_buf, "Motor %d set to duty %d\r\n", motor_num, duty);
                     HAL_UART_Transmit(&huart1, tx_buf, strlen((char*)tx_buf), 1000);
                 }
+            }
 
-                // === MOTOR COMMAND: M1FF / M2FF ===
-                else if (cmd_buffer[0] == 'M')
-                {
-                    if (fsm.get_state() != FSM::S2_MANUAL_STEP_INPUT) {
-                        HAL_UART_Transmit(&huart1, (uint8_t*)"Motor command not allowed in this state\r\n", 41, 1000);
-                    } else if (cmd_buffer[1] < '1' || cmd_buffer[1] > '3') {
-                        HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Motor Number\r\n", 23, 1000);
-                    } else {
-                        uint8_t motor_num = cmd_buffer[1] - '0';
-                        char hex_string[3] = { cmd_buffer[2], cmd_buffer[3], '\0' };
-                        int8_t duty = (int8_t)strtol(hex_string, NULL, 16);
-                        if (duty > 127) duty -= 256;
-                        if (duty > 100) duty = 100;
-                        if (duty < -100) duty = -100;
-                        int16_t pulse = (duty * 4799) / 100;
-                        if (pulse < 0) pulse = -pulse;
+            // SERVO COMMAND: S1FF, S2FF
+            else if (cmd_buffer[0] == 'S')
+            {
+                if (fsm.get_state() != FSM::S3_MANUAL_TARGET) {
+                    HAL_UART_Transmit(&huart1, (uint8_t*)"Servo command not allowed\r\n", 28, 1000);
+                } else if (cmd_buffer[1] < '1' || cmd_buffer[1] > '2') {
+                    HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Servo Number\r\n", 23, 1000);
+                } else {
+                    uint8_t servo_num = cmd_buffer[1] - '0';
+                    char hex_string[3] = { cmd_buffer[2], cmd_buffer[3], '\0' };
+                    int8_t duty = (int8_t)strtol(hex_string, NULL, 16);
+                    if (duty > 127) duty -= 256;
+                    if (duty > 100) duty = 100;
+                    if (duty < -100) duty = -100;
 
-                        if (motor_num == 1)
-                            set_duty(&motor_1, (duty >= 0) ? pulse : 0);
-                        else if (motor_num == 2)
-                            set_duty(&motor_2, (duty >= 0) ? pulse : 0);
-                        //selse if (motor_num == 3)
-                        	//set_duty()
-
-                        sprintf((char*)tx_buf, "Motor %d set to duty %d\r\n", motor_num, duty);
-                        HAL_UART_Transmit(&huart1, tx_buf, strlen((char*)tx_buf), 1000);
+                    int16_t pulse = duty * (8275 - 1655) / 100 + 1655;
+                    if (pulse < 0) {
+                        HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Duty\r\n", 15, 1000);
                     }
-                }
 
-                // === SERVO COMMAND: S1XX / S2XX ===
-                else if (cmd_buffer[0] == 'S')
-                {
-                    if (fsm.get_state() != FSM::S2_MANUAL_STEP_INPUT) {
-                        HAL_UART_Transmit(&huart1, (uint8_t*)"Servo command not allowed in this state\r\n", 41, 1000);
-                    } else if (cmd_buffer[1] < '1' || cmd_buffer[1] > '2') {
-                        HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Servo Number\r\n", 23, 1000);
-                    } else {
-                        uint8_t servo_num = cmd_buffer[1] - '0';
-                        char hex_string[3] = { cmd_buffer[2], cmd_buffer[3], '\0' };
-                        int8_t duty = (int8_t)strtol(hex_string, NULL, 16);
-                        if (duty > 127) duty -= 256;
-                        if (duty > 100) duty = 100;
-                        if (duty < -100) duty = -100;
+                    if (servo_num == 1)
+                        servo_duty(&servo_1, (duty >= 0) ? pulse : 0);
 
-                        int16_t pulse = duty * (8275 - 1655) / 100 + 1655;
-                        if (pulse < 0) {
-                            HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Duty\r\n", 15, 1000);
-                        }
-
-                        if (servo_num == 1)
-                            servo_duty(&servo_1, (duty >= 0) ? pulse : 0);
-                        else
-                            ; // placeholder for servo_2
-
-                        sprintf((char*)tx_buf, "Servo %d set to duty %d\r\n", servo_num, duty);
-                        HAL_UART_Transmit(&huart1, tx_buf, strlen((char*)tx_buf), 1000);
-                    }
-                }
-
-                // === MOVEMENT COMMANDS (W/A/S/D) ===
-                else if (fsm.get_state() == FSM::S2_MANUAL_STEP_INPUT)
-                {
-                    char dir = cmd_buffer[0];
-                    switch (dir) {
-                        case 'W': HAL_UART_Transmit(&huart1, (uint8_t*)"Move Up\r\n", 9, 1000); break;
-                        case 'A': HAL_UART_Transmit(&huart1, (uint8_t*)"Move Left\r\n", 11, 1000); break;
-                        case 'S': HAL_UART_Transmit(&huart1, (uint8_t*)"Move Down\r\n", 11, 1000); break;
-                        case 'D': HAL_UART_Transmit(&huart1, (uint8_t*)"Move Right\r\n", 12, 1000); break;
-                        default:
-                            HAL_UART_Transmit(&huart1, (uint8_t*)"Unknown Direction\r\n", 20, 1000);
-                            break;
-                    }
-                }
-
-                // === NEW: FLYWHEEL POSITION COMMAND: FXXXX ===
-				else if (cmd_buffer[0] == 'F')
-				{
-					if (fsm.get_state() == FSM::S3_MANUAL_TARGET) {
-
-
-						if (cmd_index >= 5) // Ensure command is at least 'F' + 4 digits
-						{
-							char *endptr;
-							int32_t pos_val = (int32_t)strtol(&cmd_buffer[1], &endptr, 10); // Parse decimal from index 1
-
-							// Check if number was successfully parsed
-							if (*endptr == '\0')
-							{
-								// Call set pos function
-								motor_d_set_pos(&Pololu_1, &pos_controller_1, pos_val);
-								sprintf((char*)tx_buf, "Pololu position set to %ld\r\n", pos_val);
-								HAL_UART_Transmit(&huart1, tx_buf, strlen((char*)tx_buf), 1000);
-							} else {
-								HAL_UART_Transmit(&huart1, (uint8_t*)"Unsuccessful parse\r\n", 52, 1000);
-							}
-						} else {
-							HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Command Length (4 digits expected)\r\n", 42, 1000);
-						}
-					} else {
-						HAL_UART_Transmit(&huart1, (uint8_t*)"Position command not allowed in this state \r\n", 41, 1000);
-					}
-				}
-                // === INVALID COMMAND ===
-                else {
-                    HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Command\r\n", 18, 1000);
+                    sprintf((char*)tx_buf, "Servo %d set to duty %d\r\n", servo_num, duty);
+                    HAL_UART_Transmit(&huart1, tx_buf, strlen((char*)tx_buf), 1000);
                 }
             }
+
+            // POSITION COMMAND: F1234
+            else if (cmd_buffer[0] == 'F')
+            {
+                if (fsm.get_state() == FSM::S3_MANUAL_TARGET && cmd_index >= 5)
+                {
+                    char *endptr;
+                    int32_t pos_val = (int32_t)strtol(&cmd_buffer[1], &endptr, 10);
+                    if (*endptr == '\0') {
+                        motor_d_set_pos(&Pololu_1, &pos_controller_1, pos_val);
+                        sprintf((char*)tx_buf, "Pololu position set to %ld\r\n", pos_val);
+                        HAL_UART_Transmit(&huart1, tx_buf, strlen((char*)tx_buf), 1000);
+                    } else {
+                        HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Position Format\r\n", 26, 1000);
+                    }
+                }
+                else {
+                    HAL_UART_Transmit(&huart1, (uint8_t*)"Position command not allowed\r\n", 31, 1000);
+                }
+            }
+
+            else if (fsm.get_state() == FSM::S4_AUTOMATIC)
+            {
+
+
+                //HAL_UART_Receive_IT(&huart1, rx_buf, 1);
+                //return;
+            }
+
             else {
                 HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Command\r\n", 18, 1000);
             }
 
-            cmd_index = 0; // reset buffer
+            cmd_index = 0;  // Clear buffer after processing
         }
+
+
         else
         {
             if (cmd_index < sizeof(cmd_buffer) - 1)
                 cmd_buffer[cmd_index++] = c;
         }
 
-        // Enable next UART RX interrupt
-        HAL_UART_Receive_IT(&huart1, rx_buf, 1);
+        HAL_UART_Receive_IT(&huart1, rx_buf, 1);  // Continue receiving
     }
 }
-
 
 void initialize_IMU(void) {
 	HAL_Delay(100);
@@ -970,7 +1023,7 @@ void initialize_IMU(void) {
 }
 
 void log_IMU(void) {
-	if(HAL_I2C_IsDeviceReady (&hi2c3, 0x29 << 1, 10, 500) == HAL_OK) {
+		if(HAL_I2C_IsDeviceReady (&hi2c3, 0x29 << 1, 10, 500) == HAL_OK) {
 
 		  } else {
 			  const int error = HAL_I2C_GetError(&hi2c3);
@@ -993,6 +1046,16 @@ void log_IMU(void) {
 
 }
 
+void poll_IMU(void) {
+
+	bno055_get_operation_mode(&op_mode);
+	bno055_get_power_mode(&pow_mode);
+	state = HAL_I2C_GetState(&hi2c3);
+	bno055_read_accel_xyz(&accel_data);
+	bno055_read_euler_hrp(&euler_data);
+	heading = euler_data.h;
+}
+
 void log_LIDAR(void) {
 
 	HAL_I2C_Mem_Read(&hi2c2, 0x10 << 1, 0x00, I2C_MEMADD_SIZE_8BIT, distance_data, 2, 500);
@@ -1003,6 +1066,14 @@ void log_LIDAR(void) {
 	sprintf((char*)log_buf, "distance: %d amp: %d\r\n", distance_cm, intensity_value);
 	HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
 
+
+}
+
+void poll_LIDAR(void) {
+	HAL_I2C_Mem_Read(&hi2c2, 0x10 << 1, 0x00, I2C_MEMADD_SIZE_8BIT, distance_data, 2, 500);
+	distance_cm = (uint16_t)(distance_data[1] << 8 | distance_data[0]);
+	HAL_I2C_Mem_Read(&hi2c2, 0x10 << 1, 0x02, I2C_MEMADD_SIZE_8BIT, intensity_data, 2, 500);
+	intensity_value = (uint16_t)(intensity_data[1] << 8 | intensity_data[0]);
 
 }
 
