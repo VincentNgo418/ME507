@@ -183,8 +183,6 @@ int main(void)
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_3);
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_4);
 
-
-  // LAUNCHER MOTOR
   HAL_TIM_Encoder_Start_IT(&htim4,TIM_CHANNEL_ALL);
 
 
@@ -211,7 +209,7 @@ int main(void)
 
 
   //set_duty_dual(&Pololu_2, 0, 2500);
-  motor_d_set_pos(&Pololu_2, &pos_controller_1, 1000);
+  //motor_d_set_pos(&Pololu_2, &pos_controller_1, 1000);
 
   sprintf((char*)log_buf, "Motor Pos: %d Motor goal: %d \r\n", motor_d_get_pos(&Pololu_2), pos_controller_1.setpoint);
   HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
@@ -221,14 +219,14 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   uint16_t step_counter;
   uint16_t enc_val;
-
+  htim4.Instance->CNT = 0;
 
   while (1)
   {
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
 
-	  HAL_Delay(10);
+	  HAL_Delay(50);
 
 	  motor_d_update_pos(&Pololu_2, &pos_controller_1);
 	  //sprintf((char*)log_buf, "Motor Pos: %d \r\n", enc_val);
@@ -236,16 +234,18 @@ int main(void)
 
 	  fsm.run();
 	  //HAL_UART_Transmit(&huart1, (uint8_t*)"FSM RUNNING\r\n", 13, HAL_MAX_DELAY);
-	  /*step_counter += 1;
+	  step_counter += 1;
 
 	  if(step_counter % 10 == 0) {
 		  //log_IMU();
 		  //log_LIDAR();
 
-		  sprintf((char*)log_buf, "CH1 effort: %d CH2 effort: %d error: %d \r\n",
+		  sprintf((char*)log_buf, "CH1 effort: %d CH2 effort: %d error: %d setpoint: %d, pos: %d\r\n",
 				  htim3.Instance->CCR1,
 				  htim3.Instance->CCR2,
-				  pos_controller_1.setpoint-htim4.Instance->CNT);
+				  pos_controller_1.setpoint-htim4.Instance->CNT,
+				  pos_controller_1.setpoint,
+				  htim4.Instance->CNT);
 		  HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 500);
 	  }
 
@@ -253,16 +253,10 @@ int main(void)
 
 	  if(step_counter >= 2000) {
 		  step_counter = 1;
-		  motor_d_set_pos(&Pololu_2, &pos_controller_1, 1500);
-		  sprintf((char*)log_buf, "Motor Pos: %d Motor goal: %d \r\n", motor_d_get_pos(&Pololu_2), pos_controller_1.setpoint);
-		  HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
+		  //motor_d_set_pos(&Pololu_2, &pos_controller_1, 1500);
+		  //sprintf((char*)log_buf, "Motor Pos: %d Motor goal: %d \r\n", motor_d_get_pos(&Pololu_2), pos_controller_1.setpoint);
+		  //HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
 	  }
-
-	  if(step_counter == 1000) {
-	  		  motor_d_set_pos(&Pololu_2, &pos_controller_1, -1500);
-	  		  sprintf((char*)log_buf, "Motor Pos: %d Motor goal: %d \r\n", motor_d_get_pos(&Pololu_2), pos_controller_1.setpoint);
-	  		  HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
-	  	  }*/
 
 
   }
@@ -854,7 +848,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
                 }
 
                 // === MOVEMENT COMMANDS (W/A/S/D) ===
-                else if (fsm.get_state() == FSM::S2_MANUAL_STEP_INPUT || fsm.get_state() == FSM::S3_MANUAL_TARGET)
+                else if (fsm.get_state() == FSM::S2_MANUAL_STEP_INPUT)
                 {
                     char dir = cmd_buffer[0];
                     switch (dir) {
@@ -868,6 +862,34 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
                     }
                 }
 
+                // === NEW: FLYWHEEL POSITION COMMAND: FXXXX ===
+				else if (cmd_buffer[0] == 'F')
+				{
+					if (fsm.get_state() == FSM::S3_MANUAL_TARGET) {
+
+
+						if (cmd_index >= 5) // Ensure command is at least 'F' + 4 digits
+						{
+							char *endptr;
+							int32_t pos_val = (int32_t)strtol(&cmd_buffer[1], &endptr, 10); // Parse decimal from index 1
+
+							// Check if number was successfully parsed
+							if (*endptr == '\0')
+							{
+								// Call set pos function
+								motor_d_set_pos(&Pololu_1, &pos_controller_1, pos_val);
+								sprintf((char*)tx_buf, "Pololu position set to %ld\r\n", pos_val);
+								HAL_UART_Transmit(&huart1, tx_buf, strlen((char*)tx_buf), 1000);
+							} else {
+								HAL_UART_Transmit(&huart1, (uint8_t*)"Unsuccessful parse\r\n", 52, 1000);
+							}
+						} else {
+							HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Command Length (4 digits expected)\r\n", 42, 1000);
+						}
+					} else {
+						HAL_UART_Transmit(&huart1, (uint8_t*)"Position command not allowed in this state \r\n", 41, 1000);
+					}
+				}
                 // === INVALID COMMAND ===
                 else {
                     HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Command\r\n", 18, 1000);

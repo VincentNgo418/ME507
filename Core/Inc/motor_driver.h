@@ -41,7 +41,7 @@ void set_duty_dual(motor_dual* motor_d, uint32_t pulse_1, uint32_t pulse_2);
 void motor_brake_dual(motor_dual* motor_d);
 
 void motor_d_update_pos(motor_dual* motor_d, PI_Controller* ctrl);
-void motor_d_set_pos(motor_dual* motor_d, PI_Controller* ctrl, uint32_t pos);
+void motor_d_set_pos(motor_dual* motor_d, PI_Controller* ctrl, int32_t pos);
 uint32_t motor_d_get_pos(motor_dual* motor_d);
 
 

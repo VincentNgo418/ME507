@@ -94,12 +94,12 @@ void motor_brake_dual(motor_dual* motor_d) {
 //Sets
 //@param motor_dual*, a motor with two PWM inputs
 //@param PI_Controller*, controller
-
+const int32_t ENCODER_MAX = 65536;
 void motor_d_update_pos(motor_dual* motor_d, PI_Controller* ctrl) {
     int32_t current_count = __HAL_TIM_GET_COUNTER(motor_d->enc);
     int32_t error = ctrl->setpoint - current_count;
 
-	const int32_t ENCODER_MAX = 65536;
+
 
 	if (error > ENCODER_MAX / 2) {
 		error -= ENCODER_MAX; // Subtract resolution for positive wrap-around
@@ -158,9 +158,11 @@ void motor_d_update_pos(motor_dual* motor_d, PI_Controller* ctrl) {
     }
 }
 
-void motor_d_set_pos(motor_dual* motor_d, PI_Controller* ctrl, uint32_t pos) {
-	ctrl->setpoint = pos + motor_d_get_pos(motor_d);
-
+void motor_d_set_pos(motor_dual* motor_d, PI_Controller* ctrl, int32_t pos) {
+	ctrl->setpoint = pos + ctrl->setpoint;
+	if (ctrl->setpoint > ENCODER_MAX) {
+		ctrl->setpoint = ctrl->setpoint - ENCODER_MAX;
+	}
 }
 
 uint32_t motor_d_get_pos(motor_dual* motor_d) {
