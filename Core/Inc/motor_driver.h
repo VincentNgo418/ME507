@@ -22,6 +22,7 @@ typedef struct controller{
     float integral;
     int32_t setpoint;
     uint32_t prevTick;
+    int16_t prevPulse;
 } PI_Controller;
 
 

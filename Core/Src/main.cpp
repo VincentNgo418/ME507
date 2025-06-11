@@ -156,12 +156,13 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+  MX_TIM3_Init();
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   MX_TIM2_Init();
   MX_I2C3_Init();
   MX_TIM1_Init();
-  MX_TIM3_Init();
+
   MX_TIM4_Init();
   MX_TIM5_Init();
   MX_I2C2_Init();
@@ -190,6 +191,12 @@ int main(void)
   // POLOLU 1
   HAL_TIM_PWM_Start_IT(&htim5, TIM_CHANNEL_3);
   HAL_TIM_PWM_Start_IT(&htim5, TIM_CHANNEL_4);
+
+  // FLYWHEEL
+  HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_2);
+
+  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 2500);
+
   //set BNO055 reset to low
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_SET);
   //initialize BNO055
@@ -222,9 +229,6 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
 	  HAL_Delay(10);
-	  //log_IMU();
-	  //log_LIDAR();
-	  //enc_val = __HAL_TIM_GET_COUNTER(Pololu_2.enc);
 
 	  motor_d_update_pos(&Pololu_2, &pos_controller_1);
 	  //sprintf((char*)log_buf, "Motor Pos: %d \r\n", enc_val);
@@ -232,23 +236,33 @@ int main(void)
 
 	  fsm.run();
 	  //HAL_UART_Transmit(&huart1, (uint8_t*)"FSM RUNNING\r\n", 13, HAL_MAX_DELAY);
-	  step_counter += 1;
+	  /*step_counter += 1;
 
 	  if(step_counter % 10 == 0) {
+		  //log_IMU();
+		  //log_LIDAR();
+
 		  sprintf((char*)log_buf, "CH1 effort: %d CH2 effort: %d error: %d \r\n",
 				  htim3.Instance->CCR1,
 				  htim3.Instance->CCR2,
 				  pos_controller_1.setpoint-htim4.Instance->CNT);
-		  HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
+		  HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 500);
 	  }
 
-	  if(step_counter >= 500) {
+
+
+	  if(step_counter >= 2000) {
 		  step_counter = 1;
-		  motor_d_set_pos(&Pololu_2, &pos_controller_1, 1000);
+		  motor_d_set_pos(&Pololu_2, &pos_controller_1, 1500);
 		  sprintf((char*)log_buf, "Motor Pos: %d Motor goal: %d \r\n", motor_d_get_pos(&Pololu_2), pos_controller_1.setpoint);
 		  HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
 	  }
 
+	  if(step_counter == 1000) {
+	  		  motor_d_set_pos(&Pololu_2, &pos_controller_1, -1500);
+	  		  sprintf((char*)log_buf, "Motor Pos: %d Motor goal: %d \r\n", motor_d_get_pos(&Pololu_2), pos_controller_1.setpoint);
+	  		  HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
+	  	  }*/
 
 
   }
@@ -391,7 +405,7 @@ static void MX_TIM1_Init(void)
   htim1.Instance = TIM1;
   htim1.Init.Prescaler = 0;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 65535;
+  htim1.Init.Period = 4999;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -785,7 +799,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
                 {
                     if (fsm.get_state() != FSM::S2_MANUAL_STEP_INPUT) {
                         HAL_UART_Transmit(&huart1, (uint8_t*)"Motor command not allowed in this state\r\n", 41, 1000);
-                    } else if (cmd_buffer[1] < '1' || cmd_buffer[1] > '2') {
+                    } else if (cmd_buffer[1] < '1' || cmd_buffer[1] > '3') {
                         HAL_UART_Transmit(&huart1, (uint8_t*)"Invalid Motor Number\r\n", 23, 1000);
                     } else {
                         uint8_t motor_num = cmd_buffer[1] - '0';
@@ -799,8 +813,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
                         if (motor_num == 1)
                             set_duty(&motor_1, (duty >= 0) ? pulse : 0);
-                        else
+                        else if (motor_num == 2)
                             set_duty(&motor_2, (duty >= 0) ? pulse : 0);
+                        //selse if (motor_num == 3)
+                        	//set_duty()
 
                         sprintf((char*)tx_buf, "Motor %d set to duty %d\r\n", motor_num, duty);
                         HAL_UART_Transmit(&huart1, tx_buf, strlen((char*)tx_buf), 1000);
@@ -967,6 +983,8 @@ void log_LIDAR(void) {
 
 
 }
+
+
 
 
 /* USER CODE END 4 */

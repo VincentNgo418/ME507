@@ -14,7 +14,7 @@ extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim5;
 extern TIM_HandleTypeDef htim4;
 extern TIM_HandleTypeDef htim2;
-
+extern TIM_HandleTypeDef htim1;
 #define SATURATION_LIMIT 4000
 
 #define fabs(control_effort) \
@@ -31,8 +31,8 @@ motor_t motor_1 = {
 // Flywheel Motor 2
 
 motor_t motor_2 = {
-    .PWM_CHANNEL_1 = TIM_CHANNEL_4,
-    .htim = &htim3
+    .PWM_CHANNEL_1 = TIM_CHANNEL_2,
+    .htim = &htim1
 };
 
 // Pololu Motor 1
@@ -61,7 +61,18 @@ PI_Controller pos_controller_1 = {
     .Ki = 0.0f,
     .integral = 0,
     .setpoint = 0,
-	.prevTick = 0
+	.prevTick = 0,
+	.prevPulse = 0
+};
+
+// Controller 1
+PI_Controller pos_controller_2 = {
+    .Kp = 3.25f,
+    .Ki = 0.0f,
+    .integral = 0,
+    .setpoint = 0,
+	.prevTick = 0,
+	.prevPulse = 0
 };
 
 
@@ -88,6 +99,14 @@ void motor_d_update_pos(motor_dual* motor_d, PI_Controller* ctrl) {
     int32_t current_count = __HAL_TIM_GET_COUNTER(motor_d->enc);
     int32_t error = ctrl->setpoint - current_count;
 
+	const int32_t ENCODER_MAX = 65536;
+
+	if (error > ENCODER_MAX / 2) {
+		error -= ENCODER_MAX; // Subtract resolution for positive wrap-around
+	} else if (error < -ENCODER_MAX / 2) {
+		error += ENCODER_MAX; // Add resolution for negative wrap-around
+	}
+
     //calculate deltaT
    	uint32_t deltaT = HAL_GetTick() - ctrl->prevTick;
    	ctrl->prevTick = HAL_GetTick();
@@ -104,22 +123,40 @@ void motor_d_update_pos(motor_dual* motor_d, PI_Controller* ctrl) {
 
     // Convert to PWM pulse
     int16_t pulse = fabs(control);
-    if (pulse > 4799) pulse = 4799;
 
-    // Set direction based on sign
+    //saturate jump in pulse
+	if (pulse - ctrl->prevPulse > 2000) {
+		pulse = ctrl->prevPulse + 2000;
+	}
+	if (pulse - ctrl->prevPulse < -2000) {
+		pulse = ctrl->prevPulse - 2000;
+	}
+
+	const int16_t PULSE_LIMIT = 3200;
+    //saturate pulse
+    if (pulse > PULSE_LIMIT) pulse = PULSE_LIMIT;
+    if (pulse < -PULSE_LIMIT) pulse = -PULSE_LIMIT;
+
+
+    ctrl->prevPulse = pulse;
+
     if (control > 4) {
         __HAL_TIM_SET_COMPARE(motor_d->htim, motor_d->PWM_CHANNEL_1, 0);
         __HAL_TIM_SET_COMPARE(motor_d->htim, motor_d->PWM_CHANNEL_2, pulse);
     } else if (control < -4) {
-        __HAL_TIM_SET_COMPARE(motor_d->htim, motor_d->PWM_CHANNEL_1, pulse);
+        __HAL_TIM_SET_COMPARE(motor_d->htim, motor_d->PWM_CHANNEL_1, abs(pulse));
         __HAL_TIM_SET_COMPARE(motor_d->htim, motor_d->PWM_CHANNEL_2, 0);
     } else {
         // Stop motor if within small error band
-        __HAL_TIM_SET_COMPARE(motor_d->htim, motor_d->PWM_CHANNEL_1, 0);
-        __HAL_TIM_SET_COMPARE(motor_d->htim, motor_d->PWM_CHANNEL_2, 0);
+        __HAL_TIM_SET_COMPARE(motor_d->htim, motor_d->PWM_CHANNEL_1, 4999);
+        __HAL_TIM_SET_COMPARE(motor_d->htim, motor_d->PWM_CHANNEL_2, 4999);
+    }
+
+    if (error < 50 && error > -50) {
+    	__HAL_TIM_SET_COMPARE(motor_d->htim, motor_d->PWM_CHANNEL_1, 4999);
+    	__HAL_TIM_SET_COMPARE(motor_d->htim, motor_d->PWM_CHANNEL_2, 4999);
     }
 }
-
 
 void motor_d_set_pos(motor_dual* motor_d, PI_Controller* ctrl, uint32_t pos) {
 	ctrl->setpoint = pos + motor_d_get_pos(motor_d);
