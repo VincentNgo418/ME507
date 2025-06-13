@@ -1,0 +1,113 @@
+Here is a template for your `main.dox` file, which will serve as the overview and landing page for your Ping Pong Robot documentation.
+
+This file uses Doxygen commands to create a well-structured and informative main page.
+
+```cpp
+/**
+ * @mainpage Ping Pong Robot Control System Documentation
+ *
+ * @section intro_sec Introduction
+ *
+ * This documentation provides a comprehensive overview of the firmware controlling the Ping Pong Robot,
+ * which is powered by an STM32F4111 microcontroller. The robot is designed for both manual and
+ * automatic operation, utilizing various motors and sensors to achieve precise ball launching and positioning.
+ *
+ * The robot features:
+ * - Two gearmotors for accurate positioning of the robot base.
+ * - Two flywheel motors for launching ping pong balls.
+ * - An integrated LIDAR sensor for distance measurement, crucial for automatic target acquisition.
+ * - An Inertial Measurement Unit (IMU) for orientation and heading information.
+ *
+ * @section features_sec Key Features and Control Modes
+ *
+ * The robot operates under four distinct control modes, each designed for different operational scenarios:
+ *
+ * 1.  **S1: Idle Mode (`FSM::S1_IDLE`)**
+ * The initial state where the robot is awaiting commands. From this mode, you can transition to other operational modes.
+ *
+ * 2.  **S2: Manual Step Input Mode (`FSM::S2_MANUAL_STEP_INPUT`)**
+ * Allows for granular, step-by-step control of the robot's movement using simple character inputs via UART.
+ * -   'A': Move Left
+ * -   'D': Move Right
+ * -   'S': Stop Movement
+ * -   'Q': Launch a ball
+ * -   'E': Reset launch mechanism
+ * -   'R': Toggle flywheel motors
+ * -   'H': Set current IMU heading as home
+ * -   'T': Exit to Idle Mode
+ *
+ * 3.  **S3: Manual Target Mode (`FSM::S3_MANUAL_TARGET`)**
+ * Enables setting specific position targets for the robot's base and controlling individual motor/servo duties.
+ * -   `FXXXX`: Set target position for Pololu motor 1 (e.g., F1500 for position 1500).
+ * -   `M1FF`: Set duty cycle for Motor 1 (flywheel). `FF` is a hex value for duty (-100 to 100).
+ * -   `M2FF`: Set duty cycle for Motor 2 (base). `FF` is a hex value for duty (-100 to 100).
+ * -   `S1FF`: Set duty cycle for Servo 1 (launch angle). `FF` is a hex value for duty (-100 to 100).
+ * -   `Q`: Launch a ball
+ * -   `E`: Reset launch mechanism
+ * -   `R`: Turn Flywheels On
+ * -   `F`: Turn Flywheels Off
+ * -   `T`: Exit to Idle Mode
+ *
+ * 4.  **S4: Automatic Mode (`FSM::S4_AUTOMATIC`)**
+ * The robot autonomously uses sensor data (primarily LIDAR) to detect and target ping pong balls for launching.
+ * The `main.c` currently indicates that pressing 'Q' is needed to start in this mode.
+ *
+ * @section components_sec Hardware Components
+ *
+ * -   **STM32F4111 Microcontroller:** The main processing unit.
+ * -   **Geared Motors (Pololu Motors):** Used for horizontal positioning of the robot. Controlled via PWM and encoders for feedback.
+ * -   **Flywheel Motors:** Responsible for imparting velocity to the ping pong ball.
+ * -   **Servo Motor:** Controls the launch angle or a similar mechanism.
+ * -   **LIDAR Sensor (TFLuna):** Connected via I2C2, provides distance and intensity data for target detection.
+ * -   **IMU Sensor (BNO055):** Connected via I2C3, provides orientation data (heading, pitch, roll).
+ *
+ * @section software_modules_sec Software Modules
+ *
+ * The firmware is structured into several modules:
+ * -   `main.c`: The entry point of the program, handles peripheral initialization, main loop execution, and UART command parsing.
+ * -   `fsm.h`/`fsm.cpp`: Implements the Finite State Machine that manages the robot's control modes.
+ * -   `motor_driver.h`/`motor_driver.cpp`: Provides abstractions for controlling the gearmotors and flywheel motors, including PID control for positioning.
+ * -   `servo_driver.h`/`servo_driver.cpp`: Provides functions for controlling the servo motor.
+ * -   `bno055.h`/`bno055_hal.h`: Drivers for interfacing with the BNO055 IMU sensor.
+ *
+ * @section setup_sec Setup and Build
+ *
+ * For detailed instructions on setting up the development environment, flashing the firmware,
+ * and building the project, please refer to the project's README.md or specific build documentation.
+ *
+ * @subsection file_structure Project File Structure
+ * @verbatim
+ * .
+ * ├── Core
+ * │   ├── Inc
+ * │   │   ├── main.h
+ * │   │   └── stm32f4xx_hal_conf.h
+ * │   └── Src
+ * │       ├── main.c
+ * │       ├── stm32f4xx_hal_msp.c
+ * │       └── stm32f4xx_it.c
+ * ├── Drivers
+ * │   ├── BNO055
+ * │   │   ├── bno055.h
+ * │   │   └── bno055_hal.h
+ * │   └── ... (Other peripheral drivers)
+ * ├── custom_drivers
+ * │   ├── fsm.h
+ * │   ├── fsm.cpp
+ * │   ├── motor_driver.h
+ * │   ├── motor_driver.cpp
+ * │   ├── servo_driver.h
+ * │   └── servo_driver.cpp
+ * └── Doxyfile (Your Doxygen configuration file)
+ * @endverbatim
+ *
+ * @section quick_links Quick Links
+ *
+ * -   @ref FSM "Finite State Machine (FSM) Documentation"
+ * -   @ref Motor_Driver "Motor Driver Documentation"
+ * -   @ref Servo_Driver "Servo Driver Documentation"
+ * -   @ref BNO055_Driver "BNO055 IMU Driver Documentation"
+ * -   @ref LIDAR_Interface "LIDAR Sensor Interface"
+ *
+ */
+```

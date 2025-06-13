@@ -48,8 +48,6 @@ extern "C" {
 
 
 
-
-
 #include "../Drivers/BNO055/bno055.h"
 #include "../Drivers/BNO055/bno055_hal.h"
 
@@ -72,20 +70,56 @@ extern "C" {
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+/**
+  * @brief I2C2 Handle Variable
+  */
 I2C_HandleTypeDef hi2c2;
+
+/**
+  * @brief I2C3 Handle Variable
+  */
 I2C_HandleTypeDef hi2c3;
 
+/**
+  * @brief TIM1 Handle Variable
+  */
 TIM_HandleTypeDef htim1;
+
+/**
+  * @brief TIM2 Handle Variable
+  */
 TIM_HandleTypeDef htim2;
+
+/**
+  * @brief TIM3 Handle Variable
+  */
 TIM_HandleTypeDef htim3;
+
+/**
+  * @brief TIM4 Handle Variable
+  */
 TIM_HandleTypeDef htim4;
+
+/**
+  * @brief TIM5 Handle Variable
+  */
 TIM_HandleTypeDef htim5;
 
+/**
+  * @brief UART1 Handle Variable
+  */
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 
+/**
+  * @brief Transmit buffer for UART communication
+  */
 uint8_t tx_buf[64];
+
+/**
+  * @brief Receive buffer for UART communication
+  */
 uint8_t rx_buf[64];
 
 
@@ -113,22 +147,71 @@ void poll_IMU(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+/**
+  * @brief Buffer for logging messages via UART
+  */
 char log_buf[50] = {0};
+
+/**
+  * @brief BNO055 IMU structure
+  */
 struct bno055_t IMU;
 
 //BNO055 initialize readout variables
+/**
+  * @brief Accelerometer data structure for BNO055
+  */
 struct bno055_accel_t accel_data;
+
+/**
+  * @brief Euler angle data structure for BNO055
+  */
 struct bno055_euler_t euler_data;
+
+/**
+  * @brief Volatile variable to store IMU heading
+  */
 volatile int16_t heading;
+
+/**
+  * @brief Stores the current state of the I2C communication
+  */
 HAL_I2C_StateTypeDef state;
+
+/**
+  * @brief Stores the operation mode of the BNO055
+  */
 uint8_t op_mode;
+
+/**
+  * @brief Stores the power mode of the BNO055
+  */
 uint8_t pow_mode;
+
+/**
+  * @brief Stores the system status of the BNO055
+  */
 uint8_t sys_stat;
 
 //TFLuna initialize readout variables
+/**
+  * @brief Raw distance data from LIDAR, comes in high and low byte
+  */
 uint8_t distance_data[2];
+
+/**
+  * @brief Volatile variable to store distance in centimeters from LIDAR
+  */
 volatile uint16_t distance_cm;
+
+/**
+  * @brief Raw intensity data from LIDAR, comes in high and low byte
+  */
 uint8_t intensity_data[2];
+
+/**
+  * @brief Volatile variable to store intensity value from LIDAR sensor
+  */
 volatile uint16_t intensity_value;
 /* USER CODE END 0 */
 
@@ -173,40 +256,53 @@ int main(void)
 
 
   // SERVO MOTOR
+  /** @brief Starts PWM for the servo motor on TIM1 Channel 4. */
   HAL_TIM_PWM_Start_IT(&htim1,TIM_CHANNEL_4);
 
 
   // BASE MOTOR
+  /** @brief Starts encoder input for the base motor on TIM2. */
   HAL_TIM_Encoder_Start_IT(&htim2,TIM_CHANNEL_ALL);
 
   // POLOLU 2
+  /** @brief Starts PWM for Pololu motor 2 on TIM3 Channels 1 and 2. */
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_2);
 
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_3);
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_4);
 
+  /** @brief Starts encoder input for Pololu motor 2 on TIM4. */
   HAL_TIM_Encoder_Start_IT(&htim4,TIM_CHANNEL_ALL);
 
 
   // POLOLU 1
+  /** @brief Starts PWM for Pololu motor 1 on TIM5 Channels 3 and 4. */
   HAL_TIM_PWM_Start_IT(&htim5, TIM_CHANNEL_3);
   HAL_TIM_PWM_Start_IT(&htim5, TIM_CHANNEL_4);
 
   // FLYWHEEL
+  /** @brief Starts PWM for the flywheel motor on TIM1 Channel 2. */
   HAL_TIM_PWM_Start_IT(&htim1, TIM_CHANNEL_2);
 
+  /** @brief Sets the initial compare value for the flywheel motor PWM. */
   __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, 2500);
 
   //set BNO055 reset to low
+  /** @brief Sets the reset pin for BNO055 to low (active). */
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_SET);
   //initialize BNO055
+  /** @brief Sets up the BNO055 IMU. */
   BNO055_setup(&IMU);
 
+  /** @brief Initializes the IMU. */
   initialize_IMU();
+  /** @brief Starts UART receive in interrupt mode. */
   HAL_UART_Receive_IT(&huart1, rx_buf, 1);
 
+  /** @brief Stores the last encoder count for motor 1 (unused). */
   int16_t last_count1 = 0;
+  /** @brief Stores the last encoder count for motor 2 (unused). */
   int16_t last_count2 = 0;
 
 
@@ -214,14 +310,18 @@ int main(void)
   //set_duty_dual(&Pololu_2, 0, 2500);
   //motor_d_set_pos(&Pololu_2, &pos_controller_1, 1000);
 
+  /** @brief Logs the initial motor position and goal via UART. */
   sprintf((char*)log_buf, "Motor Pos: %d Motor goal: %d \r\n", motor_d_get_pos(&Pololu_2), pos_controller_1.setpoint);
   HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  /** @brief Counter for main loop steps. */
   uint16_t step_counter;
+  /** @brief Encoder value variable (unused). */
   uint16_t enc_val;
+  /** @brief Resets the TIM4 encoder counter. */
   htim4.Instance->CNT = 0;
 
 
@@ -234,18 +334,23 @@ int main(void)
 
 	  HAL_Delay(50);
 
+	  /** @brief Updates the position of Pololu motor 2 based on its PID controller. */
 	  motor_d_update_pos(&Pololu_2, &pos_controller_1);
 	  //sprintf((char*)log_buf, "Motor Pos: %d \r\n", enc_val);
 	  //HAL_UART_Transmit(&huart1, (uint8_t*)log_buf, strlen((char*)log_buf), 1000);
 
+	  /** @brief Runs the finite state machine. */
 	  fsm.run();
 	  //HAL_UART_Transmit(&huart1, (uint8_t*)"FSM RUNNING\r\n", 13, HAL_MAX_DELAY);
+	  /** @brief Increments the step counter. */
 	  step_counter += 1;
 
 	  if(step_counter % 10 == 0) {
 		  //log_IMU();
 		  //log_LIDAR();
+		  /** @brief Polls the LIDAR sensor for data. */
 		  poll_LIDAR();
+		  /** @brief Polls the IMU for data. */
 		  poll_IMU();
 		 /*sprintf((char*)log_buf, "CH1 effort: %d CH2 effort: %d error: %d setpoint: %d, pos: %d\r\n",
 				  htim3.Instance->CCR1,
@@ -259,6 +364,7 @@ int main(void)
 
 
 	  if(step_counter >= 1000) {
+		  /** @brief Resets step counter after reaching 1000. */
 		  step_counter = 1;
 		  /*motor_d_set_pos(&Pololu_2, &pos_controller_1, 1500);
 		  sprintf((char*)log_buf, "Motor Pos: %d Motor goal: %d \r\n", motor_d_get_pos(&Pololu_2), pos_controller_1.setpoint);
@@ -740,10 +846,17 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-
+/**
+  * @brief Flag to indicate if the flywheel is active.
+  */
 bool flywheel = false;
 
 #include <ctype.h>  // for toupper()
+/**
+  * @brief UART Receive Complete Callback.
+  * @param huart UART handle.
+  * @retval None
+  */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
     if (huart->Instance == USART1)
@@ -966,6 +1079,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     }
 }
 
+/**
+  * @brief Initializes the BNO055 IMU sensor.
+  * @retval None
+  */
 void initialize_IMU(void) {
 	HAL_Delay(100);
 	sprintf((char*)log_buf, "INIT IMU \r\n");
@@ -1022,6 +1139,11 @@ void initialize_IMU(void) {
 
 }
 
+/**
+  * @brief Logs the IMU sensor data (accelerometer and Euler angles) via UART.
+  * @note This function is currently commented out in the main loop.
+  * @retval None
+  */
 void log_IMU(void) {
 		if(HAL_I2C_IsDeviceReady (&hi2c3, 0x29 << 1, 10, 500) == HAL_OK) {
 
@@ -1046,6 +1168,10 @@ void log_IMU(void) {
 
 }
 
+/**
+  * @brief Polls the IMU sensor for its operation mode, power mode, I2C state, accelerometer data, and Euler angles.
+  * @retval None
+  */
 void poll_IMU(void) {
 
 	bno055_get_operation_mode(&op_mode);
@@ -1056,6 +1182,11 @@ void poll_IMU(void) {
 	heading = euler_data.h;
 }
 
+/**
+  * @brief Logs the LIDAR sensor data (distance and intensity) via UART.
+  * @note This function is currently commented out in the main loop.
+  * @retval None
+  */
 void log_LIDAR(void) {
 
 	HAL_I2C_Mem_Read(&hi2c2, 0x10 << 1, 0x00, I2C_MEMADD_SIZE_8BIT, distance_data, 2, 500);
@@ -1069,6 +1200,10 @@ void log_LIDAR(void) {
 
 }
 
+/**
+  * @brief Polls the LIDAR sensor for distance and intensity data.
+  * @retval None
+  */
 void poll_LIDAR(void) {
 	HAL_I2C_Mem_Read(&hi2c2, 0x10 << 1, 0x00, I2C_MEMADD_SIZE_8BIT, distance_data, 2, 500);
 	distance_cm = (uint16_t)(distance_data[1] << 8 | distance_data[0]);
@@ -1100,7 +1235,7 @@ void Error_Handler(void)
 #ifdef  USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
+  * where the assert_param error has occurred.
   * @param  file: pointer to the source file name
   * @param  line: assert_param error line source number
   * @retval None
