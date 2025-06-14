@@ -317,11 +317,9 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  /** @brief Counter for main loop steps. */
+  /** @brief Counter for main loop. Used for periodic print statements and debugging. */
   uint16_t step_counter;
-  /** @brief Encoder value variable (unused). */
-  uint16_t enc_val;
-  /** @brief Resets the TIM4 encoder counter. */
+  /** @brief Resets the TIM4 encoder counter for turret heading motor. */
   htim4.Instance->CNT = 0;
 
 
@@ -847,13 +845,13 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 /**
-  * @brief Flag to indicate if the flywheel is active.
+  * @brief Flag to indicate if the flywheel is active. Used to toggle flywheel.
   */
 bool flywheel = false;
 
 #include <ctype.h>  // for toupper()
 /**
-  * @brief UART Receive Complete Callback.
+  * @brief UART Receive Complete Callback. Handles command parsing and calls various driver functions.
   * @param huart UART handle.
   * @retval None
   */
@@ -1081,6 +1079,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 /**
   * @brief Initializes the BNO055 IMU sensor.
+  * @details Attempts to set operation to CONFIG and then to IMU. Returns error codes if unsuccessful.
   * @retval None
   */
 void initialize_IMU(void) {
@@ -1141,7 +1140,7 @@ void initialize_IMU(void) {
 
 /**
   * @brief Logs the IMU sensor data (accelerometer and Euler angles) via UART.
-  * @note This function is currently commented out in the main loop.
+  * @details Used for debugging.
   * @retval None
   */
 void log_IMU(void) {
@@ -1169,7 +1168,7 @@ void log_IMU(void) {
 }
 
 /**
-  * @brief Polls the IMU sensor for its operation mode, power mode, I2C state, accelerometer data, and Euler angles.
+  * @brief Reads operation mode, power mode, I2C state, accelerometer data, and Euler angles from IMU.
   * @retval None
   */
 void poll_IMU(void) {
@@ -1183,8 +1182,8 @@ void poll_IMU(void) {
 }
 
 /**
-  * @brief Logs the LIDAR sensor data (distance and intensity) via UART.
-  * @note This function is currently commented out in the main loop.
+  * @brief Prints out LIDAR sensor data (distance and intensity) via UART.
+  * @note Used purely for debugging purposes.
   * @retval None
   */
 void log_LIDAR(void) {
@@ -1201,7 +1200,7 @@ void log_LIDAR(void) {
 }
 
 /**
-  * @brief Polls the LIDAR sensor for distance and intensity data.
+  * @brief Reads and parses the LIDAR sensor for distance and intensity data.
   * @retval None
   */
 void poll_LIDAR(void) {

@@ -25,11 +25,12 @@ This file uses Doxygen commands to create a well-structured and informative main
  *
  * 1.  **S1: Idle Mode (`FSM::S1_IDLE`)**
  * The initial state where the robot is awaiting commands. From this mode, you can transition to other operational modes.
- *
- * - MODEX : Changes to different Mode / State
+ * Commands:
+ * - 'MODEX' : Changes to different Mode / State where 'X' is the number of the mode.
  *
  * 2.  **S2: Manual Step Input Mode (`FSM::S2_MANUAL_STEP_INPUT`)**
- * Allows for granular, step-by-step control of the robot's movement using simple character inputs via UART.
+ * Allows for granular, step-by-step control of the robot's movement using simple character inputs via UART. 
+ * Commands:
  * -   'A': Move Left
  * -   'D': Move Right
  * -   'S': Stop Movement
@@ -40,7 +41,7 @@ This file uses Doxygen commands to create a well-structured and informative main
  * -   'T': Exit to Idle Mode
  *
  * 3.  **S3: Manual Target Mode (`FSM::S3_MANUAL_TARGET`)**
- * Enables setting specific position targets for the robot's base and controlling individual motor/servo duties.
+ * Enables setting specific position targets for the robot's base and controlling individual motor/servo duties. 
  * -   `FXXXX`: Set target position for Pololu motor 1 (e.g., F1500 for position 1500).
  * -   `M1FF`: Set duty cycle for Motor 1 (flywheel). `FF` is a hex value for duty (-100 to 100).
  * -   `M2FF`: Set duty cycle for Motor 2 (base). `FF` is a hex value for duty (-100 to 100).
@@ -78,21 +79,29 @@ This file uses Doxygen commands to create a well-structured and informative main
  *  - 4 x **DRV8251** Motor Drivers
  *  - \b 12V, \b 5V, and \b 3.3V rails using a LM22678TJ-ADJ switching regulator and a LMS1587ISX-ADJ-NOPB linear dropout regulator.
  *  - The PCB is powered by a 12V 15A power adapter connected via barrel jack.
- *  - 16 MHz crystal
- *  - UART and pins to connect to the ST-Link.
- *  
+ *  - 16 MHz crystal external clock
+ *  - UART and SWD to connect to the ST-Link.
+ *  - Two I2C lines to communicate with various peripherals.
  *
  *
  * @section software_modules_sec Software Modules
+ * Overview:
+ * - The code attempts to implement separation of concerns. A main.cpp program is used as the entry point of the program. 
+ * Multiple functions are defined in main.cpp, each called approx every 50ms and each one responsible for integrating with a specific driver.
+ * - This approach worked best in the case of the DC motor drivers and servo drivers, as only the motor_dual and motor_t objects needed to be passed between main.cpp and motor_driver.c.
+ * - In the case of UART and LIDAR communication, the functionality we wanted was too simple to warrant writing an external driver file. Although, in a project where hardware might change, best practice would have been to separate driver files for these too.
+ * - Separating finite state machine (FSM) logic into FSM.cpp did not work well for us. We found that a lot of FSM logic required access to IMU, encoder, or LIDAR data. This meant we had to expose these variables via the extern keyword.
+ * This solution felt clunky and really defeated the purpose of having a separate file. FSM probably should have remained in main.cpp.
  *
  * The firmware is structured into several modules:
- * -   \b main.c: The entry point of the program, handles peripheral initialization, main loop execution, and UART command parsing.
- * -   \b fsm.h/fsm\b.cpp: Implements the Finite State Machine that manages the robot's control modes.
- * -   \b motor_driver.h/motor_driver\b.cpp: Provides abstractions for controlling the gearmotors and flywheel motors, including PID control for positioning.
+ * -   \b main\b.c: The entry point of the program, handles peripheral initialization, main loop execution, and UART command parsing.
+ * The main loop calls multiple smaller functions which connect with motor and IMU drivers. It also includes multiple functions meant to assist with debugging, which were heavily utilized. 
+ * -   \b fsm.h/fsm\b.cpp: Implements the Finite State Machine that manages the robot's control modes. Is controlled by the set_state() function, called in main.cpp.
+ * -   \b motor_driver.h/motor_driver\b.cpp: Provides abstractions for controlling the gearmotors and flywheel motors, including PI control for positioning. 
  * -   \b servo_driver.h/servo_driver\b.cpp: Provides functions for controlling the servo motor.
- * -   \b bno055.h/bno055_hal\b.h: Drivers for interfacing with the BNO055 IMU sensor.
+ * -   \b bno055.h/bno055_hal\b.h: Drivers for interfacing with the BNO055 IMU sensor. BNO055 files are provided by Bosch. They connect to the HAL layer via the bno055_hal files.
  *
- *
+ * 
  *
  * @section Performance_sec Performance
  * The overall performance of the robot aligned with our expectations, especially considering the time constraints. 
@@ -101,7 +110,7 @@ This file uses Doxygen commands to create a well-structured and informative main
  * Due to hardware issues encountered during PCB debugging and rework, two of our motor drivers became non-functional. 
  * As a result, we prioritized horizontal positioning and flywheel control, deeming the vertical gearmotor the least critical. 
  * With access to a third functional motor driver, more accurate targeting through vertical adjustment would have been feasible.
- *
+ * 
  *
  *
  *
@@ -116,14 +125,20 @@ This file uses Doxygen commands to create a well-structured and informative main
  *
  * @section Challenges_sec Challenges and Workarounds
  *  One significant challenge we faced was that we were initially unable to drive the motors using the pinouts. 
- *  We spent several days debugging the motor drivers because we were unsure of why our motors did not spin. 
+ *  We spent several days debugging the motor drivers because we were unsure why our motors did not spin. 
  *  We initially thought that the issue was that our motor drivers were broken because the schematic was correct according to the DRV8251 datasheet.
  *  We then were able to spin the motors by applying a PWM signal to one of the leads of the motor and grounding the other, 
  *  but we were unable to spin the motor if both OUT1 and OUT2 pins were connected to the motor driver.
  *  We then realized that the issue was related to the current draw of the motor because the motor driver disabled if the motor was connected to both OUT1 / OUT2 pins.
  *  We then discovered that the shunt resistor was 200 Ohms instead of 0.2 Ohms, which effectively resulted in a trip current threshold of ~0.001 A.
  *  We then removed the resistors and soldered the pads together with lead, which resulted in a resistance of ~0.3 Ohms and an acceptable current threshold.
- *
+ * 
+ *  Because two of our four motor drivers were rendered non-functional, we needed to find new pins capable of PWM to control our motors.
+ *  We ultimately chose to drive both of our flywheels from one motor driver, allowing the remaining functioning driver to control the heading motor. 
+ *  
+ *  Early on we decided to utilize Bosch's official BNO055 driver, which they provide via Github.
+ *  This proved challenging to integrate with our code as the architecture of the driver was more complex than anything we had encountered in class.
+ *  While very capable, the driver ended up being much more than we needed for this project. It is unclear if utilizing the Bosch driver was better than writing our own.
  *
  *@section Mistakes_and_Future_Improvements_sec Mistakes and Future Improvements
  * - Check the correct values for components on the order form.

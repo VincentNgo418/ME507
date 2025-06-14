@@ -25,7 +25,7 @@ extern UART_HandleTypeDef huart1;
 FSM::FSM() : state(S0_INIT) { }
 
 /**
- * @brief Sets the current state of the FSM.
+ * @brief Sets the state of the FSM.
  * @param new_state The new state to transition to.
  */
 void FSM::set_state(system_state_t new_state) {
@@ -77,7 +77,7 @@ void FSM::run(void)
                     HAL_Delay(200);
                 }
 
-                // --- Patrol Movement (sweep back and forth) ---
+                // --- Patrol Movement (sweep turret back and forth) ---
                 else {
                     switch (i) {
                         case 0:
@@ -103,7 +103,7 @@ void FSM::run(void)
                     }
                 }
 
-                // --- Wind Down ---
+                // --- Wind Down Flywheels when nothing detected---
                 if (dynamic_duty > 200) {
                     dynamic_duty -= 300;
                     set_duty(&motor_1, dynamic_duty);
@@ -125,7 +125,7 @@ void FSM::run(void)
 
 /**
  * @brief Set the manual movement direction for S2 manual mode.
- * @param dir -1 for left, 1 for right, 0 for stop
+ * @param dir -1 for left, 1 for right, 0 for stop. Is called in main.
  */
 void FSM::set_move_dir(int8_t dir) {
     move_dir = dir;
@@ -133,7 +133,7 @@ void FSM::set_move_dir(int8_t dir) {
 
 /**
  * @brief Get the current movement direction.
- * @return Current movement direction.
+ * @return Current movement direction. -1 for left, 1 for right, 0 for stop
  */
 int8_t FSM::get_move_dir() {
     return move_dir;

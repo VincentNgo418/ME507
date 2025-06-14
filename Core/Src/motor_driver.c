@@ -26,19 +26,19 @@ extern TIM_HandleTypeDef htim1;
     ((int16_t)((control_effort) > SATURATION_LIMIT ? SATURATION_LIMIT : \
               ((control_effort) < -SATURATION_LIMIT ? -SATURATION_LIMIT : (control_effort))))
 
-/** @brief Flywheel motor (Left/Primary) */
+/** @brief Flywheel motor (Left) */
 motor_t motor_1 = {
     .PWM_CHANNEL_1 = TIM_CHANNEL_3,
     .htim = &htim3
 };
 
-/** @brief Flywheel motor (Right/Secondary) */
+/** @brief Flywheel motor (Right) */
 motor_t motor_2 = {
     .PWM_CHANNEL_1 = TIM_CHANNEL_2,
     .htim = &htim1
 };
 
-/** @brief Pololu dual-channel positioning motor 1 */
+/** @brief Turret pitch positioning motor */
 motor_dual Pololu_1 = {
     .PWM_CHANNEL_1 = TIM_CHANNEL_3,
     .PWM_CHANNEL_2 = TIM_CHANNEL_4,
@@ -46,7 +46,7 @@ motor_dual Pololu_1 = {
     .enc = &htim2
 };
 
-/** @brief Pololu dual-channel positioning motor 2 */
+/** @brief Turret heading positioning motor */
 motor_dual Pololu_2 = {
     .PWM_CHANNEL_1 = TIM_CHANNEL_1,
     .PWM_CHANNEL_2 = TIM_CHANNEL_2,
@@ -77,7 +77,7 @@ PI_Controller pos_controller_2 = {
 /**
  * @brief Set PWM duty for a single-channel motor.
  * @param motor Pointer to the motor_t structure.
- * @param pulse_1 PWM compare value.
+ * @param pulse_1 PWM compare value, currently limited at 4999.
  */
 void set_duty(motor_t* motor, uint32_t pulse_1) {
     __HAL_TIM_SET_COMPARE(motor->htim, motor->PWM_CHANNEL_1, pulse_1);
@@ -122,7 +122,7 @@ void step_motor_backward(void) {
 }
 
 /**
- * @brief Performs a launch using a servo motor.
+ * @brief Performs a launch sequence using a servo motor.
  */
 void launch(void) {
     servo_duty(&servo_1, 8275);  // Launch
@@ -179,7 +179,7 @@ void motor_d_update_pos(motor_dual* motor_d, PI_Controller* ctrl) {
 }
 
 /**
- * @brief Incremental target setter for dual motor.
+ * @brief Sets position control target for dual motor relative to current position.
  * @param motor_d Pointer to motor.
  * @param ctrl Pointer to controller.
  * @param pos Relative step to add to setpoint.
