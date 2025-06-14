@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['main_2eh_0',['main.h',['../main_8h.html',1,'']]],
-  ['modes_1',['Key Features and Control Modes',['../index.html#features_sec',1,'']]],
-  ['modules_2',['Software Modules',['../index.html#software_modules_sec',1,'']]],
-  ['motor_3',['motor',['../structmotor.html',1,'']]],
-  ['motor_5fd_4',['motor_d',['../structmotor__d.html',1,'']]],
-  ['my_5fstruct_5',['my_struct',['../structmy__struct.html',1,'']]]
+  ['launch_0',['launch',['../motor__driver_8h.html#a6b13b09a5c4ef671fcfeefef0e75e5a4',1,'launch(void):&#160;motor_driver.c'],['../motor__driver_8c.html#a6b13b09a5c4ef671fcfeefef0e75e5a4',1,'launch(void):&#160;motor_driver.c']]],
+  ['links_1',['Quick Links',['../index.html#quick_links',1,'']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.14.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ME 507 Ping Pong: FSM Class Reference</title>
+<title>My Project: FSM Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">ME 507 Ping Pong
+   <div id="projectname">My Project
    </div>
   </td>
  </tr>
@@ -91,33 +91,46 @@ $(function(){initNavTree('class_f_s_m.html','','class_f_s_m-members'); });
   <div class="headertitle"><div class="title">FSM Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Finite State Machine for managing the robot's control logic.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="fsm_8h_source.html">fsm.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ad72695bdf5aedc0a08f8a8b8adf8c974" id="r_ad72695bdf5aedc0a08f8a8b8adf8c974"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>state</b> { <br />
-&#160;&#160;<b>S0_INIT</b>
-, <b>S1_IDLE</b>
-, <b>S2_MANUAL_STEP_INPUT</b>
-, <b>S3_MANUAL_TARGET</b>
+<tr class="memitem:ad72695bdf5aedc0a08f8a8b8adf8c974" id="r_ad72695bdf5aedc0a08f8a8b8adf8c974"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad72695bdf5aedc0a08f8a8b8adf8c974">state</a> { <br />
+&#160;&#160;<a class="el" href="#ad72695bdf5aedc0a08f8a8b8adf8c974ac47f75675358b8f90c5feeb4b04e6066">S0_INIT</a>
+, <a class="el" href="#ad72695bdf5aedc0a08f8a8b8adf8c974aba7b69d75125811dc711b6bdf3476410">S1_IDLE</a>
+, <a class="el" href="#ad72695bdf5aedc0a08f8a8b8adf8c974adcc21330960404bacf07312628aea2ce">S2_MANUAL_STEP_INPUT</a>
+, <a class="el" href="#ad72695bdf5aedc0a08f8a8b8adf8c974aea705ab58cd28ee9eb9bfe90de6cb552">S3_MANUAL_TARGET</a>
 , <br />
-&#160;&#160;<b>S4_AUTOMATIC</b>
+&#160;&#160;<a class="el" href="#ad72695bdf5aedc0a08f8a8b8adf8c974a9ecd4fc0509f68813f7fa45fe9ab0c3f">S4_AUTOMATIC</a>
 <br />
  }</td></tr>
 <tr class="memitem:afeca5e2ea1925467e9a009ce2ba4680f" id="r_afeca5e2ea1925467e9a009ce2ba4680f"><td class="memItemLeft" align="right" valign="top"><a id="afeca5e2ea1925467e9a009ce2ba4680f" name="afeca5e2ea1925467e9a009ce2ba4680f"></a>
-typedef enum FSM::state&#160;</td><td class="memItemRight" valign="bottom"><b>system_state_t</b></td></tr>
+typedef enum <a class="el" href="#ad72695bdf5aedc0a08f8a8b8adf8c974">FSM::state</a>&#160;</td><td class="memItemRight" valign="bottom"><b>system_state_t</b></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a2fccf1c016c43e4fa4ee512311bf9d7d" id="r_a2fccf1c016c43e4fa4ee512311bf9d7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2fccf1c016c43e4fa4ee512311bf9d7d">FSM</a> ()</td></tr>
+<tr class="memdesc:a2fccf1c016c43e4fa4ee512311bf9d7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="class_f_s_m.html" title="Finite State Machine for managing the robot&#39;s control logic.">FSM</a> class.  <br /></td></tr>
 <tr class="memitem:a496aa465a2d90d034b16fe4ba1282d02" id="r_a496aa465a2d90d034b16fe4ba1282d02"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a496aa465a2d90d034b16fe4ba1282d02">run</a> (void)</td></tr>
+<tr class="memdesc:a496aa465a2d90d034b16fe4ba1282d02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes logic based on current <a class="el" href="class_f_s_m.html" title="Finite State Machine for managing the robot&#39;s control logic.">FSM</a> state.  <br /></td></tr>
 <tr class="memitem:a7b7ae1f9edd52633d0217f0c932fcdcb" id="r_a7b7ae1f9edd52633d0217f0c932fcdcb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b7ae1f9edd52633d0217f0c932fcdcb">set_state</a> (system_state_t new_state)</td></tr>
+<tr class="memdesc:a7b7ae1f9edd52633d0217f0c932fcdcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the <a class="el" href="class_f_s_m.html" title="Finite State Machine for managing the robot&#39;s control logic.">FSM</a> to a new state.  <br /></td></tr>
 <tr class="memitem:a631edf096da5cf668316069062c3c50c" id="r_a631edf096da5cf668316069062c3c50c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a631edf096da5cf668316069062c3c50c">set_move_dir</a> (int8_t dir)</td></tr>
+<tr class="memdesc:a631edf096da5cf668316069062c3c50c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the motor movement direction (used in manual mode).  <br /></td></tr>
 <tr class="memitem:a0ee8d05441372eced786a48e2de0ea36" id="r_a0ee8d05441372eced786a48e2de0ea36"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ee8d05441372eced786a48e2de0ea36">get_move_dir</a> ()</td></tr>
+<tr class="memdesc:a0ee8d05441372eced786a48e2de0ea36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current movement direction.  <br /></td></tr>
 <tr class="memitem:a6399110476656ef23f3260fd77ea4187" id="r_a6399110476656ef23f3260fd77ea4187"><td class="memItemLeft" align="right" valign="top">system_state_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6399110476656ef23f3260fd77ea4187">get_state</a> () const</td></tr>
+<tr class="memdesc:a6399110476656ef23f3260fd77ea4187"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current <a class="el" href="class_f_s_m.html" title="Finite State Machine for managing the robot&#39;s control logic.">FSM</a> state.  <br /></td></tr>
 <tr class="memitem:aad054d54aec3d077a5a7d363b5642aa7" id="r_aad054d54aec3d077a5a7d363b5642aa7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad054d54aec3d077a5a7d363b5642aa7">set_home_heading</a> (int16_t home_heading)</td></tr>
+<tr class="memdesc:aad054d54aec3d077a5a7d363b5642aa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current IMU heading as the home reference.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="fsm_8h_source.html#l00013">13</a> of file <a class="el" href="fsm_8h_source.html">fsm.h</a>.</p>
+<div class="textblock"><p>Finite State Machine for managing the robot's control logic. </p>
+<p>The <a class="el" href="class_f_s_m.html" title="Finite State Machine for managing the robot&#39;s control logic.">FSM</a> handles different control states such as initialization, manual control, target-based motion, and automatic tracking using sensor feedback. </p>
 </div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Member Enumeration Documentation</h2>
 <a id="ad72695bdf5aedc0a08f8a8b8adf8c974" name="ad72695bdf5aedc0a08f8a8b8adf8c974"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad72695bdf5aedc0a08f8a8b8adf8c974">&#9670;&#160;</a></span>state</h2>
@@ -126,12 +139,22 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum FSM::state</td>
+          <td class="memname">enum <a class="el" href="#ad72695bdf5aedc0a08f8a8b8adf8c974">FSM::state</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="fsm_8h_source.html#l00017">17</a> of file <a class="el" href="fsm_8h_source.html">fsm.h</a>.</p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ad72695bdf5aedc0a08f8a8b8adf8c974ac47f75675358b8f90c5feeb4b04e6066" name="ad72695bdf5aedc0a08f8a8b8adf8c974ac47f75675358b8f90c5feeb4b04e6066"></a>S0_INIT&#160;</td><td class="fielddoc"><p>System initialization </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ad72695bdf5aedc0a08f8a8b8adf8c974aba7b69d75125811dc711b6bdf3476410" name="ad72695bdf5aedc0a08f8a8b8adf8c974aba7b69d75125811dc711b6bdf3476410"></a>S1_IDLE&#160;</td><td class="fielddoc"><p>Idle mode, awaiting input </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ad72695bdf5aedc0a08f8a8b8adf8c974adcc21330960404bacf07312628aea2ce" name="ad72695bdf5aedc0a08f8a8b8adf8c974adcc21330960404bacf07312628aea2ce"></a>S2_MANUAL_STEP_INPUT&#160;</td><td class="fielddoc"><p>Manual movement via key inputs </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ad72695bdf5aedc0a08f8a8b8adf8c974aea705ab58cd28ee9eb9bfe90de6cb552" name="ad72695bdf5aedc0a08f8a8b8adf8c974aea705ab58cd28ee9eb9bfe90de6cb552"></a>S3_MANUAL_TARGET&#160;</td><td class="fielddoc"><p>Manual motor/servo target input </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ad72695bdf5aedc0a08f8a8b8adf8c974a9ecd4fc0509f68813f7fa45fe9ab0c3f" name="ad72695bdf5aedc0a08f8a8b8adf8c974a9ecd4fc0509f68813f7fa45fe9ab0c3f"></a>S4_AUTOMATIC&#160;</td><td class="fielddoc"><p>Autonomous operation using sensors </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -151,7 +174,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fsm_8cpp_source.html#l00022">22</a> of file <a class="el" href="fsm_8cpp_source.html">fsm.cpp</a>.</p>
+<p>Constructor for <a class="el" href="class_f_s_m.html" title="Finite State Machine for managing the robot&#39;s control logic.">FSM</a> class. </p>
+<p><a class="el" href="class_f_s_m.html" title="Finite State Machine for managing the robot&#39;s control logic.">FSM</a> constructor. Initializes the state machine to S0_INIT. </p>
 
 </div>
 </div>
@@ -171,7 +195,11 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fsm_8cpp_source.html#l00219">219</a> of file <a class="el" href="fsm_8cpp_source.html">fsm.cpp</a>.</p>
+<p>Gets the current movement direction. </p>
+<p>Get the current movement direction.</p>
+<dl class="section return"><dt>Returns</dt><dd>Direction: -1, 0, or 1.</dd>
+<dd>
+Current movement direction. -1 for left, 1 for right, 0 for stop </dd></dl>
 
 </div>
 </div>
@@ -180,9 +208,6 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">system_state_t FSM::get_state </td>
@@ -191,14 +216,10 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fsm_8h_source.html#l00032">32</a> of file <a class="el" href="fsm_8h_source.html">fsm.h</a>.</p>
+<p>Gets the current <a class="el" href="class_f_s_m.html" title="Finite State Machine for managing the robot&#39;s control logic.">FSM</a> state. </p>
+<dl class="section return"><dt>Returns</dt><dd>Current state. </dd></dl>
 
 </div>
 </div>
@@ -217,7 +238,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fsm_8cpp_source.html#l00032">32</a> of file <a class="el" href="fsm_8cpp_source.html">fsm.cpp</a>.</p>
+<p>Executes logic based on current <a class="el" href="class_f_s_m.html" title="Finite State Machine for managing the robot&#39;s control logic.">FSM</a> state. </p>
+<p>Runs the current state's logic. Should be called repeatedly in the main loop. </p>
 
 </div>
 </div>
@@ -230,13 +252,21 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void FSM::set_home_heading </td>
           <td>(</td>
-          <td class="paramtype">int16_t</td>          <td class="paramname"><span class="paramname"><em>home_heading</em></span></td><td>)</td>
+          <td class="paramtype">int16_t</td>          <td class="paramname"><span class="paramname"><em>current_heading</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fsm_8cpp_source.html#l00223">223</a> of file <a class="el" href="fsm_8cpp_source.html">fsm.cpp</a>.</p>
+<p>Sets the current IMU heading as the home reference. </p>
+<p>Sets the robot's home heading for use in automatic mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">home_heading</td><td>Heading value to store as home.</td></tr>
+    <tr><td class="paramname">current_heading</td><td>The heading angle from the IMU to record as home. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -255,7 +285,15 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fsm_8cpp_source.html#l00215">215</a> of file <a class="el" href="fsm_8cpp_source.html">fsm.cpp</a>.</p>
+<p>Sets the motor movement direction (used in manual mode). </p>
+<p>Set the manual movement direction for S2 manual mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dir</td><td>Direction of movement: -1 = left, 0 = stop, 1 = right.</td></tr>
+    <tr><td class="paramname">dir</td><td>-1 for left, 1 for right, 0 for stop. Is called in main. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -274,13 +312,21 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="fsm_8cpp_source.html#l00027">27</a> of file <a class="el" href="fsm_8cpp_source.html">fsm.cpp</a>.</p>
+<p>Sets the <a class="el" href="class_f_s_m.html" title="Finite State Machine for managing the robot&#39;s control logic.">FSM</a> to a new state. </p>
+<p>Sets the state of the <a class="el" href="class_f_s_m.html" title="Finite State Machine for managing the robot&#39;s control logic.">FSM</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">new_state</td><td>The state to transition to.</td></tr>
+    <tr><td class="paramname">new_state</td><td>The new state to transition to. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>Core/Inc/<a class="el" href="fsm_8h_source.html">fsm.h</a></li>
-<li>Core/Src/<a class="el" href="fsm_8cpp_source.html">fsm.cpp</a></li>
+<li>Core/Src/<a class="el" href="fsm_8cpp.html">fsm.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -1,6 +1,7 @@
 var main_8h =
 [
-    [ "my_struct", "structmy__struct.html", null ],
+    [ "my_struct", "structmy__struct.html", "structmy__struct" ],
+    [ "my_struct_t", "main_8h.html#a0c4dfd06d602644b41be188f1eda184f", null ],
     [ "Error_Handler", "main_8h.html#a1730ffe1e560465665eb47d9264826f9", null ],
     [ "distance_cm", "main_8h.html#ae021034a15c38ec3070fe51cd52b2719", null ],
     [ "heading", "main_8h.html#a049382970fbae2e500ec960a4b731e94", null ],

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.14.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ME 507 Ping Pong: Core/Inc/main.h File Reference</title>
+<title>My Project: Core/Inc/main.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">ME 507 Ping Pong
+   <div id="projectname">My Project
    </div>
   </td>
  </tr>
@@ -92,7 +92,7 @@ $(function(){initNavTree('main_8h.html','',''); });
 </div><!--header-->
 <div class="contents">
 
-<p>: Header for main.c file. This file contains the common defines of the application.  
+<p>: Header for main.c file. Contains shared defines, structures, and global variables.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;stm32f4xx_hal.h&quot;</code><br />
 </div>
@@ -101,36 +101,55 @@ $(function(){initNavTree('main_8h.html','',''); });
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:my_5Fstruct" id="r_my_5Fstruct"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmy__struct.html">my_struct</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Custom data structure used for application-specific motor or timer management.  <a href="structmy__struct.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a0c4dfd06d602644b41be188f1eda184f" id="r_a0c4dfd06d602644b41be188f1eda184f"><td class="memItemLeft" align="right" valign="top"><a id="a0c4dfd06d602644b41be188f1eda184f" name="a0c4dfd06d602644b41be188f1eda184f"></a>
-typedef struct <a class="el" href="structmy__struct.html">my_struct</a>&#160;</td><td class="memItemRight" valign="bottom"><b>my_struct_t</b></td></tr>
+<tr class="memitem:a0c4dfd06d602644b41be188f1eda184f" id="r_a0c4dfd06d602644b41be188f1eda184f"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structmy__struct.html">my_struct</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c4dfd06d602644b41be188f1eda184f">my_struct_t</a></td></tr>
+<tr class="memdesc:a0c4dfd06d602644b41be188f1eda184f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Custom data structure used for application-specific motor or timer management.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ae70bce6c39d0b570a7523b86738cec4b" id="r_ae70bce6c39d0b570a7523b86738cec4b"><td class="memItemLeft" align="right" valign="top"><a id="ae70bce6c39d0b570a7523b86738cec4b" name="ae70bce6c39d0b570a7523b86738cec4b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_TIM_MspPostInit</b> (TIM_HandleTypeDef *htim)</td></tr>
 <tr class="memitem:a1730ffe1e560465665eb47d9264826f9" id="r_a1730ffe1e560465665eb47d9264826f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1730ffe1e560465665eb47d9264826f9">Error_Handler</a> (void)</td></tr>
-<tr class="memdesc:a1730ffe1e560465665eb47d9264826f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is executed in case of error occurrence.  <br /></td></tr>
+<tr class="memdesc:a1730ffe1e560465665eb47d9264826f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">General error handler. Called when a critical error occurs.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:ae021034a15c38ec3070fe51cd52b2719" id="r_ae021034a15c38ec3070fe51cd52b2719"><td class="memItemLeft" align="right" valign="top">volatile uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae021034a15c38ec3070fe51cd52b2719">distance_cm</a></td></tr>
-<tr class="memdesc:ae021034a15c38ec3070fe51cd52b2719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Volatile variable to store distance in centimeters from LIDAR.  <br /></td></tr>
+<tr class="memdesc:ae021034a15c38ec3070fe51cd52b2719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Distance reading from the TF-Luna LIDAR sensor (in centimeters).  <br /></td></tr>
 <tr class="memitem:a049382970fbae2e500ec960a4b731e94" id="r_a049382970fbae2e500ec960a4b731e94"><td class="memItemLeft" align="right" valign="top">volatile int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a049382970fbae2e500ec960a4b731e94">heading</a></td></tr>
-<tr class="memdesc:a049382970fbae2e500ec960a4b731e94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Volatile variable to store IMU heading.  <br /></td></tr>
+<tr class="memdesc:a049382970fbae2e500ec960a4b731e94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heading angle from the BNO055 IMU sensor (in degrees).  <br /></td></tr>
 <tr class="memitem:a4d3d8bf9230cbc302d5d00587312141c" id="r_a4d3d8bf9230cbc302d5d00587312141c"><td class="memItemLeft" align="right" valign="top">volatile uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d3d8bf9230cbc302d5d00587312141c">intensity_value</a></td></tr>
-<tr class="memdesc:a4d3d8bf9230cbc302d5d00587312141c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Volatile variable to store intensity value from LIDAR sensor.  <br /></td></tr>
+<tr class="memdesc:a4d3d8bf9230cbc302d5d00587312141c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Intensity or reflectivity value from the TF-Luna LIDAR.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>: Header for main.c file. This file contains the common defines of the application. </p>
-<dl class="section attention"><dt>Attention</dt><dd></dd></dl>
-<p>Copyright (c) 2025 STMicroelectronics. All rights reserved.</p>
-<p>This software is licensed under terms that can be found in the LICENSE file in the root directory of this software component. If no LICENSE file comes with this software, it is provided AS-IS. </p>
+<div class="textblock"><p>: Header for main.c file. Contains shared defines, structures, and global variables. </p>
+<dl class="section author"><dt>Author</dt><dd>: Jason </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>: 2025 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>: 1.0</dd></dl>
+<p>This file declares hardware handles, types, and global variables used across the application, including user-defined structures and sensor data.</p>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2025 STMicroelectronics. This software is licensed under terms in the LICENSE file in the root directory. If no LICENSE file comes with this software, it is provided AS-IS. </dd></dl>
+</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
+<a id="a0c4dfd06d602644b41be188f1eda184f" name="a0c4dfd06d602644b41be188f1eda184f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c4dfd06d602644b41be188f1eda184f">&#9670;&#160;</a></span>my_struct_t</h2>
 
-<p class="definition">Definition in file <a class="el" href="main_8h_source.html">main.h</a>.</p>
-</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structmy__struct.html">my_struct</a> <a class="el" href="#a0c4dfd06d602644b41be188f1eda184f">my_struct_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Custom data structure used for application-specific motor or timer management. </p>
+<p>&lt; HAL library for STM32F4 peripherals </p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a1730ffe1e560465665eb47d9264826f9" name="a1730ffe1e560465665eb47d9264826f9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1730ffe1e560465665eb47d9264826f9">&#9670;&#160;</a></span>Error_Handler()</h2>
 
@@ -146,15 +165,14 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function is executed in case of error occurrence. </p>
+<p>General error handler. Called when a critical error occurs. </p>
+<p>General error handler. Called when a critical error occurs.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">None</td><td></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l01224">1224</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
 </div>
 </div>
@@ -179,9 +197,8 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Volatile variable to store distance in centimeters from LIDAR. </p>
-
-<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00205">205</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Distance reading from the TF-Luna LIDAR sensor (in centimeters). </p>
+<p>Distance reading from the TF-Luna LIDAR sensor (in centimeters). </p>
 
 </div>
 </div>
@@ -205,9 +222,8 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Volatile variable to store IMU heading. </p>
-
-<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00174">174</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Heading angle from the BNO055 IMU sensor (in degrees). </p>
+<p>Heading angle from the BNO055 IMU sensor (in degrees). </p>
 
 </div>
 </div>
@@ -231,9 +247,8 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Volatile variable to store intensity value from LIDAR sensor. </p>
-
-<p class="definition">Definition at line <a class="el" href="main_8cpp_source.html#l00215">215</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Intensity or reflectivity value from the TF-Luna LIDAR. </p>
+<p>Intensity or reflectivity value from the TF-Luna LIDAR. </p>
 
 </div>
 </div>

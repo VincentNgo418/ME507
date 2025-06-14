@@ -94,7 +94,7 @@ This file uses Doxygen commands to create a well-structured and informative main
  * This solution felt clunky and really defeated the purpose of having a separate file. FSM probably should have remained in main.cpp.
  *
  * The firmware is structured into several modules:
- * -   \b main\b.c: The entry point of the program, handles peripheral initialization, main loop execution, and UART command parsing.
+ * -   \b main.c: The entry point of the program, handles peripheral initialization, main loop execution, and UART command parsing.
  * The main loop calls multiple smaller functions which connect with motor and IMU drivers. It also includes multiple functions meant to assist with debugging, which were heavily utilized. 
  * -   \b fsm.h/fsm\b.cpp: Implements the Finite State Machine that manages the robot's control modes. Is controlled by the set_state() function, called in main.cpp.
  * -   \b motor_driver.h/motor_driver\b.cpp: Provides abstractions for controlling the gearmotors and flywheel motors, including PI control for positioning. 

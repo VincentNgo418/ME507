@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['quick_20links_0',['Quick Links',['../index.html#quick_links',1,'']]]
+  ['objectives_0',['Features and Objectives',['../index.html#features_objectives_sec',1,'']]]
 ];
