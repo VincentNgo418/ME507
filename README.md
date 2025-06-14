@@ -1,7 +1,7 @@
 # ME 507 - Ping Pong Ball Launcher
 
 **Team Members:** Vincent Ngo, Jason Wong  
-**Support:** Charlie Refvem
+**Support:** Charlie Refvem, Josh DeWeese, Nolan Jeung
 
 ## Overview
 
