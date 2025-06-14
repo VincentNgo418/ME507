@@ -1,0 +1,75 @@
+\doxysection{controller Struct Reference}
+\hypertarget{structcontroller}{}\label{structcontroller}\index{controller@{controller}}
+
+
+Proportional-\/\+Integral controller used for position control.  
+
+
+
+
+{\ttfamily \#include $<$motor\+\_\+driver.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{structcontroller_aa94eb5d9e1fd1ef16c32e986fa7acae8}{Kp}}
+\item 
+float \mbox{\hyperlink{structcontroller_a3f89813528742b9c3cbc00d009a423a2}{Ki}}
+\item 
+float \mbox{\hyperlink{structcontroller_a5a90275a08d21f18a7809cc64211f876}{integral}}
+\item 
+int32\+\_\+t \mbox{\hyperlink{structcontroller_a554ab32471791254081a953f62e3ed41}{setpoint}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structcontroller_aa9d235155626be9eccef1678a91a414f}{prev\+Tick}}
+\item 
+int16\+\_\+t \mbox{\hyperlink{structcontroller_a809bcc260585f63d3f751f1edfcb4d84}{prev\+Pulse}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Proportional-\/\+Integral controller used for position control. 
+
+\label{doc-variable-members}
+\Hypertarget{structcontroller_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structcontroller_a5a90275a08d21f18a7809cc64211f876}\index{controller@{controller}!integral@{integral}}
+\index{integral@{integral}!controller@{controller}}
+\doxysubsubsection{\texorpdfstring{integral}{integral}}
+{\footnotesize\ttfamily \label{structcontroller_a5a90275a08d21f18a7809cc64211f876} 
+float controller\+::integral}
+
+Accumulated integral value \Hypertarget{structcontroller_a3f89813528742b9c3cbc00d009a423a2}\index{controller@{controller}!Ki@{Ki}}
+\index{Ki@{Ki}!controller@{controller}}
+\doxysubsubsection{\texorpdfstring{Ki}{Ki}}
+{\footnotesize\ttfamily \label{structcontroller_a3f89813528742b9c3cbc00d009a423a2} 
+float controller\+::\+Ki}
+
+Integral gain \Hypertarget{structcontroller_aa94eb5d9e1fd1ef16c32e986fa7acae8}\index{controller@{controller}!Kp@{Kp}}
+\index{Kp@{Kp}!controller@{controller}}
+\doxysubsubsection{\texorpdfstring{Kp}{Kp}}
+{\footnotesize\ttfamily \label{structcontroller_aa94eb5d9e1fd1ef16c32e986fa7acae8} 
+float controller\+::\+Kp}
+
+Proportional gain \Hypertarget{structcontroller_a809bcc260585f63d3f751f1edfcb4d84}\index{controller@{controller}!prevPulse@{prevPulse}}
+\index{prevPulse@{prevPulse}!controller@{controller}}
+\doxysubsubsection{\texorpdfstring{prevPulse}{prevPulse}}
+{\footnotesize\ttfamily \label{structcontroller_a809bcc260585f63d3f751f1edfcb4d84} 
+int16\+\_\+t controller\+::prev\+Pulse}
+
+Previous encoder pulse count \Hypertarget{structcontroller_aa9d235155626be9eccef1678a91a414f}\index{controller@{controller}!prevTick@{prevTick}}
+\index{prevTick@{prevTick}!controller@{controller}}
+\doxysubsubsection{\texorpdfstring{prevTick}{prevTick}}
+{\footnotesize\ttfamily \label{structcontroller_aa9d235155626be9eccef1678a91a414f} 
+uint32\+\_\+t controller\+::prev\+Tick}
+
+Timestamp of last control update \Hypertarget{structcontroller_a554ab32471791254081a953f62e3ed41}\index{controller@{controller}!setpoint@{setpoint}}
+\index{setpoint@{setpoint}!controller@{controller}}
+\doxysubsubsection{\texorpdfstring{setpoint}{setpoint}}
+{\footnotesize\ttfamily \label{structcontroller_a554ab32471791254081a953f62e3ed41} 
+int32\+\_\+t controller\+::setpoint}
+
+Desired motor position 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Core/\+Inc/\mbox{\hyperlink{motor__driver_8h}{motor\+\_\+driver.\+h}}\end{DoxyCompactItemize}

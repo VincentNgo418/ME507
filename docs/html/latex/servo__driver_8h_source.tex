@@ -1,0 +1,35 @@
+\doxysection{servo\+\_\+driver.\+h}
+\hypertarget{servo__driver_8h_source}{}\label{servo__driver_8h_source}\index{Core/Inc/servo\_driver.h@{Core/Inc/servo\_driver.h}}
+\mbox{\hyperlink{servo__driver_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#ifndef\ INC\_SERVO\_DRIVER\_H\_}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ INC\_SERVO\_DRIVER\_H\_}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{stm32f4xx__hal_8h}{stm32f4xx\_hal.h}}"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structservo}{servo}}\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structservo_a5d99cda75ea2d021c30b44ecbd5cb205}{PWM\_CHANNEL}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\_HandleTypeDef}}*\ \mbox{\hyperlink{structservo_a3dc886d35887db8e1587a01c16304f78}{htim}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00022\ \}\ \mbox{\hyperlink{servo__driver_8h_aeb994d32e00714381648cde445df8695}{servo\_t}};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{servo__driver_8h_aeb994d32e00714381648cde445df8695}{servo\_t}}\ \mbox{\hyperlink{servo__driver_8h_a392c202f30b33bb58279cf39c5187957}{servo\_1}};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00030\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00038\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{servo__driver_8h_a41a06f3428ecd306f4339fb9676120e6}{servo\_duty}}(\mbox{\hyperlink{servo__driver_8h_aeb994d32e00714381648cde445df8695}{servo\_t}}*\ \mbox{\hyperlink{structservo}{servo}},\ uint32\_t\ pulse\_1);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00044\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{servo__driver_8h_a9966d205a13322002c116e464d2e4d86}{servo\_brake}}(\mbox{\hyperlink{servo__driver_8h_aeb994d32e00714381648cde445df8695}{servo\_t}}*\ \mbox{\hyperlink{structservo}{servo}});}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00050\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{servo__driver_8h_a0e453b48b23f5185089d5464727c727e}{servo\_disable}}(\mbox{\hyperlink{servo__driver_8h_aeb994d32e00714381648cde445df8695}{servo\_t}}*\ \mbox{\hyperlink{structservo}{servo}});}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00053\ \}\ \textcolor{comment}{//\ End\ of\ extern\ "{}C"{}\ block}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ INC\_SERVO\_DRIVER\_H\_\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

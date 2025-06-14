@@ -1,0 +1,214 @@
+\doxysection{FSM Class Reference}
+\hypertarget{class_f_s_m}{}\label{class_f_s_m}\index{FSM@{FSM}}
+
+
+Finite State Machine for managing the robot\textquotesingle{}s control logic.  
+
+
+
+
+{\ttfamily \#include $<$fsm.\+h$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974}{state}} \{ \newline
+\mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974ac47f75675358b8f90c5feeb4b04e6066}{S0\+\_\+\+INIT}}
+, \mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974aba7b69d75125811dc711b6bdf3476410}{S1\+\_\+\+IDLE}}
+, \mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974adcc21330960404bacf07312628aea2ce}{S2\+\_\+\+MANUAL\+\_\+\+STEP\+\_\+\+INPUT}}
+, \mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974aea705ab58cd28ee9eb9bfe90de6cb552}{S3\+\_\+\+MANUAL\+\_\+\+TARGET}}
+, \newline
+\mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974a9ecd4fc0509f68813f7fa45fe9ab0c3f}{S4\+\_\+\+AUTOMATIC}}
+ \}
+\item 
+typedef enum \mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974}{FSM\+::state}} \mbox{\hyperlink{class_f_s_m_afeca5e2ea1925467e9a009ce2ba4680f}{system\+\_\+state\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_f_s_m_a2fccf1c016c43e4fa4ee512311bf9d7d}{FSM}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{class_f_s_m}{FSM} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_s_m_a496aa465a2d90d034b16fe4ba1282d02}{run}} (void)
+\begin{DoxyCompactList}\small\item\em Executes logic based on current \doxylink{class_f_s_m}{FSM} state. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_s_m_a7b7ae1f9edd52633d0217f0c932fcdcb}{set\+\_\+state}} (\mbox{\hyperlink{class_f_s_m_afeca5e2ea1925467e9a009ce2ba4680f}{system\+\_\+state\+\_\+t}} new\+\_\+state)
+\begin{DoxyCompactList}\small\item\em Sets the \doxylink{class_f_s_m}{FSM} to a new state. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_s_m_a631edf096da5cf668316069062c3c50c}{set\+\_\+move\+\_\+dir}} (int8\+\_\+t dir)
+\begin{DoxyCompactList}\small\item\em Sets the motor movement direction (used in manual mode). \end{DoxyCompactList}\item 
+int8\+\_\+t \mbox{\hyperlink{class_f_s_m_a0ee8d05441372eced786a48e2de0ea36}{get\+\_\+move\+\_\+dir}} ()
+\begin{DoxyCompactList}\small\item\em Gets the current movement direction. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_f_s_m_afeca5e2ea1925467e9a009ce2ba4680f}{system\+\_\+state\+\_\+t}} \mbox{\hyperlink{class_f_s_m_a6399110476656ef23f3260fd77ea4187}{get\+\_\+state}} () const
+\begin{DoxyCompactList}\small\item\em Gets the current \doxylink{class_f_s_m}{FSM} state. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_s_m_aad054d54aec3d077a5a7d363b5642aa7}{set\+\_\+home\+\_\+heading}} (int16\+\_\+t home\+\_\+heading)
+\begin{DoxyCompactList}\small\item\em Sets the current IMU heading as the home reference. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Finite State Machine for managing the robot\textquotesingle{}s control logic. 
+
+The \doxylink{class_f_s_m}{FSM} handles different control states such as initialization, manual control, target-\/based motion, and automatic tracking using sensor feedback. 
+
+\label{doc-typedef-members}
+\Hypertarget{class_f_s_m_doc-typedef-members}
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{class_f_s_m_afeca5e2ea1925467e9a009ce2ba4680f}\index{FSM@{FSM}!system\_state\_t@{system\_state\_t}}
+\index{system\_state\_t@{system\_state\_t}!FSM@{FSM}}
+\doxysubsubsection{\texorpdfstring{system\_state\_t}{system\_state\_t}}
+{\footnotesize\ttfamily \label{class_f_s_m_afeca5e2ea1925467e9a009ce2ba4680f} 
+typedef enum \mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974}{FSM\+::state}} \mbox{\hyperlink{class_f_s_m_afeca5e2ea1925467e9a009ce2ba4680f}{FSM\+::system\+\_\+state\+\_\+t}}}
+
+
+
+\label{doc-enum-members}
+\Hypertarget{class_f_s_m_doc-enum-members}
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974}\index{FSM@{FSM}!state@{state}}
+\index{state@{state}!FSM@{FSM}}
+\doxysubsubsection{\texorpdfstring{state}{state}}
+{\footnotesize\ttfamily \label{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974} 
+enum \mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974}{FSM\+::state}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S0\_INIT@{S0\_INIT}!FSM@{FSM}}\index{FSM@{FSM}!S0\_INIT@{S0\_INIT}}}\Hypertarget{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974ac47f75675358b8f90c5feeb4b04e6066}\label{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974ac47f75675358b8f90c5feeb4b04e6066} 
+S0\+\_\+\+INIT&System initialization \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S1\_IDLE@{S1\_IDLE}!FSM@{FSM}}\index{FSM@{FSM}!S1\_IDLE@{S1\_IDLE}}}\Hypertarget{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974aba7b69d75125811dc711b6bdf3476410}\label{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974aba7b69d75125811dc711b6bdf3476410} 
+S1\+\_\+\+IDLE&Idle mode, awaiting input \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S2\_MANUAL\_STEP\_INPUT@{S2\_MANUAL\_STEP\_INPUT}!FSM@{FSM}}\index{FSM@{FSM}!S2\_MANUAL\_STEP\_INPUT@{S2\_MANUAL\_STEP\_INPUT}}}\Hypertarget{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974adcc21330960404bacf07312628aea2ce}\label{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974adcc21330960404bacf07312628aea2ce} 
+S2\+\_\+\+MANUAL\+\_\+\+STEP\+\_\+\+INPUT&Manual movement via key inputs \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S3\_MANUAL\_TARGET@{S3\_MANUAL\_TARGET}!FSM@{FSM}}\index{FSM@{FSM}!S3\_MANUAL\_TARGET@{S3\_MANUAL\_TARGET}}}\Hypertarget{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974aea705ab58cd28ee9eb9bfe90de6cb552}\label{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974aea705ab58cd28ee9eb9bfe90de6cb552} 
+S3\+\_\+\+MANUAL\+\_\+\+TARGET&Manual motor/servo target input \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S4\_AUTOMATIC@{S4\_AUTOMATIC}!FSM@{FSM}}\index{FSM@{FSM}!S4\_AUTOMATIC@{S4\_AUTOMATIC}}}\Hypertarget{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974a9ecd4fc0509f68813f7fa45fe9ab0c3f}\label{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974a9ecd4fc0509f68813f7fa45fe9ab0c3f} 
+S4\+\_\+\+AUTOMATIC&Autonomous operation using sensors \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-constructors}
+\Hypertarget{class_f_s_m_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_f_s_m_a2fccf1c016c43e4fa4ee512311bf9d7d}\index{FSM@{FSM}!FSM@{FSM}}
+\index{FSM@{FSM}!FSM@{FSM}}
+\doxysubsubsection{\texorpdfstring{FSM()}{FSM()}}
+{\footnotesize\ttfamily \label{class_f_s_m_a2fccf1c016c43e4fa4ee512311bf9d7d} 
+FSM\+::\+FSM (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{class_f_s_m}{FSM} class. 
+
+\doxylink{class_f_s_m}{FSM} constructor. Initializes the state machine to S0\+\_\+\+INIT. 
+
+\label{doc-func-members}
+\Hypertarget{class_f_s_m_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_f_s_m_a0ee8d05441372eced786a48e2de0ea36}\index{FSM@{FSM}!get\_move\_dir@{get\_move\_dir}}
+\index{get\_move\_dir@{get\_move\_dir}!FSM@{FSM}}
+\doxysubsubsection{\texorpdfstring{get\_move\_dir()}{get\_move\_dir()}}
+{\footnotesize\ttfamily \label{class_f_s_m_a0ee8d05441372eced786a48e2de0ea36} 
+int8\+\_\+t FSM\+::get\+\_\+move\+\_\+dir (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the current movement direction. 
+
+Get the current movement direction.
+
+\begin{DoxyReturn}{Returns}
+Direction\+: -\/1, 0, or 1.
+
+Current movement direction. 
+\end{DoxyReturn}
+\Hypertarget{class_f_s_m_a6399110476656ef23f3260fd77ea4187}\index{FSM@{FSM}!get\_state@{get\_state}}
+\index{get\_state@{get\_state}!FSM@{FSM}}
+\doxysubsubsection{\texorpdfstring{get\_state()}{get\_state()}}
+{\footnotesize\ttfamily \label{class_f_s_m_a6399110476656ef23f3260fd77ea4187} 
+\mbox{\hyperlink{class_f_s_m_afeca5e2ea1925467e9a009ce2ba4680f}{system\+\_\+state\+\_\+t}} FSM\+::get\+\_\+state (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Gets the current \doxylink{class_f_s_m}{FSM} state. 
+
+\begin{DoxyReturn}{Returns}
+Current state. 
+\end{DoxyReturn}
+\Hypertarget{class_f_s_m_a496aa465a2d90d034b16fe4ba1282d02}\index{FSM@{FSM}!run@{run}}
+\index{run@{run}!FSM@{FSM}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily \label{class_f_s_m_a496aa465a2d90d034b16fe4ba1282d02} 
+void FSM\+::run (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Executes logic based on current \doxylink{class_f_s_m}{FSM} state. 
+
+Runs the current state\textquotesingle{}s logic. Should be called repeatedly in the main loop. \Hypertarget{class_f_s_m_aad054d54aec3d077a5a7d363b5642aa7}\index{FSM@{FSM}!set\_home\_heading@{set\_home\_heading}}
+\index{set\_home\_heading@{set\_home\_heading}!FSM@{FSM}}
+\doxysubsubsection{\texorpdfstring{set\_home\_heading()}{set\_home\_heading()}}
+{\footnotesize\ttfamily \label{class_f_s_m_aad054d54aec3d077a5a7d363b5642aa7} 
+void FSM\+::set\+\_\+home\+\_\+heading (\begin{DoxyParamCaption}\item[{int16\+\_\+t}]{current\+\_\+heading}{}\end{DoxyParamCaption})}
+
+
+
+Sets the current IMU heading as the home reference. 
+
+Sets the robot\textquotesingle{}s home heading for use in automatic mode.
+
+
+\begin{DoxyParams}{Parameters}
+{\em home\+\_\+heading} & Heading value to store as home.\\
+\hline
+{\em current\+\_\+heading} & The heading angle from the IMU to record as home. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_f_s_m_a631edf096da5cf668316069062c3c50c}\index{FSM@{FSM}!set\_move\_dir@{set\_move\_dir}}
+\index{set\_move\_dir@{set\_move\_dir}!FSM@{FSM}}
+\doxysubsubsection{\texorpdfstring{set\_move\_dir()}{set\_move\_dir()}}
+{\footnotesize\ttfamily \label{class_f_s_m_a631edf096da5cf668316069062c3c50c} 
+void FSM\+::set\+\_\+move\+\_\+dir (\begin{DoxyParamCaption}\item[{int8\+\_\+t}]{dir}{}\end{DoxyParamCaption})}
+
+
+
+Sets the motor movement direction (used in manual mode). 
+
+Set the manual movement direction for S2 manual mode.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dir} & Direction of movement\+: -\/1 = left, 0 = stop, 1 = right.\\
+\hline
+{\em dir} & -\/1 for left, 1 for right, 0 for stop \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_f_s_m_a7b7ae1f9edd52633d0217f0c932fcdcb}\index{FSM@{FSM}!set\_state@{set\_state}}
+\index{set\_state@{set\_state}!FSM@{FSM}}
+\doxysubsubsection{\texorpdfstring{set\_state()}{set\_state()}}
+{\footnotesize\ttfamily \label{class_f_s_m_a7b7ae1f9edd52633d0217f0c932fcdcb} 
+void FSM\+::set\+\_\+state (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_f_s_m_afeca5e2ea1925467e9a009ce2ba4680f}{system\+\_\+state\+\_\+t}}}]{new\+\_\+state}{}\end{DoxyParamCaption})}
+
+
+
+Sets the \doxylink{class_f_s_m}{FSM} to a new state. 
+
+Sets the current state of the \doxylink{class_f_s_m}{FSM}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+state} & The state to transition to.\\
+\hline
+{\em new\+\_\+state} & The new state to transition to. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Core/\+Inc/\mbox{\hyperlink{fsm_8h}{fsm.\+h}}\item 
+Core/\+Src/\mbox{\hyperlink{fsm_8cpp}{fsm.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,454 @@
+\doxysection{Core/\+Src/main.cpp File Reference}
+\hypertarget{main_8cpp}{}\label{main_8cpp}\index{Core/Src/main.cpp@{Core/Src/main.cpp}}
+{\ttfamily \#include "{}main.\+h"{}}\newline
+{\ttfamily \#include "{}stm32f4xx\+\_\+hal.\+h"{}}\newline
+{\ttfamily \#include "{}fsm.\+h"{}}\newline
+{\ttfamily \#include "{}motor\+\_\+driver.\+h"{}}\newline
+{\ttfamily \#include "{}servo\+\_\+driver.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
+{\ttfamily \#include "{}../\+Drivers/\+BNO055/bno055.\+h"{}}\newline
+{\ttfamily \#include "{}../\+Drivers/\+BNO055/bno055\+\_\+hal.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8cpp_a70af21c671abfcc773614a9a4f63d920}{System\+Clock\+\_\+\+Config}} (void)
+\begin{DoxyCompactList}\small\item\em System Clock Configuration. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a7e2c84b9ad255c4986e70ec0b81e3f87}{poll\+\_\+\+LIDAR}} (void)
+\begin{DoxyCompactList}\small\item\em Polls the LIDAR sensor for distance and intensity data. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a256c4d6ad7224cdd7910d7a9ff125911}{poll\+\_\+\+IMU}} (void)
+\begin{DoxyCompactList}\small\item\em Polls the IMU sensor for its operation mode, power mode, I2C state, accelerometer data, and Euler angles. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\begin{DoxyCompactList}\small\item\em The application entry point. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___u_a_r_t___exported___functions___group2_gae494a9643f29b87d6d81e5264e60e57b}{HAL\+\_\+\+UART\+\_\+\+Rx\+Cplt\+Callback}} (\mbox{\hyperlink{group___u_a_r_t___exported___types_ga5de4a49eb132735325e706f406c69d6e}{UART\+\_\+\+Handle\+Type\+Def}} \texorpdfstring{$\ast$}{*}huart)
+\begin{DoxyCompactList}\small\item\em UART Receive Complete Callback. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a1730ffe1e560465665eb47d9264826f9}{Error\+\_\+\+Handler}} (void)
+\begin{DoxyCompactList}\small\item\em This function is executed in case of error occurrence. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_i2_c___handle_type_def}{I2\+C\+\_\+\+Handle\+Type\+Def}} \mbox{\hyperlink{main_8cpp_ac379bcc152d860f08b1279fd3e232295}{hi2c2}}
+\begin{DoxyCompactList}\small\item\em I2\+C2 Handle Variable. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_i2_c___handle_type_def}{I2\+C\+\_\+\+Handle\+Type\+Def}} \mbox{\hyperlink{main_8cpp_a5ccf4a01a8d7f08d3190181f843f7515}{hi2c3}}
+\begin{DoxyCompactList}\small\item\em I2\+C3 Handle Variable. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}} \mbox{\hyperlink{main_8cpp_a25fc663547539bc49fecc0011bd76ab5}{htim1}}
+\begin{DoxyCompactList}\small\item\em TIM1 Handle Variable. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}} \mbox{\hyperlink{main_8cpp_a2c80fd5510e2990a59a5c90d745c716c}{htim2}}
+\begin{DoxyCompactList}\small\item\em TIM2 Handle Variable. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}} \mbox{\hyperlink{main_8cpp_aac3d2c59ee0e3bbae1b99529a154eb62}{htim3}}
+\begin{DoxyCompactList}\small\item\em TIM3 Handle Variable. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}} \mbox{\hyperlink{main_8cpp_a85788cec5a97ee377e4ee2e74f026484}{htim4}}
+\begin{DoxyCompactList}\small\item\em TIM4 Handle Variable. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}} \mbox{\hyperlink{main_8cpp_acefaeaaa3856ddddae7083b2d220fe4b}{htim5}}
+\begin{DoxyCompactList}\small\item\em TIM5 Handle Variable. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{group___u_a_r_t___exported___types_ga5de4a49eb132735325e706f406c69d6e}{UART\+\_\+\+Handle\+Type\+Def}} \mbox{\hyperlink{main_8cpp_a2cf715bef37f7e8ef385a30974a5f0d5}{huart1}}
+\begin{DoxyCompactList}\small\item\em UART1 Handle Variable. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{main_8cpp_a9e7a89e7bd60d6f715c2a2fad2f82690}{tx\+\_\+buf}} \mbox{[}64\mbox{]}
+\begin{DoxyCompactList}\small\item\em Transmit buffer for UART communication. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{main_8cpp_ad98b7db0ad412bdc77bf267ab2bced08}{rx\+\_\+buf}} \mbox{[}64\mbox{]}
+\begin{DoxyCompactList}\small\item\em Receive buffer for UART communication. \end{DoxyCompactList}\item 
+char \mbox{\hyperlink{main_8cpp_ac3b1ae9b220d05d02aabf603d6932207}{log\+\_\+buf}} \mbox{[}50\mbox{]} = \{0\}
+\begin{DoxyCompactList}\small\item\em Buffer for logging messages via UART. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structbno055__t}{bno055\+\_\+t}} \mbox{\hyperlink{main_8cpp_a9c4da34692771377c2fd134d46f6f411}{IMU}}
+\begin{DoxyCompactList}\small\item\em BNO055 IMU structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structbno055__accel__t}{bno055\+\_\+accel\+\_\+t}} \mbox{\hyperlink{main_8cpp_a09cb9a0c5c54e7a3d5e02028ffdf72fa}{accel\+\_\+data}}
+\begin{DoxyCompactList}\small\item\em Accelerometer data structure for BNO055. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structbno055__euler__t}{bno055\+\_\+euler\+\_\+t}} \mbox{\hyperlink{main_8cpp_a28777fc96151cd4bfe5ff51ed9f0aab6}{euler\+\_\+data}}
+\begin{DoxyCompactList}\small\item\em Euler angle data structure for BNO055. \end{DoxyCompactList}\item 
+volatile int16\+\_\+t \mbox{\hyperlink{main_8cpp_a049382970fbae2e500ec960a4b731e94}{heading}}
+\begin{DoxyCompactList}\small\item\em Volatile variable to store IMU heading. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{group___h_a_l__state__structure__definition_gaef355af8eab251ae2a19ee164ad81c37}{HAL\+\_\+\+I2\+C\+\_\+\+State\+Type\+Def}} \mbox{\hyperlink{main_8cpp_a9cddffea77f1ba60f55b6ff130bd4327}{state}}
+\begin{DoxyCompactList}\small\item\em Stores the current state of the I2C communication. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{main_8cpp_aec948fb30e99b1eda7e3d9ff741d417a}{op\+\_\+mode}}
+\begin{DoxyCompactList}\small\item\em Stores the operation mode of the BNO055. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{main_8cpp_a27584dafa872710515eedf4bafd998c6}{pow\+\_\+mode}}
+\begin{DoxyCompactList}\small\item\em Stores the power mode of the BNO055. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{main_8cpp_af4d25b55df5899ebb41fcfa7967f2aae}{sys\+\_\+stat}}
+\begin{DoxyCompactList}\small\item\em Stores the system status of the BNO055. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{main_8cpp_aa04bcb2384a88db354e678a31d6646a2}{distance\+\_\+data}} \mbox{[}2\mbox{]}
+\begin{DoxyCompactList}\small\item\em Raw distance data from LIDAR, comes in high and low byte. \end{DoxyCompactList}\item 
+volatile uint16\+\_\+t \mbox{\hyperlink{main_8cpp_ae021034a15c38ec3070fe51cd52b2719}{distance\+\_\+cm}}
+\begin{DoxyCompactList}\small\item\em Volatile variable to store distance in centimeters from LIDAR. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{main_8cpp_ac73bfdde61c9a9449ad193007a4d11cf}{intensity\+\_\+data}} \mbox{[}2\mbox{]}
+\begin{DoxyCompactList}\small\item\em Raw intensity data from LIDAR, comes in high and low byte. \end{DoxyCompactList}\item 
+volatile uint16\+\_\+t \mbox{\hyperlink{main_8cpp_a4d3d8bf9230cbc302d5d00587312141c}{intensity\+\_\+value}}
+\begin{DoxyCompactList}\small\item\em Volatile variable to store intensity value from LIDAR sensor. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{main_8cpp_ad337ae099e442edf675ba794442d975e}{flywheel}} = false
+\begin{DoxyCompactList}\small\item\em Flag to indicate if the flywheel is active. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{main_8cpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8cpp_a1730ffe1e560465665eb47d9264826f9}\index{main.cpp@{main.cpp}!Error\_Handler@{Error\_Handler}}
+\index{Error\_Handler@{Error\_Handler}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{Error\_Handler()}{Error\_Handler()}}
+{\footnotesize\ttfamily \label{main_8cpp_a1730ffe1e560465665eb47d9264826f9} 
+void Error\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+This function is executed in case of error occurrence. 
+
+General error handler. Called when a critical error occurs.
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}\index{main.cpp@{main.cpp}!main@{main}}
+\index{main@{main}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe} 
+int main (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+The application entry point. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em int} & \\
+\hline
+\end{DoxyRetVals}
+Starts PWM for the servo motor on TIM1 Channel 4.
+
+Starts encoder input for the base motor on TIM2.
+
+Starts PWM for Pololu motor 2 on TIM3 Channels 1 and 2.
+
+Starts encoder input for Pololu motor 2 on TIM4.
+
+Starts PWM for Pololu motor 1 on TIM5 Channels 3 and 4.
+
+Starts PWM for the flywheel motor on TIM1 Channel 2.
+
+Sets the initial compare value for the flywheel motor PWM.
+
+Sets the reset pin for BNO055 to low (active).
+
+Sets up the BNO055 IMU.
+
+Initializes the IMU.
+
+Starts UART receive in interrupt mode.
+
+Stores the last encoder count for motor 1 (unused).
+
+Stores the last encoder count for motor 2 (unused).
+
+Logs the initial motor position and goal via UART.
+
+Counter for main loop steps.
+
+Encoder value variable (unused).
+
+Resets the TIM4 encoder counter.
+
+Updates the position of Pololu motor 2 based on its PID controller.
+
+Runs the finite state machine.
+
+Increments the step counter.
+
+Polls the LIDAR sensor for data.
+
+Polls the IMU for data.
+
+Resets step counter after reaching 1000.\Hypertarget{main_8cpp_a256c4d6ad7224cdd7910d7a9ff125911}\index{main.cpp@{main.cpp}!poll\_IMU@{poll\_IMU}}
+\index{poll\_IMU@{poll\_IMU}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{poll\_IMU()}{poll\_IMU()}}
+{\footnotesize\ttfamily \label{main_8cpp_a256c4d6ad7224cdd7910d7a9ff125911} 
+void poll\+\_\+\+IMU (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Polls the IMU sensor for its operation mode, power mode, I2C state, accelerometer data, and Euler angles. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8cpp_a7e2c84b9ad255c4986e70ec0b81e3f87}\index{main.cpp@{main.cpp}!poll\_LIDAR@{poll\_LIDAR}}
+\index{poll\_LIDAR@{poll\_LIDAR}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{poll\_LIDAR()}{poll\_LIDAR()}}
+{\footnotesize\ttfamily \label{main_8cpp_a7e2c84b9ad255c4986e70ec0b81e3f87} 
+void poll\+\_\+\+LIDAR (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Polls the LIDAR sensor for distance and intensity data. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8cpp_a70af21c671abfcc773614a9a4f63d920}\index{main.cpp@{main.cpp}!SystemClock\_Config@{SystemClock\_Config}}
+\index{SystemClock\_Config@{SystemClock\_Config}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{SystemClock\_Config()}{SystemClock\_Config()}}
+{\footnotesize\ttfamily \label{main_8cpp_a70af21c671abfcc773614a9a4f63d920} 
+void System\+Clock\+\_\+\+Config (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+System Clock Configuration. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+Configure the main internal regulator output voltage
+
+Initializes the RCC Oscillators according to the specified parameters in the \doxylink{struct_r_c_c___osc_init_type_def}{RCC\+\_\+\+Osc\+Init\+Type\+Def} structure.
+
+Initializes the CPU, AHB and APB buses clocks
+
+\label{doc-var-members}
+\Hypertarget{main_8cpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{main_8cpp_a09cb9a0c5c54e7a3d5e02028ffdf72fa}\index{main.cpp@{main.cpp}!accel\_data@{accel\_data}}
+\index{accel\_data@{accel\_data}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{accel\_data}{accel\_data}}
+{\footnotesize\ttfamily \label{main_8cpp_a09cb9a0c5c54e7a3d5e02028ffdf72fa} 
+struct \mbox{\hyperlink{structbno055__accel__t}{bno055\+\_\+accel\+\_\+t}} accel\+\_\+data}
+
+
+
+Accelerometer data structure for BNO055. 
+
+\Hypertarget{main_8cpp_ae021034a15c38ec3070fe51cd52b2719}\index{main.cpp@{main.cpp}!distance\_cm@{distance\_cm}}
+\index{distance\_cm@{distance\_cm}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{distance\_cm}{distance\_cm}}
+{\footnotesize\ttfamily \label{main_8cpp_ae021034a15c38ec3070fe51cd52b2719} 
+volatile uint16\+\_\+t distance\+\_\+cm}
+
+
+
+Volatile variable to store distance in centimeters from LIDAR. 
+
+Distance reading from the TF-\/\+Luna LIDAR sensor (in centimeters). \Hypertarget{main_8cpp_aa04bcb2384a88db354e678a31d6646a2}\index{main.cpp@{main.cpp}!distance\_data@{distance\_data}}
+\index{distance\_data@{distance\_data}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{distance\_data}{distance\_data}}
+{\footnotesize\ttfamily \label{main_8cpp_aa04bcb2384a88db354e678a31d6646a2} 
+uint8\+\_\+t distance\+\_\+data\mbox{[}2\mbox{]}}
+
+
+
+Raw distance data from LIDAR, comes in high and low byte. 
+
+\Hypertarget{main_8cpp_a28777fc96151cd4bfe5ff51ed9f0aab6}\index{main.cpp@{main.cpp}!euler\_data@{euler\_data}}
+\index{euler\_data@{euler\_data}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{euler\_data}{euler\_data}}
+{\footnotesize\ttfamily \label{main_8cpp_a28777fc96151cd4bfe5ff51ed9f0aab6} 
+struct \mbox{\hyperlink{structbno055__euler__t}{bno055\+\_\+euler\+\_\+t}} euler\+\_\+data}
+
+
+
+Euler angle data structure for BNO055. 
+
+\Hypertarget{main_8cpp_ad337ae099e442edf675ba794442d975e}\index{main.cpp@{main.cpp}!flywheel@{flywheel}}
+\index{flywheel@{flywheel}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{flywheel}{flywheel}}
+{\footnotesize\ttfamily \label{main_8cpp_ad337ae099e442edf675ba794442d975e} 
+bool flywheel = false}
+
+
+
+Flag to indicate if the flywheel is active. 
+
+\Hypertarget{main_8cpp_a049382970fbae2e500ec960a4b731e94}\index{main.cpp@{main.cpp}!heading@{heading}}
+\index{heading@{heading}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{heading}{heading}}
+{\footnotesize\ttfamily \label{main_8cpp_a049382970fbae2e500ec960a4b731e94} 
+volatile int16\+\_\+t heading}
+
+
+
+Volatile variable to store IMU heading. 
+
+Heading angle from the BNO055 IMU sensor (in degrees). \Hypertarget{main_8cpp_ac379bcc152d860f08b1279fd3e232295}\index{main.cpp@{main.cpp}!hi2c2@{hi2c2}}
+\index{hi2c2@{hi2c2}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{hi2c2}{hi2c2}}
+{\footnotesize\ttfamily \label{main_8cpp_ac379bcc152d860f08b1279fd3e232295} 
+\mbox{\hyperlink{struct_i2_c___handle_type_def}{I2\+C\+\_\+\+Handle\+Type\+Def}} hi2c2}
+
+
+
+I2\+C2 Handle Variable. 
+
+\Hypertarget{main_8cpp_a5ccf4a01a8d7f08d3190181f843f7515}\index{main.cpp@{main.cpp}!hi2c3@{hi2c3}}
+\index{hi2c3@{hi2c3}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{hi2c3}{hi2c3}}
+{\footnotesize\ttfamily \label{main_8cpp_a5ccf4a01a8d7f08d3190181f843f7515} 
+\mbox{\hyperlink{struct_i2_c___handle_type_def}{I2\+C\+\_\+\+Handle\+Type\+Def}} hi2c3}
+
+
+
+I2\+C3 Handle Variable. 
+
+\Hypertarget{main_8cpp_a25fc663547539bc49fecc0011bd76ab5}\index{main.cpp@{main.cpp}!htim1@{htim1}}
+\index{htim1@{htim1}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{htim1}{htim1}}
+{\footnotesize\ttfamily \label{main_8cpp_a25fc663547539bc49fecc0011bd76ab5} 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}} htim1}
+
+
+
+TIM1 Handle Variable. 
+
+\Hypertarget{main_8cpp_a2c80fd5510e2990a59a5c90d745c716c}\index{main.cpp@{main.cpp}!htim2@{htim2}}
+\index{htim2@{htim2}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{htim2}{htim2}}
+{\footnotesize\ttfamily \label{main_8cpp_a2c80fd5510e2990a59a5c90d745c716c} 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}} htim2}
+
+
+
+TIM2 Handle Variable. 
+
+\Hypertarget{main_8cpp_aac3d2c59ee0e3bbae1b99529a154eb62}\index{main.cpp@{main.cpp}!htim3@{htim3}}
+\index{htim3@{htim3}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{htim3}{htim3}}
+{\footnotesize\ttfamily \label{main_8cpp_aac3d2c59ee0e3bbae1b99529a154eb62} 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}} htim3}
+
+
+
+TIM3 Handle Variable. 
+
+\Hypertarget{main_8cpp_a85788cec5a97ee377e4ee2e74f026484}\index{main.cpp@{main.cpp}!htim4@{htim4}}
+\index{htim4@{htim4}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{htim4}{htim4}}
+{\footnotesize\ttfamily \label{main_8cpp_a85788cec5a97ee377e4ee2e74f026484} 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}} htim4}
+
+
+
+TIM4 Handle Variable. 
+
+\Hypertarget{main_8cpp_acefaeaaa3856ddddae7083b2d220fe4b}\index{main.cpp@{main.cpp}!htim5@{htim5}}
+\index{htim5@{htim5}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{htim5}{htim5}}
+{\footnotesize\ttfamily \label{main_8cpp_acefaeaaa3856ddddae7083b2d220fe4b} 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}} htim5}
+
+
+
+TIM5 Handle Variable. 
+
+\Hypertarget{main_8cpp_a2cf715bef37f7e8ef385a30974a5f0d5}\index{main.cpp@{main.cpp}!huart1@{huart1}}
+\index{huart1@{huart1}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{huart1}{huart1}}
+{\footnotesize\ttfamily \label{main_8cpp_a2cf715bef37f7e8ef385a30974a5f0d5} 
+\mbox{\hyperlink{group___u_a_r_t___exported___types_ga5de4a49eb132735325e706f406c69d6e}{UART\+\_\+\+Handle\+Type\+Def}} huart1}
+
+
+
+UART1 Handle Variable. 
+
+\Hypertarget{main_8cpp_a9c4da34692771377c2fd134d46f6f411}\index{main.cpp@{main.cpp}!IMU@{IMU}}
+\index{IMU@{IMU}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{IMU}{IMU}}
+{\footnotesize\ttfamily \label{main_8cpp_a9c4da34692771377c2fd134d46f6f411} 
+struct \mbox{\hyperlink{structbno055__t}{bno055\+\_\+t}} IMU}
+
+
+
+BNO055 IMU structure. 
+
+\Hypertarget{main_8cpp_ac73bfdde61c9a9449ad193007a4d11cf}\index{main.cpp@{main.cpp}!intensity\_data@{intensity\_data}}
+\index{intensity\_data@{intensity\_data}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{intensity\_data}{intensity\_data}}
+{\footnotesize\ttfamily \label{main_8cpp_ac73bfdde61c9a9449ad193007a4d11cf} 
+uint8\+\_\+t intensity\+\_\+data\mbox{[}2\mbox{]}}
+
+
+
+Raw intensity data from LIDAR, comes in high and low byte. 
+
+\Hypertarget{main_8cpp_a4d3d8bf9230cbc302d5d00587312141c}\index{main.cpp@{main.cpp}!intensity\_value@{intensity\_value}}
+\index{intensity\_value@{intensity\_value}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{intensity\_value}{intensity\_value}}
+{\footnotesize\ttfamily \label{main_8cpp_a4d3d8bf9230cbc302d5d00587312141c} 
+volatile uint16\+\_\+t intensity\+\_\+value}
+
+
+
+Volatile variable to store intensity value from LIDAR sensor. 
+
+Intensity or reflectivity value from the TF-\/\+Luna LIDAR. \Hypertarget{main_8cpp_ac3b1ae9b220d05d02aabf603d6932207}\index{main.cpp@{main.cpp}!log\_buf@{log\_buf}}
+\index{log\_buf@{log\_buf}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{log\_buf}{log\_buf}}
+{\footnotesize\ttfamily \label{main_8cpp_ac3b1ae9b220d05d02aabf603d6932207} 
+char log\+\_\+buf\mbox{[}50\mbox{]} = \{0\}}
+
+
+
+Buffer for logging messages via UART. 
+
+\Hypertarget{main_8cpp_aec948fb30e99b1eda7e3d9ff741d417a}\index{main.cpp@{main.cpp}!op\_mode@{op\_mode}}
+\index{op\_mode@{op\_mode}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{op\_mode}{op\_mode}}
+{\footnotesize\ttfamily \label{main_8cpp_aec948fb30e99b1eda7e3d9ff741d417a} 
+uint8\+\_\+t op\+\_\+mode}
+
+
+
+Stores the operation mode of the BNO055. 
+
+\Hypertarget{main_8cpp_a27584dafa872710515eedf4bafd998c6}\index{main.cpp@{main.cpp}!pow\_mode@{pow\_mode}}
+\index{pow\_mode@{pow\_mode}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{pow\_mode}{pow\_mode}}
+{\footnotesize\ttfamily \label{main_8cpp_a27584dafa872710515eedf4bafd998c6} 
+uint8\+\_\+t pow\+\_\+mode}
+
+
+
+Stores the power mode of the BNO055. 
+
+\Hypertarget{main_8cpp_ad98b7db0ad412bdc77bf267ab2bced08}\index{main.cpp@{main.cpp}!rx\_buf@{rx\_buf}}
+\index{rx\_buf@{rx\_buf}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{rx\_buf}{rx\_buf}}
+{\footnotesize\ttfamily \label{main_8cpp_ad98b7db0ad412bdc77bf267ab2bced08} 
+uint8\+\_\+t rx\+\_\+buf\mbox{[}64\mbox{]}}
+
+
+
+Receive buffer for UART communication. 
+
+\Hypertarget{main_8cpp_a9cddffea77f1ba60f55b6ff130bd4327}\index{main.cpp@{main.cpp}!state@{state}}
+\index{state@{state}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{state}{state}}
+{\footnotesize\ttfamily \label{main_8cpp_a9cddffea77f1ba60f55b6ff130bd4327} 
+\mbox{\hyperlink{group___h_a_l__state__structure__definition_gaef355af8eab251ae2a19ee164ad81c37}{HAL\+\_\+\+I2\+C\+\_\+\+State\+Type\+Def}} state}
+
+
+
+Stores the current state of the I2C communication. 
+
+\Hypertarget{main_8cpp_af4d25b55df5899ebb41fcfa7967f2aae}\index{main.cpp@{main.cpp}!sys\_stat@{sys\_stat}}
+\index{sys\_stat@{sys\_stat}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{sys\_stat}{sys\_stat}}
+{\footnotesize\ttfamily \label{main_8cpp_af4d25b55df5899ebb41fcfa7967f2aae} 
+uint8\+\_\+t sys\+\_\+stat}
+
+
+
+Stores the system status of the BNO055. 
+
+\Hypertarget{main_8cpp_a9e7a89e7bd60d6f715c2a2fad2f82690}\index{main.cpp@{main.cpp}!tx\_buf@{tx\_buf}}
+\index{tx\_buf@{tx\_buf}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{tx\_buf}{tx\_buf}}
+{\footnotesize\ttfamily \label{main_8cpp_a9e7a89e7bd60d6f715c2a2fad2f82690} 
+uint8\+\_\+t tx\+\_\+buf\mbox{[}64\mbox{]}}
+
+
+
+Transmit buffer for UART communication. 
+

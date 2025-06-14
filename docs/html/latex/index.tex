@@ -1,0 +1,133 @@
+\chapter{Ping Pong Robot Control System Documentation }
+\hypertarget{index}{}\label{index}\index{Ping Pong Robot Control System Documentation@{Ping Pong Robot Control System Documentation}}
+\hypertarget{index_intro_sec}{}\doxysection{\texorpdfstring{Introduction}{Introduction}}\label{index_intro_sec}
+This documentation provides a comprehensive overview of the firmware of the Automated Ping Pong Launcher Robot which is powered by an STM32\+F4111 microcontroller and a custom PCB. The robot is designed for both manual and automatic operation, utilizing various motors and sensors to achieve ball launching and positioning. 
+
+The robot features\+:
+\begin{DoxyItemize}
+\item Two 12V DC-\/gearmotors with built in encoders for accurate positioning of the robot base.
+\item Two flywheel motors for launching ping pong balls.
+\item TF Luna LIDAR sensor for distance measurement and object detection.
+\item A BNO055 Inertial Measurement Unit (IMU) for orientation and heading information.
+\end{DoxyItemize}\hypertarget{index_features_sec}{}\doxysection{\texorpdfstring{Key Features and Control Modes}{Key Features and Control Modes}}\label{index_features_sec}
+The robot operates under four distinct control modes, each designed for different operational scenarios\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{S1\+: Idle Mode ({\ttfamily \doxylink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974aba7b69d75125811dc711b6bdf3476410}{FSM\+::\+S1\+\_\+\+IDLE}})}} The initial state where the robot is awaiting commands. From this mode, you can transition to other operational modes.
+\end{DoxyEnumerate}
+\begin{DoxyItemize}
+\item MODEX \+: Changes to different Mode / State
+\end{DoxyItemize}
+\begin{DoxyEnumerate}
+\item {\bfseries{S2\+: Manual Step Input Mode ({\ttfamily \doxylink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974adcc21330960404bacf07312628aea2ce}{FSM\+::\+S2\+\_\+\+MANUAL\+\_\+\+STEP\+\_\+\+INPUT}})}} Allows for granular, step-\/by-\/step control of the robot\textquotesingle{}s movement using simple character inputs via UART.
+\end{DoxyEnumerate}
+\begin{DoxyItemize}
+\item \textquotesingle{}A\textquotesingle{}\+: Move Left
+\item \textquotesingle{}D\textquotesingle{}\+: Move Right
+\item \textquotesingle{}S\textquotesingle{}\+: Stop Movement
+\item \textquotesingle{}Q\textquotesingle{}\+: Launch a ball
+\item \textquotesingle{}E\textquotesingle{}\+: Reset launch mechanism
+\item \textquotesingle{}R\textquotesingle{}\+: Toggle flywheel motors
+\item \textquotesingle{}H\textquotesingle{}\+: Set current IMU heading as home
+\item \textquotesingle{}T\textquotesingle{}\+: Exit to Idle Mode
+\end{DoxyItemize}
+\begin{DoxyEnumerate}
+\item {\bfseries{S3\+: Manual Target Mode ({\ttfamily \doxylink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974aea705ab58cd28ee9eb9bfe90de6cb552}{FSM\+::\+S3\+\_\+\+MANUAL\+\_\+\+TARGET}})}} Enables setting specific position targets for the robot\textquotesingle{}s base and controlling individual motor/servo duties.
+\end{DoxyEnumerate}
+\begin{DoxyItemize}
+\item {\ttfamily FXXXX}\+: Set target position for Pololu motor 1 (e.\+g., F1500 for position 1500).
+\item {\ttfamily M1\+FF}\+: Set duty cycle for Motor 1 (flywheel). {\ttfamily FF} is a hex value for duty (-\/100 to 100).
+\item {\ttfamily M2\+FF}\+: Set duty cycle for Motor 2 (base). {\ttfamily FF} is a hex value for duty (-\/100 to 100).
+\item {\ttfamily S1\+FF}\+: Set duty cycle for Servo 1 (launch angle). {\ttfamily FF} is a hex value for duty (-\/100 to 100).
+\item {\ttfamily Q}\+: Launch a ball
+\item {\ttfamily E}\+: Reset launch mechanism
+\item {\ttfamily R}\+: Turn Flywheels On
+\item {\ttfamily F}\+: Turn Flywheels Off
+\item {\ttfamily T}\+: Exit to Idle Mode
+\end{DoxyItemize}
+\begin{DoxyEnumerate}
+\item {\bfseries{S4\+: Automatic Mode ({\ttfamily \doxylink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974a9ecd4fc0509f68813f7fa45fe9ab0c3f}{FSM\+::\+S4\+\_\+\+AUTOMATIC}})}} The robot autonomously uses sensor data (primarily LIDAR) to detect and target ping pong balls for launching. The {\ttfamily main.\+c} currently indicates that pressing \textquotesingle{}Q\textquotesingle{} is needed to start in this mode.
+\end{DoxyEnumerate}\hypertarget{index_components_sec}{}\doxysection{\texorpdfstring{Hardware Components}{Hardware Components}}\label{index_components_sec}
+
+\begin{DoxyItemize}
+\item {\bfseries{STM32\+F411 Microcontroller\+:}} The main processing unit.
+\item {\bfseries{Geared Motors (Pololu Motors)\+:}} Used for horizontal positioning of the robot. Controlled via PWM and encoders for feedback.
+\item {\bfseries{Flywheel Motors\+:}} Responsible for imparting velocity to the ping pong ball.
+\item {\bfseries{Servo Motor\+:}} Controls the launch angle or a similar mechanism.
+\item {\bfseries{LIDAR Sensor (TFLuna)\+:}} Connected via I2\+C2, provides distance and intensity data for target detection.
+\item {\bfseries{IMU Sensor (BNO055)\+:}} Connected via I2\+C3, provides orientation data (heading, pitch, roll).
+\item {\bfseries{Launcher\+:}} 3D Printed parts
+\end{DoxyItemize}
+
+\hypertarget{index_Custom_PCB_sec}{}\doxysection{\texorpdfstring{Custom PCB}{Custom PCB}}\label{index_Custom_PCB_sec}
+
+
+Our Custom PCB features\+:
+\begin{DoxyItemize}
+\item STM32\+F411\+CEU6 microcontroller
+\item 4 x {\bfseries{DRV8251}} Motor Drivers
+\item {\bfseries{12V}}, {\bfseries{5V}}, and {\bfseries{3.\+3V}} rails using a LM22678\+TJ-\/\+ADJ switching regulator and a LMS1587\+ISX-\/\+ADJ-\/\+NOPB linear dropout regulator.
+\item The PCB is powered by a 12V 15A power adapter connected via barrel jack.
+\item 16 MHz crystal
+\item UART and pins to connect to the ST-\/\+Link.
+\end{DoxyItemize}\hypertarget{index_software_modules_sec}{}\doxysection{\texorpdfstring{Software Modules}{Software Modules}}\label{index_software_modules_sec}
+The firmware is structured into several modules\+:
+\begin{DoxyItemize}
+\item {\bfseries{main.\+c\+:}} The entry point of the program, handles peripheral initialization, main loop execution, and UART command parsing.
+\item {\bfseries{\doxylink{fsm_8h}{fsm.\+h}/fsm{\bfseries{}}.cpp\+:}} Implements the Finite State Machine that manages the robot\textquotesingle{}s control modes.
+\item {\bfseries{\doxylink{motor__driver_8h}{motor\+\_\+driver.\+h}/motor\+\_\+driver{\bfseries{}}.cpp\+:}} Provides abstractions for controlling the gearmotors and flywheel motors, including PID control for positioning.
+\item {\bfseries{\doxylink{servo__driver_8h}{servo\+\_\+driver.\+h}/servo\+\_\+driver{\bfseries{}}.cpp\+:}} Provides functions for controlling the servo motor.
+\item {\bfseries{\doxylink{bno055_8h}{bno055.\+h}/bno055\+\_\+hal{\bfseries{}}.h\+:}} Drivers for interfacing with the BNO055 IMU sensor.
+\end{DoxyItemize}\hypertarget{index_Performance_sec}{}\doxysection{\texorpdfstring{Performance}{Performance}}\label{index_Performance_sec}
+The overall performance of the robot aligned with our expectations, especially considering the time constraints. While the system was able to reliably launch ping pong balls, achieving precise targeting remained a challenge. This inconsistency can be attributed to limitations in the launching mechanism and the absence of a vertical gearmotor. Due to hardware issues encountered during PCB debugging and rework, two of our motor drivers became non-\/functional. As a result, we prioritized horizontal positioning and flywheel control, deeming the vertical gearmotor the least critical. With access to a third functional motor driver, more accurate targeting through vertical adjustment would have been feasible.\hypertarget{index_features_objectives_sec}{}\doxysection{\texorpdfstring{Features and Objectives}{Features and Objectives}}\label{index_features_objectives_sec}
+At the beginning of the project, we identified several key features and objectives for the robot\textquotesingle{}s functionality\+:
+\begin{DoxyItemize}
+\item Utilize the {\bfseries{LIDAR}} sensor to detect the presence of a plastic cup.
+\item Use the {\bfseries{IMU}} for a homing mechanism.
+\item Enable manual {\bfseries{positioning}} of the robot using keyboard inputs (e.\+g., \textquotesingle{}A\textquotesingle{} and \textquotesingle{}D\textquotesingle{} keys).
+\item Implement a mechanism for reliably {\bfseries{launching}} a ping pong ball toward the target.
+\end{DoxyItemize}\hypertarget{index_Challenges_sec}{}\doxysection{\texorpdfstring{Challenges and Workarounds}{Challenges and Workarounds}}\label{index_Challenges_sec}
+One significant challenge we faced was that we were initially unable to drive the motors using the pinouts. We spent several days debugging the motor drivers because we were unsure of why our motors did not spin. We initially thought that the issue was that our motor drivers were broken because the schematic was correct according to the DRV8251 datasheet. We then were able to spin the motors by applying a PWM signal to one of the leads of the motor and grounding the other, but we were unable to spin the motor if both OUT1 and OUT2 pins were connected to the motor driver. We then realized that the issue was related to the current draw of the motor because the motor driver disabled if the motor was connected to both OUT1 / OUT2 pins. We then discovered that the shunt resistor was 200 Ohms instead of 0.\+2 Ohms, which effectively resulted in a trip current threshold of \texorpdfstring{$\sim$}{\string~}0.001 A. We then removed the resistors and soldered the pads together with lead, which resulted in a resistance of \texorpdfstring{$\sim$}{\string~}0.3 Ohms and an acceptable current threshold.\hypertarget{index_Mistakes_and_Future_Improvements_sec}{}\doxysection{\texorpdfstring{Mistakes and Future Improvements}{Mistakes and Future Improvements}}\label{index_Mistakes_and_Future_Improvements_sec}
+
+\begin{DoxyItemize}
+\item Check the correct values for components on the order form.
+\item Use Polygons for output pins on a motor driver in addition to the Vm pin.
+\item Make PCB larger to make reworking easier.
+\item Try not to place vias close to other pins/traces.
+\item Add all possible pins on the microcontroller for flexibility.
+\item Use connectors instead of dupont wires.
+\end{DoxyItemize}\hypertarget{index_setup_sec}{}\doxysection{\texorpdfstring{Setup and Build}{Setup and Build}}\label{index_setup_sec}
+For detailed instructions on setting up the development environment, flashing the firmware, and building the project, please refer to the project\textquotesingle{}s README.\+md or specific build documentation.\hypertarget{index_file_structure}{}\doxysubsection{\texorpdfstring{Project File Structure}{Project File Structure}}\label{index_file_structure}
+\begin{DoxyVerb}* .
+* ├── Core
+* │   ├── Inc
+* │   │   ├── main.h
+* │   │   └── stm32f4xx_hal_conf.h
+* │   └── Src
+* │       ├── main.c
+* │       ├── stm32f4xx_hal_msp.c
+* │       └── stm32f4xx_it.c
+* ├── Drivers
+* │   ├── BNO055
+* │   │   ├── bno055.h
+* │   │   └── bno055_hal.h
+* │   └── ... (Other peripheral drivers)
+* ├── custom_drivers
+* │   ├── fsm.h
+* │   ├── fsm.cpp
+* │   ├── motor_driver.h
+* │   ├── motor_driver.cpp
+* │   ├── servo_driver.h
+* │   └── servo_driver.cpp
+* └── Doxyfile (Your Doxygen configuration file)
+* \end{DoxyVerb}
+\hypertarget{index_quick_links}{}\doxysection{\texorpdfstring{Quick Links}{Quick Links}}\label{index_quick_links}
+
+\begin{DoxyItemize}
+\item \doxylink{class_f_s_m}{Finite State Machine (FSM) Documentation}
+\item Motor Driver Documentation
+\item Servo Driver Documentation
+\item BNO055 IMU Driver Documentation
+\item LIDAR Sensor Interface 
+\end{DoxyItemize}

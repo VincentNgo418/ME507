@@ -1,0 +1,49 @@
+\doxysection{fsm.\+h}
+\hypertarget{fsm_8h_source}{}\label{fsm_8h_source}\index{Core/Inc/fsm.h@{Core/Inc/fsm.h}}
+\mbox{\hyperlink{fsm_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ INC\_FSM\_H\_}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ INC\_FSM\_H\_}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_f_s_m_a2fccf1c016c43e4fa4ee512311bf9d7d}{FSM}}\ \{}
+\DoxyCodeLine{00025\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974}{state}}\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974ac47f75675358b8f90c5feeb4b04e6066}{S0\_INIT}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974aba7b69d75125811dc711b6bdf3476410}{S1\_IDLE}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974adcc21330960404bacf07312628aea2ce}{S2\_MANUAL\_STEP\_INPUT}},\ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974aea705ab58cd28ee9eb9bfe90de6cb552}{S3\_MANUAL\_TARGET}},\ \ \ \ \ \ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974a9ecd4fc0509f68813f7fa45fe9ab0c3f}{S4\_AUTOMATIC}}\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \}\ \mbox{\hyperlink{class_f_s_m_afeca5e2ea1925467e9a009ce2ba4680f}{system\_state\_t}};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{class_f_s_m_a2fccf1c016c43e4fa4ee512311bf9d7d}{FSM}}();}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_f_s_m_a496aa465a2d90d034b16fe4ba1282d02}{run}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_f_s_m_a7b7ae1f9edd52633d0217f0c932fcdcb}{set\_state}}(\mbox{\hyperlink{class_f_s_m_afeca5e2ea1925467e9a009ce2ba4680f}{system\_state\_t}}\ new\_state);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_f_s_m_a631edf096da5cf668316069062c3c50c}{set\_move\_dir}}(int8\_t\ dir);}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00064\ \ \ \ \ int8\_t\ \mbox{\hyperlink{class_f_s_m_a0ee8d05441372eced786a48e2de0ea36}{get\_move\_dir}}();}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00070\ \ \ \ \ \mbox{\hyperlink{class_f_s_m_afeca5e2ea1925467e9a009ce2ba4680f}{system\_state\_t}}\ \mbox{\hyperlink{class_f_s_m_a6399110476656ef23f3260fd77ea4187}{get\_state}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_f_s_m_aad054d54aec3d077a5a7d363b5642aa7}{set\_home\_heading}}(int16\_t\ home\_heading);}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00079\ \ \ \ \ \mbox{\hyperlink{class_f_s_m_afeca5e2ea1925467e9a009ce2ba4680f}{system\_state\_t}}\ \mbox{\hyperlink{class_f_s_m_ad72695bdf5aedc0a08f8a8b8adf8c974}{state}};\ \ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ int8\_t\ move\_dir;\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ int16\_t\ home\_heading\ =\ 0;\ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{int}\ s4flag\ =\ 1;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00083\ \ \ \ \ uint32\_t\ dynamic\_duty\ =\ 0;\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ uint32\_t\ prevTick\ =\ 0;\ \ \ \ \ }
+\DoxyCodeLine{00086\ \ \ \ \ int32\_t\ error\ =\ 0;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00087\ \};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ INC\_FSM\_H\_\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

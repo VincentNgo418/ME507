@@ -1,0 +1,401 @@
+\doxysection{Core/\+Inc/motor\+\_\+driver.h File Reference}
+\hypertarget{motor__driver_8h}{}\label{motor__driver_8h}\index{Core/Inc/motor\_driver.h@{Core/Inc/motor\_driver.h}}
+
+
+Header file for motor driver control on STM32 using PWM and encoder feedback.  
+
+
+{\ttfamily \#include "{}stm32f4xx\+\_\+hal.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmotor}{motor}}
+\begin{DoxyCompactList}\small\item\em Struct for single-\/channel PWM motor. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structmotor__d}{motor\+\_\+d}}
+\begin{DoxyCompactList}\small\item\em Struct for dual-\/channel motor with encoder. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcontroller}{controller}}
+\begin{DoxyCompactList}\small\item\em Proportional-\/\+Integral controller used for position control. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structmotor}{motor}} \mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Struct for single-\/channel PWM motor. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structmotor__d}{motor\+\_\+d}} \mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}}
+\begin{DoxyCompactList}\small\item\em Struct for dual-\/channel motor with encoder. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structcontroller}{controller}} \mbox{\hyperlink{motor__driver_8h_a2d5dfc38f3db03091e82200d5e32a68d}{PI\+\_\+\+Controller}}
+\begin{DoxyCompactList}\small\item\em Proportional-\/\+Integral controller used for position control. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{motor__driver_8h_a9b0c0dbf86dfe0644a51aeb8cf0246df}{set\+\_\+duty}} (\mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\+\_\+t}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structmotor}{motor}}, uint32\+\_\+t pulse\+\_\+1)
+\begin{DoxyCompactList}\small\item\em Set PWM duty cycle on a single motor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{motor__driver_8h_a427a602e38665564a30ec49f36b92ae7}{motor\+\_\+brake}} (\mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\+\_\+t}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structmotor}{motor}})
+\begin{DoxyCompactList}\small\item\em Brake a single-\/channel motor by grounding both terminals. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{motor__driver_8h_a9dcfb75d43797a49452f4d0c5be28c8f}{motor\+\_\+disable}} (\mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\+\_\+t}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structmotor}{motor}})
+\begin{DoxyCompactList}\small\item\em Disable a motor by setting outputs low or floating. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{motor__driver_8h_a4a656fa4d7dcbdd63d4de20e69473707}{set\+\_\+duty\+\_\+dual}} (\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structmotor__d}{motor\+\_\+d}}, uint32\+\_\+t pulse\+\_\+1, uint32\+\_\+t pulse\+\_\+2)
+\begin{DoxyCompactList}\small\item\em Set PWM duty cycle on a dual-\/channel motor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{motor__driver_8h_a29cb17ab1f5e015b9bcf515adceb9089}{motor\+\_\+brake\+\_\+dual}} (\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structmotor__d}{motor\+\_\+d}})
+\begin{DoxyCompactList}\small\item\em Brake a dual-\/channel motor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{motor__driver_8h_a251d05dff9c7c1b2153c45d75164469b}{motor\+\_\+d\+\_\+update\+\_\+pos}} (\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structmotor__d}{motor\+\_\+d}}, \mbox{\hyperlink{motor__driver_8h_a2d5dfc38f3db03091e82200d5e32a68d}{PI\+\_\+\+Controller}} \texorpdfstring{$\ast$}{*}ctrl)
+\begin{DoxyCompactList}\small\item\em Update position of motor using PI control. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{motor__driver_8h_a4f3c276b4f350af92b418f3b132481bf}{motor\+\_\+d\+\_\+set\+\_\+pos}} (\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structmotor__d}{motor\+\_\+d}}, \mbox{\hyperlink{motor__driver_8h_a2d5dfc38f3db03091e82200d5e32a68d}{PI\+\_\+\+Controller}} \texorpdfstring{$\ast$}{*}ctrl, int32\+\_\+t pos)
+\begin{DoxyCompactList}\small\item\em Command motor to move to a specific position. \end{DoxyCompactList}\item 
+uint32\+\_\+t \mbox{\hyperlink{motor__driver_8h_a61b015094d64ce29503b381f394b3a2d}{motor\+\_\+d\+\_\+get\+\_\+pos}} (\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structmotor__d}{motor\+\_\+d}})
+\begin{DoxyCompactList}\small\item\em Get current encoder position. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{motor__driver_8h_a95b91c434749ecd9050d622179549b84}{step\+\_\+motor\+\_\+backward}} (void)
+\begin{DoxyCompactList}\small\item\em Rotate motor a single step backward (left). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{motor__driver_8h_a6bd108af9faccbba80682babf90932d4}{step\+\_\+motor\+\_\+forward}} (void)
+\begin{DoxyCompactList}\small\item\em Rotate motor a single step forward (right). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{motor__driver_8h_a6b13b09a5c4ef671fcfeefef0e75e5a4}{launch}} (void)
+\begin{DoxyCompactList}\small\item\em Trigger the launch mechanism (flywheel or servo). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\+\_\+t}} \mbox{\hyperlink{motor__driver_8h_a0fac0915eb75dd9c6a815347cb20c053}{motor\+\_\+1}}
+\begin{DoxyCompactList}\small\item\em Global motor instance (single-\/channel) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\+\_\+t}} \mbox{\hyperlink{motor__driver_8h_a6e68315fd2747522a29dd4110a23092c}{motor\+\_\+2}}
+\begin{DoxyCompactList}\small\item\em Global motor instance (single-\/channel) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}} \mbox{\hyperlink{motor__driver_8h_af01b346804376b904fab1d18b5d9877f}{Pololu\+\_\+1}}
+\begin{DoxyCompactList}\small\item\em Dual-\/channel motor with encoder (typically Pololu motor) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}} \mbox{\hyperlink{motor__driver_8h_a4dc541176b94de15561137e81a300240}{Pololu\+\_\+2}}
+\begin{DoxyCompactList}\small\item\em Dual-\/channel motor with encoder (typically Pololu motor) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{motor__driver_8h_a2d5dfc38f3db03091e82200d5e32a68d}{PI\+\_\+\+Controller}} \mbox{\hyperlink{motor__driver_8h_a8f1ed4ae12eb4d5eb27912212ee05db4}{pos\+\_\+controller\+\_\+1}}
+\begin{DoxyCompactList}\small\item\em Position controller instance for closed-\/loop control. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header file for motor driver control on STM32 using PWM and encoder feedback. 
+
+This module provides an abstraction layer for controlling single-\/channel and dual-\/channel motors, implementing both open-\/loop PWM and closed-\/loop PID-\/based positioning with encoders. 
+
+\label{doc-typedef-members}
+\Hypertarget{motor__driver_8h_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}\index{motor\_driver.h@{motor\_driver.h}!motor\_dual@{motor\_dual}}
+\index{motor\_dual@{motor\_dual}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{motor\_dual}{motor\_dual}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25} 
+typedef struct \mbox{\hyperlink{structmotor__d}{motor\+\_\+d}} \mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}}}
+
+
+
+Struct for dual-\/channel motor with encoder. 
+
+\Hypertarget{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}\index{motor\_driver.h@{motor\_driver.h}!motor\_t@{motor\_t}}
+\index{motor\_t@{motor\_t}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{motor\_t}{motor\_t}}
+{\footnotesize\ttfamily \label{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7} 
+typedef struct \mbox{\hyperlink{structmotor}{motor}} \mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\+\_\+t}}}
+
+
+
+Struct for single-\/channel PWM motor. 
+
+\Hypertarget{motor__driver_8h_a2d5dfc38f3db03091e82200d5e32a68d}\index{motor\_driver.h@{motor\_driver.h}!PI\_Controller@{PI\_Controller}}
+\index{PI\_Controller@{PI\_Controller}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{PI\_Controller}{PI\_Controller}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a2d5dfc38f3db03091e82200d5e32a68d} 
+typedef struct \mbox{\hyperlink{structcontroller}{controller}} \mbox{\hyperlink{motor__driver_8h_a2d5dfc38f3db03091e82200d5e32a68d}{PI\+\_\+\+Controller}}}
+
+
+
+Proportional-\/\+Integral controller used for position control. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{motor__driver_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{motor__driver_8h_a6b13b09a5c4ef671fcfeefef0e75e5a4}\index{motor\_driver.h@{motor\_driver.h}!launch@{launch}}
+\index{launch@{launch}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{launch()}{launch()}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a6b13b09a5c4ef671fcfeefef0e75e5a4} 
+void launch (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Trigger the launch mechanism (flywheel or servo). 
+
+Trigger the launch mechanism (flywheel or servo). \Hypertarget{motor__driver_8h_a427a602e38665564a30ec49f36b92ae7}\index{motor\_driver.h@{motor\_driver.h}!motor\_brake@{motor\_brake}}
+\index{motor\_brake@{motor\_brake}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{motor\_brake()}{motor\_brake()}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a427a602e38665564a30ec49f36b92ae7} 
+void motor\+\_\+brake (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{motor}{}\end{DoxyParamCaption})}
+
+
+
+Brake a single-\/channel motor by grounding both terminals. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em motor} & Pointer to motor structure.\\
+\hline
+\end{DoxyParams}
+Brake a single-\/channel motor by grounding both terminals.
+
+
+\begin{DoxyParams}{Parameters}
+{\em motor} & Pointer to motor. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{motor__driver_8h_a29cb17ab1f5e015b9bcf515adceb9089}\index{motor\_driver.h@{motor\_driver.h}!motor\_brake\_dual@{motor\_brake\_dual}}
+\index{motor\_brake\_dual@{motor\_brake\_dual}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{motor\_brake\_dual()}{motor\_brake\_dual()}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a29cb17ab1f5e015b9bcf515adceb9089} 
+void motor\+\_\+brake\+\_\+dual (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}} \texorpdfstring{$\ast$}{*}}]{motor\+\_\+d}{}\end{DoxyParamCaption})}
+
+
+
+Brake a dual-\/channel motor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{structmotor__d}{motor\+\_\+d}} & Pointer to motor structure.\\
+\hline
+\end{DoxyParams}
+Brake a dual-\/channel motor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{structmotor__d}{motor\+\_\+d}} & Pointer to dual motor. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{motor__driver_8h_a61b015094d64ce29503b381f394b3a2d}\index{motor\_driver.h@{motor\_driver.h}!motor\_d\_get\_pos@{motor\_d\_get\_pos}}
+\index{motor\_d\_get\_pos@{motor\_d\_get\_pos}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{motor\_d\_get\_pos()}{motor\_d\_get\_pos()}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a61b015094d64ce29503b381f394b3a2d} 
+uint32\+\_\+t motor\+\_\+d\+\_\+get\+\_\+pos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}} \texorpdfstring{$\ast$}{*}}]{motor\+\_\+d}{}\end{DoxyParamCaption})}
+
+
+
+Get current encoder position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{structmotor__d}{motor\+\_\+d}} & Pointer to motor. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Current position as a 32-\/bit signed value.
+\end{DoxyReturn}
+Get current encoder position.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{structmotor__d}{motor\+\_\+d}} & Pointer to motor. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Current encoder count. 
+\end{DoxyReturn}
+\Hypertarget{motor__driver_8h_a4f3c276b4f350af92b418f3b132481bf}\index{motor\_driver.h@{motor\_driver.h}!motor\_d\_set\_pos@{motor\_d\_set\_pos}}
+\index{motor\_d\_set\_pos@{motor\_d\_set\_pos}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{motor\_d\_set\_pos()}{motor\_d\_set\_pos()}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a4f3c276b4f350af92b418f3b132481bf} 
+void motor\+\_\+d\+\_\+set\+\_\+pos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}} \texorpdfstring{$\ast$}{*}}]{motor\+\_\+d}{, }\item[{\mbox{\hyperlink{motor__driver_8h_a2d5dfc38f3db03091e82200d5e32a68d}{PI\+\_\+\+Controller}} \texorpdfstring{$\ast$}{*}}]{ctrl}{, }\item[{int32\+\_\+t}]{pos}{}\end{DoxyParamCaption})}
+
+
+
+Command motor to move to a specific position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{structmotor__d}{motor\+\_\+d}} & Pointer to motor. \\
+\hline
+{\em ctrl} & Pointer to controller. \\
+\hline
+{\em pos} & Desired setpoint position.\\
+\hline
+\end{DoxyParams}
+Command motor to move to a specific position.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{structmotor__d}{motor\+\_\+d}} & Pointer to motor. \\
+\hline
+{\em ctrl} & Pointer to controller. \\
+\hline
+{\em pos} & Relative step to add to setpoint. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{motor__driver_8h_a251d05dff9c7c1b2153c45d75164469b}\index{motor\_driver.h@{motor\_driver.h}!motor\_d\_update\_pos@{motor\_d\_update\_pos}}
+\index{motor\_d\_update\_pos@{motor\_d\_update\_pos}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{motor\_d\_update\_pos()}{motor\_d\_update\_pos()}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a251d05dff9c7c1b2153c45d75164469b} 
+void motor\+\_\+d\+\_\+update\+\_\+pos (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}} \texorpdfstring{$\ast$}{*}}]{motor\+\_\+d}{, }\item[{\mbox{\hyperlink{motor__driver_8h_a2d5dfc38f3db03091e82200d5e32a68d}{PI\+\_\+\+Controller}} \texorpdfstring{$\ast$}{*}}]{ctrl}{}\end{DoxyParamCaption})}
+
+
+
+Update position of motor using PI control. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{structmotor__d}{motor\+\_\+d}} & Pointer to motor. \\
+\hline
+{\em ctrl} & Pointer to PI controller.\\
+\hline
+\end{DoxyParams}
+Update position of motor using PI control.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{structmotor__d}{motor\+\_\+d}} & Pointer to dual motor. \\
+\hline
+{\em ctrl} & Pointer to PI controller. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{motor__driver_8h_a9dcfb75d43797a49452f4d0c5be28c8f}\index{motor\_driver.h@{motor\_driver.h}!motor\_disable@{motor\_disable}}
+\index{motor\_disable@{motor\_disable}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{motor\_disable()}{motor\_disable()}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a9dcfb75d43797a49452f4d0c5be28c8f} 
+void motor\+\_\+disable (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{motor}{}\end{DoxyParamCaption})}
+
+
+
+Disable a motor by setting outputs low or floating. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em motor} & Pointer to motor structure.\\
+\hline
+\end{DoxyParams}
+Disable a motor by setting outputs low or floating.
+
+
+\begin{DoxyParams}{Parameters}
+{\em motor} & Pointer to motor. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{motor__driver_8h_a9b0c0dbf86dfe0644a51aeb8cf0246df}\index{motor\_driver.h@{motor\_driver.h}!set\_duty@{set\_duty}}
+\index{set\_duty@{set\_duty}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{set\_duty()}{set\_duty()}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a9b0c0dbf86dfe0644a51aeb8cf0246df} 
+void set\+\_\+duty (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{motor}{, }\item[{uint32\+\_\+t}]{pulse\+\_\+1}{}\end{DoxyParamCaption})}
+
+
+
+Set PWM duty cycle on a single motor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em motor} & Pointer to motor structure. \\
+\hline
+{\em pulse\+\_\+1} & Pulse width (0 to timer ARR).\\
+\hline
+\end{DoxyParams}
+Set PWM duty cycle on a single motor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em motor} & Pointer to the \doxylink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\+\_\+t} structure. \\
+\hline
+{\em pulse\+\_\+1} & PWM compare value. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{motor__driver_8h_a4a656fa4d7dcbdd63d4de20e69473707}\index{motor\_driver.h@{motor\_driver.h}!set\_duty\_dual@{set\_duty\_dual}}
+\index{set\_duty\_dual@{set\_duty\_dual}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{set\_duty\_dual()}{set\_duty\_dual()}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a4a656fa4d7dcbdd63d4de20e69473707} 
+void set\+\_\+duty\+\_\+dual (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}} \texorpdfstring{$\ast$}{*}}]{motor\+\_\+d}{, }\item[{uint32\+\_\+t}]{pulse\+\_\+1}{, }\item[{uint32\+\_\+t}]{pulse\+\_\+2}{}\end{DoxyParamCaption})}
+
+
+
+Set PWM duty cycle on a dual-\/channel motor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{structmotor__d}{motor\+\_\+d}} & Pointer to dual-\/motor structure. \\
+\hline
+{\em pulse\+\_\+1} & PWM for channel 1. \\
+\hline
+{\em pulse\+\_\+2} & PWM for channel 2.\\
+\hline
+\end{DoxyParams}
+Set PWM duty cycle on a dual-\/channel motor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \doxylink{structmotor__d}{motor\+\_\+d}} & Pointer to dual motor structure. \\
+\hline
+{\em pulse\+\_\+1} & PWM for channel 1. \\
+\hline
+{\em pulse\+\_\+2} & PWM for channel 2. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{motor__driver_8h_a95b91c434749ecd9050d622179549b84}\index{motor\_driver.h@{motor\_driver.h}!step\_motor\_backward@{step\_motor\_backward}}
+\index{step\_motor\_backward@{step\_motor\_backward}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{step\_motor\_backward()}{step\_motor\_backward()}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a95b91c434749ecd9050d622179549b84} 
+void step\+\_\+motor\+\_\+backward (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Rotate motor a single step backward (left). 
+
+Rotate motor a single step backward (left). \Hypertarget{motor__driver_8h_a6bd108af9faccbba80682babf90932d4}\index{motor\_driver.h@{motor\_driver.h}!step\_motor\_forward@{step\_motor\_forward}}
+\index{step\_motor\_forward@{step\_motor\_forward}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{step\_motor\_forward()}{step\_motor\_forward()}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a6bd108af9faccbba80682babf90932d4} 
+void step\+\_\+motor\+\_\+forward (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Rotate motor a single step forward (right). 
+
+Rotate motor a single step forward (right). 
+
+\label{doc-var-members}
+\Hypertarget{motor__driver_8h_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{motor__driver_8h_a0fac0915eb75dd9c6a815347cb20c053}\index{motor\_driver.h@{motor\_driver.h}!motor\_1@{motor\_1}}
+\index{motor\_1@{motor\_1}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{motor\_1}{motor\_1}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a0fac0915eb75dd9c6a815347cb20c053} 
+\mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\+\_\+t}} motor\+\_\+1\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Global motor instance (single-\/channel) 
+
+Global motor instance (single-\/channel) \Hypertarget{motor__driver_8h_a6e68315fd2747522a29dd4110a23092c}\index{motor\_driver.h@{motor\_driver.h}!motor\_2@{motor\_2}}
+\index{motor\_2@{motor\_2}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{motor\_2}{motor\_2}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a6e68315fd2747522a29dd4110a23092c} 
+\mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\+\_\+t}} motor\+\_\+2\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Global motor instance (single-\/channel) 
+
+Global motor instance (single-\/channel) \Hypertarget{motor__driver_8h_af01b346804376b904fab1d18b5d9877f}\index{motor\_driver.h@{motor\_driver.h}!Pololu\_1@{Pololu\_1}}
+\index{Pololu\_1@{Pololu\_1}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{Pololu\_1}{Pololu\_1}}
+{\footnotesize\ttfamily \label{motor__driver_8h_af01b346804376b904fab1d18b5d9877f} 
+\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}} Pololu\+\_\+1\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Dual-\/channel motor with encoder (typically Pololu motor) 
+
+Dual-\/channel motor with encoder (typically Pololu motor) \Hypertarget{motor__driver_8h_a4dc541176b94de15561137e81a300240}\index{motor\_driver.h@{motor\_driver.h}!Pololu\_2@{Pololu\_2}}
+\index{Pololu\_2@{Pololu\_2}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{Pololu\_2}{Pololu\_2}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a4dc541176b94de15561137e81a300240} 
+\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\+\_\+dual}} Pololu\+\_\+2\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Dual-\/channel motor with encoder (typically Pololu motor) 
+
+Dual-\/channel motor with encoder (typically Pololu motor) \Hypertarget{motor__driver_8h_a8f1ed4ae12eb4d5eb27912212ee05db4}\index{motor\_driver.h@{motor\_driver.h}!pos\_controller\_1@{pos\_controller\_1}}
+\index{pos\_controller\_1@{pos\_controller\_1}!motor\_driver.h@{motor\_driver.h}}
+\doxysubsubsection{\texorpdfstring{pos\_controller\_1}{pos\_controller\_1}}
+{\footnotesize\ttfamily \label{motor__driver_8h_a8f1ed4ae12eb4d5eb27912212ee05db4} 
+\mbox{\hyperlink{motor__driver_8h_a2d5dfc38f3db03091e82200d5e32a68d}{PI\+\_\+\+Controller}} pos\+\_\+controller\+\_\+1\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Position controller instance for closed-\/loop control. 
+
+Position controller instance for closed-\/loop control. 

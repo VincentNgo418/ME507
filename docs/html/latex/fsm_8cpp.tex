@@ -1,0 +1,47 @@
+\doxysection{Core/\+Src/fsm.cpp File Reference}
+\hypertarget{fsm_8cpp}{}\label{fsm_8cpp}\index{Core/Src/fsm.cpp@{Core/Src/fsm.cpp}}
+
+
+Implementation of the Finite State Machine (\doxylink{class_f_s_m}{FSM}) controlling robot operation modes.  
+
+
+{\ttfamily \#include "{}fsm.\+h"{}}\newline
+{\ttfamily \#include "{}main.\+h"{}}\newline
+{\ttfamily \#include "{}motor\+\_\+driver.\+h"{}}\newline
+{\ttfamily \#include "{}servo\+\_\+driver.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{group___u_a_r_t___exported___types_ga5de4a49eb132735325e706f406c69d6e}{UART\+\_\+\+Handle\+Type\+Def}} \mbox{\hyperlink{fsm_8cpp_a2cf715bef37f7e8ef385a30974a5f0d5}{huart1}}
+\begin{DoxyCompactList}\small\item\em UART1 Handle Variable. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementation of the Finite State Machine (\doxylink{class_f_s_m}{FSM}) controlling robot operation modes. 
+
+This file defines the behavior of each operational mode of the Ping Pong Launcher Robot, including initialization, manual control, target aiming, and automatic LIDAR-\/based targeting.
+
+\begin{DoxyAuthor}{Author}
+Jason 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+June 5, 2025 
+\end{DoxyDate}
+
+
+\label{doc-var-members}
+\Hypertarget{fsm_8cpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{fsm_8cpp_a2cf715bef37f7e8ef385a30974a5f0d5}\index{fsm.cpp@{fsm.cpp}!huart1@{huart1}}
+\index{huart1@{huart1}!fsm.cpp@{fsm.cpp}}
+\doxysubsubsection{\texorpdfstring{huart1}{huart1}}
+{\footnotesize\ttfamily \label{fsm_8cpp_a2cf715bef37f7e8ef385a30974a5f0d5} 
+\mbox{\hyperlink{group___u_a_r_t___exported___types_ga5de4a49eb132735325e706f406c69d6e}{UART\+\_\+\+Handle\+Type\+Def}} huart1\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+UART1 Handle Variable. 
+

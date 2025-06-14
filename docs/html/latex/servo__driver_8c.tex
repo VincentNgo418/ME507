@@ -1,0 +1,124 @@
+\doxysection{Core/\+Src/servo\+\_\+driver.c File Reference}
+\hypertarget{servo__driver_8c}{}\label{servo__driver_8c}\index{Core/Src/servo\_driver.c@{Core/Src/servo\_driver.c}}
+
+
+Control functions for servo motors using STM32 HAL.  
+
+
+{\ttfamily \#include "{}servo\+\_\+driver.\+h"{}}\newline
+{\ttfamily \#include "{}main.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{servo__driver_8c_a41a06f3428ecd306f4339fb9676120e6}{servo\+\_\+duty}} (\mbox{\hyperlink{servo__driver_8h_aeb994d32e00714381648cde445df8695}{servo\+\_\+t}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structservo}{servo}}, uint32\+\_\+t pulse\+\_\+1)
+\begin{DoxyCompactList}\small\item\em Set the PWM duty cycle (pulse width) for a servo motor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{servo__driver_8c_a9966d205a13322002c116e464d2e4d86}{servo\+\_\+brake}} (\mbox{\hyperlink{servo__driver_8h_aeb994d32e00714381648cde445df8695}{servo\+\_\+t}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structservo}{servo}})
+\begin{DoxyCompactList}\small\item\em Apply braking (0\% duty) to stop servo signal. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{servo__driver_8c_a0e453b48b23f5185089d5464727c727e}{servo\+\_\+disable}} (\mbox{\hyperlink{servo__driver_8h_aeb994d32e00714381648cde445df8695}{servo\+\_\+t}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structservo}{servo}})
+\begin{DoxyCompactList}\small\item\em Fully disable the servo signal (same as brake). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{servo__driver_8h_aeb994d32e00714381648cde445df8695}{servo\+\_\+t}} \mbox{\hyperlink{servo__driver_8c_a392c202f30b33bb58279cf39c5187957}{servo\+\_\+1}}
+\begin{DoxyCompactList}\small\item\em Global instance of servo motor 1 connected to TIM1, channel 4. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Control functions for servo motors using STM32 HAL. 
+
+Provides abstraction for setting, braking, and disabling a PWM-\/driven servo motor. Intended for use in applications like robotic actuation or launching mechanisms.
+
+\begin{DoxyAuthor}{Author}
+Jason 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+May 15, 2025 
+\end{DoxyDate}
+
+
+\label{doc-func-members}
+\Hypertarget{servo__driver_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{servo__driver_8c_a9966d205a13322002c116e464d2e4d86}\index{servo\_driver.c@{servo\_driver.c}!servo\_brake@{servo\_brake}}
+\index{servo\_brake@{servo\_brake}!servo\_driver.c@{servo\_driver.c}}
+\doxysubsubsection{\texorpdfstring{servo\_brake()}{servo\_brake()}}
+{\footnotesize\ttfamily \label{servo__driver_8c_a9966d205a13322002c116e464d2e4d86} 
+void servo\+\_\+brake (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{servo__driver_8h_aeb994d32e00714381648cde445df8695}{servo\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{servo}{}\end{DoxyParamCaption})}
+
+
+
+Apply braking (0\% duty) to stop servo signal. 
+
+Apply brake or stop signal to the servo.
+
+This will stop the signal to the servo, typically freezing its last position.
+
+
+\begin{DoxyParams}{Parameters}
+{\em servo} & Pointer to the servo instance. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{servo__driver_8c_a0e453b48b23f5185089d5464727c727e}\index{servo\_driver.c@{servo\_driver.c}!servo\_disable@{servo\_disable}}
+\index{servo\_disable@{servo\_disable}!servo\_driver.c@{servo\_driver.c}}
+\doxysubsubsection{\texorpdfstring{servo\_disable()}{servo\_disable()}}
+{\footnotesize\ttfamily \label{servo__driver_8c_a0e453b48b23f5185089d5464727c727e} 
+void servo\+\_\+disable (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{servo__driver_8h_aeb994d32e00714381648cde445df8695}{servo\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{servo}{}\end{DoxyParamCaption})}
+
+
+
+Fully disable the servo signal (same as brake). 
+
+Disable the servo output (sets PWM to 0 or idle).
+
+Intended to be used when turning off the servo in a safe shutdown or idle state.
+
+
+\begin{DoxyParams}{Parameters}
+{\em servo} & Pointer to the servo instance. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{servo__driver_8c_a41a06f3428ecd306f4339fb9676120e6}\index{servo\_driver.c@{servo\_driver.c}!servo\_duty@{servo\_duty}}
+\index{servo\_duty@{servo\_duty}!servo\_driver.c@{servo\_driver.c}}
+\doxysubsubsection{\texorpdfstring{servo\_duty()}{servo\_duty()}}
+{\footnotesize\ttfamily \label{servo__driver_8c_a41a06f3428ecd306f4339fb9676120e6} 
+void servo\+\_\+duty (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{servo__driver_8h_aeb994d32e00714381648cde445df8695}{servo\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{servo}{, }\item[{uint32\+\_\+t}]{pulse\+\_\+1}{}\end{DoxyParamCaption})}
+
+
+
+Set the PWM duty cycle (pulse width) for a servo motor. 
+
+Set the PWM duty cycle for the servo.
+
+This function controls the position of the servo by setting its PWM pulse width. Typical values range from \texorpdfstring{$\sim$}{\string~}1000 (0°) to \texorpdfstring{$\sim$}{\string~}9000 (180°), depending on the timer settings and servo model.
+
+
+\begin{DoxyParams}{Parameters}
+{\em servo} & Pointer to the servo instance. \\
+\hline
+{\em pulse\+\_\+1} & Pulse width value to set on the PWM channel. \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-var-members}
+\Hypertarget{servo__driver_8c_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{servo__driver_8c_a392c202f30b33bb58279cf39c5187957}\index{servo\_driver.c@{servo\_driver.c}!servo\_1@{servo\_1}}
+\index{servo\_1@{servo\_1}!servo\_driver.c@{servo\_driver.c}}
+\doxysubsubsection{\texorpdfstring{servo\_1}{servo\_1}}
+{\footnotesize\ttfamily \label{servo__driver_8c_a392c202f30b33bb58279cf39c5187957} 
+\mbox{\hyperlink{servo__driver_8h_aeb994d32e00714381648cde445df8695}{servo\+\_\+t}} servo\+\_\+1}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ .PWM\_CHANNEL\ =\ \mbox{\hyperlink{group___t_i_m___channel_gad59ef74820ee8bf77fa1f8d589fde2ac}{TIM\_CHANNEL\_4}},}
+\DoxyCodeLine{\ \ \ \ .htim\ =\ \&\mbox{\hyperlink{main_8cpp_a25fc663547539bc49fecc0011bd76ab5}{htim1}}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Global instance of servo motor 1 connected to TIM1, channel 4. 
+
+Global instance of servo motor (e.\+g., used for angle adjustment or launching). 

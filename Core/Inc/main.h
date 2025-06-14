@@ -1,24 +1,23 @@
-/* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.h
-  * @brief          : Header for main.c file.
-  *                   This file contains the common defines of the application.
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2025 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
-/* USER CODE END Header */
+ ******************************************************************************
+ * @file           : main.h
+ * @brief          : Header for main.c file.
+ *                   Contains shared defines, structures, and global variables.
+ *
+ * @author         : Jason
+ * @date           : 2025
+ * @version        : 1.0
+ *
+ * This file declares hardware handles, types, and global variables used across
+ * the application, including user-defined structures and sensor data.
+ *
+ * @copyright
+ * Copyright (c) 2025 STMicroelectronics.
+ * This software is licensed under terms in the LICENSE file in the root directory.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ ******************************************************************************
+ */
 
-/* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __MAIN_H
 #define __MAIN_H
 
@@ -26,51 +25,39 @@
 extern "C" {
 #endif
 
-/* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_hal.h"
+#include "stm32f4xx_hal.h"  /**< HAL library for STM32F4 peripherals */
 
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
-/* Exported types ------------------------------------------------------------*/
-/* USER CODE BEGIN ET */
-
+/**
+ * @brief Custom data structure used for application-specific motor or timer management.
+ */
 typedef struct my_struct {
-	int32_t 		field_1;
-	uint16_t 		field_2;
-	TIM_HandleTypeDef* htim;
+    int32_t field_1;                   /**< Custom 32-bit signed field (usage TBD) */
+    uint16_t field_2;                  /**< Custom 16-bit unsigned field (usage TBD) */
+    TIM_HandleTypeDef* htim;          /**< Pointer to a timer handle (used for PWM, encoder, etc.) */
 } my_struct_t;
 
-/* USER CODE END ET */
+/**
+ * @brief Distance reading from the TF-Luna LIDAR sensor (in centimeters).
+ */
+extern volatile uint16_t distance_cm;
 
-/* Exported constants --------------------------------------------------------*/
-/* USER CODE BEGIN EC */
+/**
+ * @brief Heading angle from the BNO055 IMU sensor (in degrees).
+ */
+extern volatile int16_t heading;
 
-/* USER CODE END EC */
+/**
+ * @brief Intensity or reflectivity value from the TF-Luna LIDAR.
+ */
+extern volatile uint16_t intensity_value;
 
-/* Exported macro ------------------------------------------------------------*/
-/* USER CODE BEGIN EM */
-
-/* USER CODE END EM */
 
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 
-/* Exported functions prototypes ---------------------------------------------*/
+/**
+ * @brief General error handler. Called when a critical error occurs.
+ */
 void Error_Handler(void);
-
-/* USER CODE BEGIN EFP */
-
-/* USER CODE END EFP */
-
-/* Private defines -----------------------------------------------------------*/
-
-/* USER CODE BEGIN Private defines */
-extern volatile uint16_t distance_cm;
-extern volatile int16_t heading;
-extern volatile uint16_t intensity_value;
-/* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }

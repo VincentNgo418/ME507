@@ -1,0 +1,27 @@
+var motor__driver_8c =
+[
+    [ "fabs", "motor__driver_8c.html#a1cfe4453a6fef50c156e710a2dc764a3", null ],
+    [ "SATURATION_LIMIT", "motor__driver_8c.html#a24ee6ddd488acefec94728073fb62214", null ],
+    [ "launch", "motor__driver_8c.html#a6b13b09a5c4ef671fcfeefef0e75e5a4", null ],
+    [ "motor_brake", "motor__driver_8c.html#a427a602e38665564a30ec49f36b92ae7", null ],
+    [ "motor_brake_dual", "motor__driver_8c.html#a29cb17ab1f5e015b9bcf515adceb9089", null ],
+    [ "motor_d_get_pos", "motor__driver_8c.html#a61b015094d64ce29503b381f394b3a2d", null ],
+    [ "motor_d_set_pos", "motor__driver_8c.html#a4f3c276b4f350af92b418f3b132481bf", null ],
+    [ "motor_d_update_pos", "motor__driver_8c.html#a251d05dff9c7c1b2153c45d75164469b", null ],
+    [ "motor_disable", "motor__driver_8c.html#a9dcfb75d43797a49452f4d0c5be28c8f", null ],
+    [ "set_duty", "motor__driver_8c.html#a9b0c0dbf86dfe0644a51aeb8cf0246df", null ],
+    [ "set_duty_dual", "motor__driver_8c.html#a4a656fa4d7dcbdd63d4de20e69473707", null ],
+    [ "step_motor_backward", "motor__driver_8c.html#a95b91c434749ecd9050d622179549b84", null ],
+    [ "step_motor_forward", "motor__driver_8c.html#a6bd108af9faccbba80682babf90932d4", null ],
+    [ "htim1", "motor__driver_8c.html#a25fc663547539bc49fecc0011bd76ab5", null ],
+    [ "htim2", "motor__driver_8c.html#a2c80fd5510e2990a59a5c90d745c716c", null ],
+    [ "htim3", "motor__driver_8c.html#aac3d2c59ee0e3bbae1b99529a154eb62", null ],
+    [ "htim4", "motor__driver_8c.html#a85788cec5a97ee377e4ee2e74f026484", null ],
+    [ "htim5", "motor__driver_8c.html#acefaeaaa3856ddddae7083b2d220fe4b", null ],
+    [ "motor_1", "motor__driver_8c.html#a0fac0915eb75dd9c6a815347cb20c053", null ],
+    [ "motor_2", "motor__driver_8c.html#a6e68315fd2747522a29dd4110a23092c", null ],
+    [ "Pololu_1", "motor__driver_8c.html#af01b346804376b904fab1d18b5d9877f", null ],
+    [ "Pololu_2", "motor__driver_8c.html#a4dc541176b94de15561137e81a300240", null ],
+    [ "pos_controller_1", "motor__driver_8c.html#a8f1ed4ae12eb4d5eb27912212ee05db4", null ],
+    [ "pos_controller_2", "motor__driver_8c.html#a04ef784c30aaaaf44ce8450a51baca71", null ]
+];

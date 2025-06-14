@@ -1,0 +1,65 @@
+\doxysection{Core/\+Drivers/\+BNO055/bno055\+\_\+hal.c File Reference}
+\hypertarget{bno055__hal_8c}{}\label{bno055__hal_8c}\index{Core/Drivers/BNO055/bno055\_hal.c@{Core/Drivers/BNO055/bno055\_hal.c}}
+{\ttfamily \#include "{}stm32f4xx\+\_\+hal.\+h"{}}\newline
+{\ttfamily \#include "{}bno055.\+h"{}}\newline
+{\ttfamily \#include "{}bno055\+\_\+hal.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{bno055_8h_a151f780fb455885061d3b77ec1c90c03}{s8}} \mbox{\hyperlink{bno055__hal_8c_a8caccc13fd25dc1e554a66853febb149}{BNO055\+\_\+\+I2\+C\+\_\+bus\+\_\+write}} (\mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} dev\+\_\+addr, \mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} reg\+\_\+addr, \mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} \texorpdfstring{$\ast$}{*}reg\+\_\+data, \mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} wr\+\_\+len)
+\item 
+\mbox{\hyperlink{bno055_8h_a151f780fb455885061d3b77ec1c90c03}{s8}} \mbox{\hyperlink{bno055__hal_8c_a07411a2f64276a39879fafbf5e214df6}{BNO055\+\_\+\+I2\+C\+\_\+bus\+\_\+read}} (\mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} dev\+\_\+addr, \mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} reg\+\_\+addr, \mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} \texorpdfstring{$\ast$}{*}reg\+\_\+data, \mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} r\+\_\+len)
+\item 
+void \mbox{\hyperlink{bno055__hal_8c_a851bd7c7f1cdb6a07ab2d4c7a9d6870f}{BNO055\+\_\+delay\+\_\+msec}} (\mbox{\hyperlink{bno055_8h_a10e94b422ef0c20dcdec20d31a1f5049}{u32}} msec)
+\item 
+void \mbox{\hyperlink{bno055__hal_8c_af1cc36290ca2da94ff6501f89ffe73d8}{BNO055\+\_\+setup}} (struct \mbox{\hyperlink{structbno055__t}{bno055\+\_\+t}} \texorpdfstring{$\ast$}{*}bno055\+\_\+device)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_i2_c___handle_type_def}{I2\+C\+\_\+\+Handle\+Type\+Def}} \mbox{\hyperlink{bno055__hal_8c_a5ccf4a01a8d7f08d3190181f843f7515}{hi2c3}}
+\begin{DoxyCompactList}\small\item\em I2\+C3 Handle Variable. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{bno055__hal_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{bno055__hal_8c_a851bd7c7f1cdb6a07ab2d4c7a9d6870f}\index{bno055\_hal.c@{bno055\_hal.c}!BNO055\_delay\_msec@{BNO055\_delay\_msec}}
+\index{BNO055\_delay\_msec@{BNO055\_delay\_msec}!bno055\_hal.c@{bno055\_hal.c}}
+\doxysubsubsection{\texorpdfstring{BNO055\_delay\_msec()}{BNO055\_delay\_msec()}}
+{\footnotesize\ttfamily \label{bno055__hal_8c_a851bd7c7f1cdb6a07ab2d4c7a9d6870f} 
+void BNO055\+\_\+delay\+\_\+msec (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bno055_8h_a10e94b422ef0c20dcdec20d31a1f5049}{u32}}}]{msec}{}\end{DoxyParamCaption})}
+
+\Hypertarget{bno055__hal_8c_a07411a2f64276a39879fafbf5e214df6}\index{bno055\_hal.c@{bno055\_hal.c}!BNO055\_I2C\_bus\_read@{BNO055\_I2C\_bus\_read}}
+\index{BNO055\_I2C\_bus\_read@{BNO055\_I2C\_bus\_read}!bno055\_hal.c@{bno055\_hal.c}}
+\doxysubsubsection{\texorpdfstring{BNO055\_I2C\_bus\_read()}{BNO055\_I2C\_bus\_read()}}
+{\footnotesize\ttfamily \label{bno055__hal_8c_a07411a2f64276a39879fafbf5e214df6} 
+\mbox{\hyperlink{bno055_8h_a151f780fb455885061d3b77ec1c90c03}{s8}} BNO055\+\_\+\+I2\+C\+\_\+bus\+\_\+read (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}}]{dev\+\_\+addr}{, }\item[{\mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}}]{reg\+\_\+addr}{, }\item[{\mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} \texorpdfstring{$\ast$}{*}}]{reg\+\_\+data}{, }\item[{\mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}}]{r\+\_\+len}{}\end{DoxyParamCaption})}
+
+\Hypertarget{bno055__hal_8c_a8caccc13fd25dc1e554a66853febb149}\index{bno055\_hal.c@{bno055\_hal.c}!BNO055\_I2C\_bus\_write@{BNO055\_I2C\_bus\_write}}
+\index{BNO055\_I2C\_bus\_write@{BNO055\_I2C\_bus\_write}!bno055\_hal.c@{bno055\_hal.c}}
+\doxysubsubsection{\texorpdfstring{BNO055\_I2C\_bus\_write()}{BNO055\_I2C\_bus\_write()}}
+{\footnotesize\ttfamily \label{bno055__hal_8c_a8caccc13fd25dc1e554a66853febb149} 
+\mbox{\hyperlink{bno055_8h_a151f780fb455885061d3b77ec1c90c03}{s8}} BNO055\+\_\+\+I2\+C\+\_\+bus\+\_\+write (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}}]{dev\+\_\+addr}{, }\item[{\mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}}]{reg\+\_\+addr}{, }\item[{\mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}} \texorpdfstring{$\ast$}{*}}]{reg\+\_\+data}{, }\item[{\mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}}]{wr\+\_\+len}{}\end{DoxyParamCaption})}
+
+\Hypertarget{bno055__hal_8c_af1cc36290ca2da94ff6501f89ffe73d8}\index{bno055\_hal.c@{bno055\_hal.c}!BNO055\_setup@{BNO055\_setup}}
+\index{BNO055\_setup@{BNO055\_setup}!bno055\_hal.c@{bno055\_hal.c}}
+\doxysubsubsection{\texorpdfstring{BNO055\_setup()}{BNO055\_setup()}}
+{\footnotesize\ttfamily \label{bno055__hal_8c_af1cc36290ca2da94ff6501f89ffe73d8} 
+void BNO055\+\_\+setup (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structbno055__t}{bno055\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{bno055\+\_\+device}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-var-members}
+\Hypertarget{bno055__hal_8c_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{bno055__hal_8c_a5ccf4a01a8d7f08d3190181f843f7515}\index{bno055\_hal.c@{bno055\_hal.c}!hi2c3@{hi2c3}}
+\index{hi2c3@{hi2c3}!bno055\_hal.c@{bno055\_hal.c}}
+\doxysubsubsection{\texorpdfstring{hi2c3}{hi2c3}}
+{\footnotesize\ttfamily \label{bno055__hal_8c_a5ccf4a01a8d7f08d3190181f843f7515} 
+\mbox{\hyperlink{struct_i2_c___handle_type_def}{I2\+C\+\_\+\+Handle\+Type\+Def}} hi2c3\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+I2\+C3 Handle Variable. 
+

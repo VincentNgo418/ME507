@@ -1,0 +1,190 @@
+\doxysection{Core/\+Src/re.c File Reference}
+\hypertarget{re_8c}{}\label{re_8c}\index{Core/Src/re.c@{Core/Src/re.c}}
+{\ttfamily \#include "{}re.\+h"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structregex__t}{regex\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{re_8c_ac13b7d7ca159d894b30e8055b76160f5}{MAX\+\_\+\+REGEXP\+\_\+\+OBJECTS}}~30    /\texorpdfstring{$\ast$}{*} Max number of regex symbols in expression. \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{re_8c_a02404f60c34021eccc1cae51cccdb983}{MAX\+\_\+\+CHAR\+\_\+\+CLASS\+\_\+\+LEN}}~40    /\texorpdfstring{$\ast$}{*} Max length of character-\/class buffer in.   \texorpdfstring{$\ast$}{*}/
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct regex\+\_\+t \mbox{\hyperlink{re_8c_a54aafd7511cd3c83f1b816f3aabf517b}{regex\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \newline
+\mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23aa09b651ef326a9d8efcee5cc5b720ab4}{UNUSED}}
+, \mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a87fdcd2ffa8f71b49da9e0cfd4fb893f}{DOT}}
+, \mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a368db50032da622d4c456ef7eaf9cb67}{BEGIN}}
+, \mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23adc6f24fd6915a3f2786a1b7045406924}{END}}
+, \newline
+\mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23ac8ffdf1cfb5b9a9785527c390aa85feb}{QUESTIONMARK}}
+, \mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a9d398750ed310ae69cd070016810e4dc}{STAR}}
+, \mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a87fe59ef12c3d13dc2a4d14c9b16c1f9}{PLUS}}
+, \mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a4618cf21306b3c647741afa7ebefcab8}{CHAR}}
+, \newline
+\mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a572ee2846b350ab0b6b89bfb436bbbcc}{CHAR\+\_\+\+CLASS}}
+, \mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23ae51b5391d0aa5a69ab0d790667091d96}{INV\+\_\+\+CHAR\+\_\+\+CLASS}}
+, \mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a1b1406e3d0746ccb290c331db527df12}{DIGIT}}
+, \mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a5ced0a1e6125e3a4143f0bc0dbadd42c}{NOT\+\_\+\+DIGIT}}
+, \newline
+\mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a47e073572a47a01522b766b027f1a16c}{ALPHA}}
+, \mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a70db2c25278f9dbcfd306b1f033dcc66}{NOT\+\_\+\+ALPHA}}
+, \mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23aba113c37f25d24aada154b75c7dd91ba}{WHITESPACE}}
+, \mbox{\hyperlink{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23aeeb5467e08f5d0e88c080930173c22a2}{NOT\+\_\+\+WHITESPACE}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{re_8c_a161aceba162e2a4339b2f565c54662ca}{re\+\_\+match}} (const char \texorpdfstring{$\ast$}{*}pattern, const char \texorpdfstring{$\ast$}{*}text, int \texorpdfstring{$\ast$}{*}matchlength)
+\item 
+int \mbox{\hyperlink{re_8c_a69832eb0012cd0c9bab9a2e5fba4036a}{re\+\_\+matchp}} (\mbox{\hyperlink{re_8h_a2fedfdd50016a0186d460cb695067633}{re\+\_\+t}} pattern, const char \texorpdfstring{$\ast$}{*}text, int \texorpdfstring{$\ast$}{*}matchlength)
+\item 
+\mbox{\hyperlink{re_8h_a2fedfdd50016a0186d460cb695067633}{re\+\_\+t}} \mbox{\hyperlink{re_8c_a54e05fab0a3e93cc1bdf7006ec7cd251}{re\+\_\+compile}} (const char \texorpdfstring{$\ast$}{*}pattern)
+\item 
+void \mbox{\hyperlink{re_8c_acf030b92375dd3292626e71ae918c41a}{re\+\_\+print}} (\mbox{\hyperlink{structregex__t}{regex\+\_\+t}} \texorpdfstring{$\ast$}{*}pattern)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{re_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{re_8c_a02404f60c34021eccc1cae51cccdb983}\index{re.c@{re.c}!MAX\_CHAR\_CLASS\_LEN@{MAX\_CHAR\_CLASS\_LEN}}
+\index{MAX\_CHAR\_CLASS\_LEN@{MAX\_CHAR\_CLASS\_LEN}!re.c@{re.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_CHAR\_CLASS\_LEN}{MAX\_CHAR\_CLASS\_LEN}}
+{\footnotesize\ttfamily \label{re_8c_a02404f60c34021eccc1cae51cccdb983} 
+\#define MAX\+\_\+\+CHAR\+\_\+\+CLASS\+\_\+\+LEN~40    /\texorpdfstring{$\ast$}{*} Max length of character-\/class buffer in.   \texorpdfstring{$\ast$}{*}/}
+
+\Hypertarget{re_8c_ac13b7d7ca159d894b30e8055b76160f5}\index{re.c@{re.c}!MAX\_REGEXP\_OBJECTS@{MAX\_REGEXP\_OBJECTS}}
+\index{MAX\_REGEXP\_OBJECTS@{MAX\_REGEXP\_OBJECTS}!re.c@{re.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_REGEXP\_OBJECTS}{MAX\_REGEXP\_OBJECTS}}
+{\footnotesize\ttfamily \label{re_8c_ac13b7d7ca159d894b30e8055b76160f5} 
+\#define MAX\+\_\+\+REGEXP\+\_\+\+OBJECTS~30    /\texorpdfstring{$\ast$}{*} Max number of regex symbols in expression. \texorpdfstring{$\ast$}{*}/}
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{re_8c_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{re_8c_a54aafd7511cd3c83f1b816f3aabf517b}\index{re.c@{re.c}!regex\_t@{regex\_t}}
+\index{regex\_t@{regex\_t}!re.c@{re.c}}
+\doxysubsubsection{\texorpdfstring{regex\_t}{regex\_t}}
+{\footnotesize\ttfamily \label{re_8c_a54aafd7511cd3c83f1b816f3aabf517b} 
+typedef struct regex\+\_\+t regex\+\_\+t}
+
+
+
+\label{doc-enum-members}
+\Hypertarget{re_8c_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23}\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily \label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23} 
+anonymous enum}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UNUSED@{UNUSED}!re.c@{re.c}}\index{re.c@{re.c}!UNUSED@{UNUSED}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23aa09b651ef326a9d8efcee5cc5b720ab4}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23aa09b651ef326a9d8efcee5cc5b720ab4} 
+UNUSED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DOT@{DOT}!re.c@{re.c}}\index{re.c@{re.c}!DOT@{DOT}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a87fdcd2ffa8f71b49da9e0cfd4fb893f}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a87fdcd2ffa8f71b49da9e0cfd4fb893f} 
+DOT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BEGIN@{BEGIN}!re.c@{re.c}}\index{re.c@{re.c}!BEGIN@{BEGIN}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a368db50032da622d4c456ef7eaf9cb67}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a368db50032da622d4c456ef7eaf9cb67} 
+BEGIN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{END@{END}!re.c@{re.c}}\index{re.c@{re.c}!END@{END}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23adc6f24fd6915a3f2786a1b7045406924}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23adc6f24fd6915a3f2786a1b7045406924} 
+END&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{QUESTIONMARK@{QUESTIONMARK}!re.c@{re.c}}\index{re.c@{re.c}!QUESTIONMARK@{QUESTIONMARK}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23ac8ffdf1cfb5b9a9785527c390aa85feb}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23ac8ffdf1cfb5b9a9785527c390aa85feb} 
+QUESTIONMARK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STAR@{STAR}!re.c@{re.c}}\index{re.c@{re.c}!STAR@{STAR}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a9d398750ed310ae69cd070016810e4dc}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a9d398750ed310ae69cd070016810e4dc} 
+STAR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PLUS@{PLUS}!re.c@{re.c}}\index{re.c@{re.c}!PLUS@{PLUS}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a87fe59ef12c3d13dc2a4d14c9b16c1f9}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a87fe59ef12c3d13dc2a4d14c9b16c1f9} 
+PLUS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CHAR@{CHAR}!re.c@{re.c}}\index{re.c@{re.c}!CHAR@{CHAR}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a4618cf21306b3c647741afa7ebefcab8}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a4618cf21306b3c647741afa7ebefcab8} 
+CHAR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CHAR\_CLASS@{CHAR\_CLASS}!re.c@{re.c}}\index{re.c@{re.c}!CHAR\_CLASS@{CHAR\_CLASS}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a572ee2846b350ab0b6b89bfb436bbbcc}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a572ee2846b350ab0b6b89bfb436bbbcc} 
+CHAR\+\_\+\+CLASS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INV\_CHAR\_CLASS@{INV\_CHAR\_CLASS}!re.c@{re.c}}\index{re.c@{re.c}!INV\_CHAR\_CLASS@{INV\_CHAR\_CLASS}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23ae51b5391d0aa5a69ab0d790667091d96}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23ae51b5391d0aa5a69ab0d790667091d96} 
+INV\+\_\+\+CHAR\+\_\+\+CLASS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DIGIT@{DIGIT}!re.c@{re.c}}\index{re.c@{re.c}!DIGIT@{DIGIT}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a1b1406e3d0746ccb290c331db527df12}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a1b1406e3d0746ccb290c331db527df12} 
+DIGIT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NOT\_DIGIT@{NOT\_DIGIT}!re.c@{re.c}}\index{re.c@{re.c}!NOT\_DIGIT@{NOT\_DIGIT}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a5ced0a1e6125e3a4143f0bc0dbadd42c}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a5ced0a1e6125e3a4143f0bc0dbadd42c} 
+NOT\+\_\+\+DIGIT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ALPHA@{ALPHA}!re.c@{re.c}}\index{re.c@{re.c}!ALPHA@{ALPHA}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a47e073572a47a01522b766b027f1a16c}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a47e073572a47a01522b766b027f1a16c} 
+ALPHA&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NOT\_ALPHA@{NOT\_ALPHA}!re.c@{re.c}}\index{re.c@{re.c}!NOT\_ALPHA@{NOT\_ALPHA}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a70db2c25278f9dbcfd306b1f033dcc66}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23a70db2c25278f9dbcfd306b1f033dcc66} 
+NOT\+\_\+\+ALPHA&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WHITESPACE@{WHITESPACE}!re.c@{re.c}}\index{re.c@{re.c}!WHITESPACE@{WHITESPACE}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23aba113c37f25d24aada154b75c7dd91ba}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23aba113c37f25d24aada154b75c7dd91ba} 
+WHITESPACE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NOT\_WHITESPACE@{NOT\_WHITESPACE}!re.c@{re.c}}\index{re.c@{re.c}!NOT\_WHITESPACE@{NOT\_WHITESPACE}}}\Hypertarget{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23aeeb5467e08f5d0e88c080930173c22a2}\label{re_8c_a69fd7538b8bfff6d4fdb8d0fb1adca23aeeb5467e08f5d0e88c080930173c22a2} 
+NOT\+\_\+\+WHITESPACE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-func-members}
+\Hypertarget{re_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{re_8c_a54e05fab0a3e93cc1bdf7006ec7cd251}\index{re.c@{re.c}!re\_compile@{re\_compile}}
+\index{re\_compile@{re\_compile}!re.c@{re.c}}
+\doxysubsubsection{\texorpdfstring{re\_compile()}{re\_compile()}}
+{\footnotesize\ttfamily \label{re_8c_a54e05fab0a3e93cc1bdf7006ec7cd251} 
+\mbox{\hyperlink{re_8h_a2fedfdd50016a0186d460cb695067633}{re\+\_\+t}} re\+\_\+compile (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{pattern}{}\end{DoxyParamCaption})}
+
+\Hypertarget{re_8c_a161aceba162e2a4339b2f565c54662ca}\index{re.c@{re.c}!re\_match@{re\_match}}
+\index{re\_match@{re\_match}!re.c@{re.c}}
+\doxysubsubsection{\texorpdfstring{re\_match()}{re\_match()}}
+{\footnotesize\ttfamily \label{re_8c_a161aceba162e2a4339b2f565c54662ca} 
+int re\+\_\+match (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{pattern}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{text}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{matchlength}{}\end{DoxyParamCaption})}
+
+\Hypertarget{re_8c_a69832eb0012cd0c9bab9a2e5fba4036a}\index{re.c@{re.c}!re\_matchp@{re\_matchp}}
+\index{re\_matchp@{re\_matchp}!re.c@{re.c}}
+\doxysubsubsection{\texorpdfstring{re\_matchp()}{re\_matchp()}}
+{\footnotesize\ttfamily \label{re_8c_a69832eb0012cd0c9bab9a2e5fba4036a} 
+int re\+\_\+matchp (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{re_8h_a2fedfdd50016a0186d460cb695067633}{re\+\_\+t}}}]{pattern}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{text}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{matchlength}{}\end{DoxyParamCaption})}
+
+\Hypertarget{re_8c_acf030b92375dd3292626e71ae918c41a}\index{re.c@{re.c}!re\_print@{re\_print}}
+\index{re\_print@{re\_print}!re.c@{re.c}}
+\doxysubsubsection{\texorpdfstring{re\_print()}{re\_print()}}
+{\footnotesize\ttfamily \label{re_8c_acf030b92375dd3292626e71ae918c41a} 
+void re\+\_\+print (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structregex__t}{regex\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{pattern}{}\end{DoxyParamCaption})}
+

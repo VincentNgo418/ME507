@@ -5,18 +5,19 @@ This file uses Doxygen commands to create a well-structured and informative main
 ```cpp
 /**
  * @mainpage Ping Pong Robot Control System Documentation
- *
+ * 
  * @section intro_sec Introduction
  *
- * This documentation provides a comprehensive overview of the firmware controlling the Ping Pong Robot,
- * which is powered by an STM32F4111 microcontroller. The robot is designed for both manual and
- * automatic operation, utilizing various motors and sensors to achieve precise ball launching and positioning.
+ * This documentation provides a comprehensive overview of the firmware of the Automated Ping Pong Launcher Robot
+ * which is powered by an STM32F4111 microcontroller and a custom PCB. The robot is designed for both manual and
+ * automatic operation, utilizing various motors and sensors to achieve ball launching and positioning.
+ *  \image html pingpong_overview.jpg "Ping Pong Ball Launcher"
  *
  * The robot features:
- * - Two gearmotors for accurate positioning of the robot base.
+ * - Two 12V DC-gearmotors with built in encoders for accurate positioning of the robot base.
  * - Two flywheel motors for launching ping pong balls.
- * - An integrated LIDAR sensor for distance measurement, crucial for automatic target acquisition.
- * - An Inertial Measurement Unit (IMU) for orientation and heading information.
+ * - TF Luna LIDAR sensor for distance measurement and object detection.
+ * - A BNO055 Inertial Measurement Unit (IMU) for orientation and heading information.
  *
  * @section features_sec Key Features and Control Modes
  *
@@ -24,6 +25,8 @@ This file uses Doxygen commands to create a well-structured and informative main
  *
  * 1.  **S1: Idle Mode (`FSM::S1_IDLE`)**
  * The initial state where the robot is awaiting commands. From this mode, you can transition to other operational modes.
+ *
+ * - MODEX : Changes to different Mode / State
  *
  * 2.  **S2: Manual Step Input Mode (`FSM::S2_MANUAL_STEP_INPUT`)**
  * Allows for granular, step-by-step control of the robot's movement using simple character inputs via UART.
@@ -53,22 +56,82 @@ This file uses Doxygen commands to create a well-structured and informative main
  * The `main.c` currently indicates that pressing 'Q' is needed to start in this mode.
  *
  * @section components_sec Hardware Components
- *
- * -   **STM32F4111 Microcontroller:** The main processing unit.
+ *  
+ * -   **STM32F411 Microcontroller:** The main processing unit.
  * -   **Geared Motors (Pololu Motors):** Used for horizontal positioning of the robot. Controlled via PWM and encoders for feedback.
  * -   **Flywheel Motors:** Responsible for imparting velocity to the ping pong ball.
  * -   **Servo Motor:** Controls the launch angle or a similar mechanism.
  * -   **LIDAR Sensor (TFLuna):** Connected via I2C2, provides distance and intensity data for target detection.
  * -   **IMU Sensor (BNO055):** Connected via I2C3, provides orientation data (heading, pitch, roll).
+ * -   **Launcher:** 3D Printed parts
+ * 
+ * \image html tfluna.jpg "TF Luna Lidar Sensor"
+ *
+ *
+ * @section Custom_PCB_sec Custom PCB
+ * \image html custom_pcb.jpg "Custom PCB"
+ * 
+ *
+ *
+ * Our Custom PCB features:
+ *  - STM32F411CEU6 microcontroller
+ *  - 4 x **DRV8251** Motor Drivers
+ *  - \b 12V, \b 5V, and \b 3.3V rails using a LM22678TJ-ADJ switching regulator and a LMS1587ISX-ADJ-NOPB linear dropout regulator.
+ *  - The PCB is powered by a 12V 15A power adapter connected via barrel jack.
+ *  - 16 MHz crystal
+ *  - UART and pins to connect to the ST-Link.
+ *  
+ *
  *
  * @section software_modules_sec Software Modules
  *
  * The firmware is structured into several modules:
- * -   `main.c`: The entry point of the program, handles peripheral initialization, main loop execution, and UART command parsing.
- * -   `fsm.h`/`fsm.cpp`: Implements the Finite State Machine that manages the robot's control modes.
- * -   `motor_driver.h`/`motor_driver.cpp`: Provides abstractions for controlling the gearmotors and flywheel motors, including PID control for positioning.
- * -   `servo_driver.h`/`servo_driver.cpp`: Provides functions for controlling the servo motor.
- * -   `bno055.h`/`bno055_hal.h`: Drivers for interfacing with the BNO055 IMU sensor.
+ * -   \b main.c: The entry point of the program, handles peripheral initialization, main loop execution, and UART command parsing.
+ * -   \b fsm.h/fsm\b.cpp: Implements the Finite State Machine that manages the robot's control modes.
+ * -   \b motor_driver.h/motor_driver\b.cpp: Provides abstractions for controlling the gearmotors and flywheel motors, including PID control for positioning.
+ * -   \b servo_driver.h/servo_driver\b.cpp: Provides functions for controlling the servo motor.
+ * -   \b bno055.h/bno055_hal\b.h: Drivers for interfacing with the BNO055 IMU sensor.
+ *
+ *
+ *
+ * @section Performance_sec Performance
+ * The overall performance of the robot aligned with our expectations, especially considering the time constraints. 
+ * While the system was able to reliably launch ping pong balls, achieving precise targeting remained a challenge. 
+ * This inconsistency can be attributed to limitations in the launching mechanism and the absence of a vertical gearmotor. 
+ * Due to hardware issues encountered during PCB debugging and rework, two of our motor drivers became non-functional. 
+ * As a result, we prioritized horizontal positioning and flywheel control, deeming the vertical gearmotor the least critical. 
+ * With access to a third functional motor driver, more accurate targeting through vertical adjustment would have been feasible.
+ *
+ *
+ *
+ *
+ * @section features_objectives_sec Features and Objectives
+ *
+ * At the beginning of the project, we identified several key features and objectives for the robot's functionality:
+ * -   Utilize the \b LIDAR sensor to detect the presence of a plastic cup.
+ * -   Use the \b IMU for a homing mechanism.
+ * -   Enable manual \b positioning of the robot using keyboard inputs (e.g., 'A' and 'D' keys).
+ * -   Implement a mechanism for reliably \b launching a ping pong ball toward the target.
+ *
+ *
+ * @section Challenges_sec Challenges and Workarounds
+ *  One significant challenge we faced was that we were initially unable to drive the motors using the pinouts. 
+ *  We spent several days debugging the motor drivers because we were unsure of why our motors did not spin. 
+ *  We initially thought that the issue was that our motor drivers were broken because the schematic was correct according to the DRV8251 datasheet.
+ *  We then were able to spin the motors by applying a PWM signal to one of the leads of the motor and grounding the other, 
+ *  but we were unable to spin the motor if both OUT1 and OUT2 pins were connected to the motor driver.
+ *  We then realized that the issue was related to the current draw of the motor because the motor driver disabled if the motor was connected to both OUT1 / OUT2 pins.
+ *  We then discovered that the shunt resistor was 200 Ohms instead of 0.2 Ohms, which effectively resulted in a trip current threshold of ~0.001 A.
+ *  We then removed the resistors and soldered the pads together with lead, which resulted in a resistance of ~0.3 Ohms and an acceptable current threshold.
+ *
+ *
+ *@section Mistakes_and_Future_Improvements_sec Mistakes and Future Improvements
+ * - Check the correct values for components on the order form.
+ * - Use Polygons for output pins on a motor driver in addition to the Vm pin.
+ * - Make PCB larger to make reworking easier.
+ * - Try not to place vias close to other pins/traces.
+ * - Add all possible pins on the microcontroller for flexibility.
+ * - Use connectors instead of dupont wires. 
  *
  * @section setup_sec Setup and Build
  *

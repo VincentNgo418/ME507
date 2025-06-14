@@ -1,0 +1,32 @@
+\doxysection{bno055\+\_\+hal.\+h}
+\hypertarget{bno055__hal_8h_source}{}\label{bno055__hal_8h_source}\index{Core/Drivers/BNO055/bno055\_hal.h@{Core/Drivers/BNO055/bno055\_hal.h}}
+\mbox{\hyperlink{bno055__hal_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ bno055\_hal.c}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ \ Created\ on:\ Jun\ 4,\ 2025}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ \ \ \ \ \ Author:\ Vincent}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#ifndef\ \_\_BNO055\_HAL\_H\_\_}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ \_\_BNO055\_HAL\_H\_\_}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{stm32f4xx__hal_8h}{stm32f4xx\_hal.h}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}../Drivers/BNO055/bno055.h"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00014\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \mbox{\hyperlink{bno055_8h_a151f780fb455885061d3b77ec1c90c03}{s8}}\ \mbox{\hyperlink{bno055__hal_8h_a8caccc13fd25dc1e554a66853febb149}{BNO055\_I2C\_bus\_write}}(\mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}\ dev\_addr,\ \mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}\ reg\_addr,\ \mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}\ *reg\_data,\ \mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}\ wr\_len);}
+\DoxyCodeLine{00018\ \mbox{\hyperlink{bno055_8h_a151f780fb455885061d3b77ec1c90c03}{s8}}\ \mbox{\hyperlink{bno055__hal_8h_a07411a2f64276a39879fafbf5e214df6}{BNO055\_I2C\_bus\_read}}(\mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}\ dev\_addr,\ \mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}\ reg\_addr,\ \mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}\ *reg\_data,\ \mbox{\hyperlink{bno055_8h_aed742c436da53c1080638ce6ef7d13de}{u8}}\ r\_len);}
+\DoxyCodeLine{00019\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bno055__hal_8h_af1cc36290ca2da94ff6501f89ffe73d8}{BNO055\_setup}}(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbno055__t}{bno055\_t}}*\ bno055\_device);}
+\DoxyCodeLine{00020\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bno055__hal_8h_a851bd7c7f1cdb6a07ab2d4c7a9d6870f}{BNO055\_delay\_msec}}(\mbox{\hyperlink{bno055_8h_a10e94b422ef0c20dcdec20d31a1f5049}{u32}}\ msec);}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00023\ \}\ \textcolor{comment}{//\ End\ of\ extern\ "{}C"{}\ block}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\_\_BNO055\_HAL\_H\_\_}}
+
+\end{DoxyCode}

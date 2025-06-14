@@ -1,0 +1,59 @@
+\doxysection{motor\+\_\+d Struct Reference}
+\hypertarget{structmotor__d}{}\label{structmotor__d}\index{motor\_d@{motor\_d}}
+
+
+Struct for dual-\/channel motor with encoder.  
+
+
+
+
+{\ttfamily \#include $<$motor\+\_\+driver.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structmotor__d_a747ae51ab818a2df0a6c6bbcaa3b8ed5}{PWM\+\_\+\+CHANNEL\+\_\+1}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structmotor__d_a67cf0f969cc7dae4765ddbaaa1395569}{PWM\+\_\+\+CHANNEL\+\_\+2}}
+\item 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmotor__d_af491d951411468ec0d6067de40f87b8c}{htim}}
+\item 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmotor__d_aa275d460ebdb6bc6c50b7a2bd5016d9d}{enc}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Struct for dual-\/channel motor with encoder. 
+
+\label{doc-variable-members}
+\Hypertarget{structmotor__d_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structmotor__d_aa275d460ebdb6bc6c50b7a2bd5016d9d}\index{motor\_d@{motor\_d}!enc@{enc}}
+\index{enc@{enc}!motor\_d@{motor\_d}}
+\doxysubsubsection{\texorpdfstring{enc}{enc}}
+{\footnotesize\ttfamily \label{structmotor__d_aa275d460ebdb6bc6c50b7a2bd5016d9d} 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}}\texorpdfstring{$\ast$}{*} motor\+\_\+d\+::enc}
+
+Timer handle for encoder input \Hypertarget{structmotor__d_af491d951411468ec0d6067de40f87b8c}\index{motor\_d@{motor\_d}!htim@{htim}}
+\index{htim@{htim}!motor\_d@{motor\_d}}
+\doxysubsubsection{\texorpdfstring{htim}{htim}}
+{\footnotesize\ttfamily \label{structmotor__d_af491d951411468ec0d6067de40f87b8c} 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}}\texorpdfstring{$\ast$}{*} motor\+\_\+d\+::htim}
+
+Timer handle for PWM generation \Hypertarget{structmotor__d_a747ae51ab818a2df0a6c6bbcaa3b8ed5}\index{motor\_d@{motor\_d}!PWM\_CHANNEL\_1@{PWM\_CHANNEL\_1}}
+\index{PWM\_CHANNEL\_1@{PWM\_CHANNEL\_1}!motor\_d@{motor\_d}}
+\doxysubsubsection{\texorpdfstring{PWM\_CHANNEL\_1}{PWM\_CHANNEL\_1}}
+{\footnotesize\ttfamily \label{structmotor__d_a747ae51ab818a2df0a6c6bbcaa3b8ed5} 
+uint32\+\_\+t motor\+\_\+d\+::\+PWM\+\_\+\+CHANNEL\+\_\+1}
+
+First PWM output channel \Hypertarget{structmotor__d_a67cf0f969cc7dae4765ddbaaa1395569}\index{motor\_d@{motor\_d}!PWM\_CHANNEL\_2@{PWM\_CHANNEL\_2}}
+\index{PWM\_CHANNEL\_2@{PWM\_CHANNEL\_2}!motor\_d@{motor\_d}}
+\doxysubsubsection{\texorpdfstring{PWM\_CHANNEL\_2}{PWM\_CHANNEL\_2}}
+{\footnotesize\ttfamily \label{structmotor__d_a67cf0f969cc7dae4765ddbaaa1395569} 
+uint32\+\_\+t motor\+\_\+d\+::\+PWM\+\_\+\+CHANNEL\+\_\+2}
+
+Second PWM output channel 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Core/\+Inc/\mbox{\hyperlink{motor__driver_8h}{motor\+\_\+driver.\+h}}\end{DoxyCompactItemize}

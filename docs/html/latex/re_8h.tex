@@ -1,0 +1,66 @@
+\doxysection{Core/\+Inc/re.h File Reference}
+\hypertarget{re_8h}{}\label{re_8h}\index{Core/Inc/re.h@{Core/Inc/re.h}}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{re_8h_a909f67de49575bb6ed1677e4d1d7e72a}{RE\+\_\+\+DOT\+\_\+\+MATCHES\+\_\+\+NEWLINE}}~1
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structregex__t}{regex\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{re_8h_a2fedfdd50016a0186d460cb695067633}{re\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{re_8h_a2fedfdd50016a0186d460cb695067633}{re\+\_\+t}} \mbox{\hyperlink{re_8h_a54e05fab0a3e93cc1bdf7006ec7cd251}{re\+\_\+compile}} (const char \texorpdfstring{$\ast$}{*}pattern)
+\item 
+int \mbox{\hyperlink{re_8h_a69832eb0012cd0c9bab9a2e5fba4036a}{re\+\_\+matchp}} (\mbox{\hyperlink{re_8h_a2fedfdd50016a0186d460cb695067633}{re\+\_\+t}} pattern, const char \texorpdfstring{$\ast$}{*}text, int \texorpdfstring{$\ast$}{*}matchlength)
+\item 
+int \mbox{\hyperlink{re_8h_a161aceba162e2a4339b2f565c54662ca}{re\+\_\+match}} (const char \texorpdfstring{$\ast$}{*}pattern, const char \texorpdfstring{$\ast$}{*}text, int \texorpdfstring{$\ast$}{*}matchlength)
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{re_8h_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{re_8h_a909f67de49575bb6ed1677e4d1d7e72a}\index{re.h@{re.h}!RE\_DOT\_MATCHES\_NEWLINE@{RE\_DOT\_MATCHES\_NEWLINE}}
+\index{RE\_DOT\_MATCHES\_NEWLINE@{RE\_DOT\_MATCHES\_NEWLINE}!re.h@{re.h}}
+\doxysubsubsection{\texorpdfstring{RE\_DOT\_MATCHES\_NEWLINE}{RE\_DOT\_MATCHES\_NEWLINE}}
+{\footnotesize\ttfamily \label{re_8h_a909f67de49575bb6ed1677e4d1d7e72a} 
+\#define RE\+\_\+\+DOT\+\_\+\+MATCHES\+\_\+\+NEWLINE~1}
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{re_8h_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{re_8h_a2fedfdd50016a0186d460cb695067633}\index{re.h@{re.h}!re\_t@{re\_t}}
+\index{re\_t@{re\_t}!re.h@{re.h}}
+\doxysubsubsection{\texorpdfstring{re\_t}{re\_t}}
+{\footnotesize\ttfamily \label{re_8h_a2fedfdd50016a0186d460cb695067633} 
+typedef struct \mbox{\hyperlink{structregex__t}{regex\+\_\+t}}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{re_8h_a2fedfdd50016a0186d460cb695067633}{re\+\_\+t}}}
+
+
+
+\label{doc-func-members}
+\Hypertarget{re_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{re_8h_a54e05fab0a3e93cc1bdf7006ec7cd251}\index{re.h@{re.h}!re\_compile@{re\_compile}}
+\index{re\_compile@{re\_compile}!re.h@{re.h}}
+\doxysubsubsection{\texorpdfstring{re\_compile()}{re\_compile()}}
+{\footnotesize\ttfamily \label{re_8h_a54e05fab0a3e93cc1bdf7006ec7cd251} 
+\mbox{\hyperlink{re_8h_a2fedfdd50016a0186d460cb695067633}{re\+\_\+t}} re\+\_\+compile (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{pattern}{}\end{DoxyParamCaption})}
+
+\Hypertarget{re_8h_a161aceba162e2a4339b2f565c54662ca}\index{re.h@{re.h}!re\_match@{re\_match}}
+\index{re\_match@{re\_match}!re.h@{re.h}}
+\doxysubsubsection{\texorpdfstring{re\_match()}{re\_match()}}
+{\footnotesize\ttfamily \label{re_8h_a161aceba162e2a4339b2f565c54662ca} 
+int re\+\_\+match (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{pattern}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{text}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{matchlength}{}\end{DoxyParamCaption})}
+
+\Hypertarget{re_8h_a69832eb0012cd0c9bab9a2e5fba4036a}\index{re.h@{re.h}!re\_matchp@{re\_matchp}}
+\index{re\_matchp@{re\_matchp}!re.h@{re.h}}
+\doxysubsubsection{\texorpdfstring{re\_matchp()}{re\_matchp()}}
+{\footnotesize\ttfamily \label{re_8h_a69832eb0012cd0c9bab9a2e5fba4036a} 
+int re\+\_\+matchp (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{re_8h_a2fedfdd50016a0186d460cb695067633}{re\+\_\+t}}}]{pattern}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{text}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{matchlength}{}\end{DoxyParamCaption})}
+

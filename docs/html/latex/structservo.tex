@@ -1,0 +1,45 @@
+\doxysection{servo Struct Reference}
+\hypertarget{structservo}{}\label{structservo}\index{servo@{servo}}
+
+
+Struct for servo configuration.  
+
+
+
+
+{\ttfamily \#include $<$servo\+\_\+driver.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structservo_a5d99cda75ea2d021c30b44ecbd5cb205}{PWM\+\_\+\+CHANNEL}}
+\item 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structservo_a3dc886d35887db8e1587a01c16304f78}{htim}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Struct for servo configuration. 
+
+Represents a single servo motor controlled via a specified PWM channel and timer. 
+
+\label{doc-variable-members}
+\Hypertarget{structservo_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structservo_a3dc886d35887db8e1587a01c16304f78}\index{servo@{servo}!htim@{htim}}
+\index{htim@{htim}!servo@{servo}}
+\doxysubsubsection{\texorpdfstring{htim}{htim}}
+{\footnotesize\ttfamily \label{structservo_a3dc886d35887db8e1587a01c16304f78} 
+\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}}\texorpdfstring{$\ast$}{*} servo\+::htim}
+
+Timer handle used for PWM generation \Hypertarget{structservo_a5d99cda75ea2d021c30b44ecbd5cb205}\index{servo@{servo}!PWM\_CHANNEL@{PWM\_CHANNEL}}
+\index{PWM\_CHANNEL@{PWM\_CHANNEL}!servo@{servo}}
+\doxysubsubsection{\texorpdfstring{PWM\_CHANNEL}{PWM\_CHANNEL}}
+{\footnotesize\ttfamily \label{structservo_a5d99cda75ea2d021c30b44ecbd5cb205} 
+uint32\+\_\+t servo\+::\+PWM\+\_\+\+CHANNEL}
+
+PWM channel assigned to the servo 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Core/\+Inc/\mbox{\hyperlink{servo__driver_8h}{servo\+\_\+driver.\+h}}\end{DoxyCompactItemize}

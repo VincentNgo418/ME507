@@ -1,0 +1,136 @@
+\doxysection{Core/\+Inc/main.h File Reference}
+\hypertarget{main_8h}{}\label{main_8h}\index{Core/Inc/main.h@{Core/Inc/main.h}}
+
+
+\+: Header for main.\+c file. Contains shared defines, structures, and global variables.  
+
+
+{\ttfamily \#include "{}stm32f4xx\+\_\+hal.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmy__struct}{my\+\_\+struct}}
+\begin{DoxyCompactList}\small\item\em Custom data structure used for application-\/specific motor or timer management. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structmy__struct}{my\+\_\+struct}} \mbox{\hyperlink{main_8h_a0c4dfd06d602644b41be188f1eda184f}{my\+\_\+struct\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Custom data structure used for application-\/specific motor or timer management. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8h_ae70bce6c39d0b570a7523b86738cec4b}{HAL\+\_\+\+TIM\+\_\+\+Msp\+Post\+Init}} (\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}} \texorpdfstring{$\ast$}{*}htim)
+\item 
+void \mbox{\hyperlink{main_8h_a1730ffe1e560465665eb47d9264826f9}{Error\+\_\+\+Handler}} (void)
+\begin{DoxyCompactList}\small\item\em General error handler. Called when a critical error occurs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+volatile uint16\+\_\+t \mbox{\hyperlink{main_8h_ae021034a15c38ec3070fe51cd52b2719}{distance\+\_\+cm}}
+\begin{DoxyCompactList}\small\item\em Distance reading from the TF-\/\+Luna LIDAR sensor (in centimeters). \end{DoxyCompactList}\item 
+volatile int16\+\_\+t \mbox{\hyperlink{main_8h_a049382970fbae2e500ec960a4b731e94}{heading}}
+\begin{DoxyCompactList}\small\item\em Heading angle from the BNO055 IMU sensor (in degrees). \end{DoxyCompactList}\item 
+volatile uint16\+\_\+t \mbox{\hyperlink{main_8h_a4d3d8bf9230cbc302d5d00587312141c}{intensity\+\_\+value}}
+\begin{DoxyCompactList}\small\item\em Intensity or reflectivity value from the TF-\/\+Luna LIDAR. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\+: Header for main.\+c file. Contains shared defines, structures, and global variables. 
+
+\begin{DoxyAuthor}{Author}
+\+: Jason 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+\+: 2025 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+\+: 1.\+0
+\end{DoxyVersion}
+This file declares hardware handles, types, and global variables used across the application, including user-\/defined structures and sensor data.
+
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2025 STMicroelectronics. This software is licensed under terms in the LICENSE file in the root directory. If no LICENSE file comes with this software, it is provided AS-\/\+IS. 
+\end{DoxyCopyright}
+
+
+\label{doc-typedef-members}
+\Hypertarget{main_8h_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{main_8h_a0c4dfd06d602644b41be188f1eda184f}\index{main.h@{main.h}!my\_struct\_t@{my\_struct\_t}}
+\index{my\_struct\_t@{my\_struct\_t}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{my\_struct\_t}{my\_struct\_t}}
+{\footnotesize\ttfamily \label{main_8h_a0c4dfd06d602644b41be188f1eda184f} 
+typedef struct \mbox{\hyperlink{structmy__struct}{my\+\_\+struct}} \mbox{\hyperlink{main_8h_a0c4dfd06d602644b41be188f1eda184f}{my\+\_\+struct\+\_\+t}}}
+
+
+
+Custom data structure used for application-\/specific motor or timer management. 
+
+\texorpdfstring{$<$}{<} HAL library for STM32\+F4 peripherals 
+
+\label{doc-func-members}
+\Hypertarget{main_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8h_a1730ffe1e560465665eb47d9264826f9}\index{main.h@{main.h}!Error\_Handler@{Error\_Handler}}
+\index{Error\_Handler@{Error\_Handler}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{Error\_Handler()}{Error\_Handler()}}
+{\footnotesize\ttfamily \label{main_8h_a1730ffe1e560465665eb47d9264826f9} 
+void Error\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+General error handler. Called when a critical error occurs. 
+
+General error handler. Called when a critical error occurs.
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{main_8h_ae70bce6c39d0b570a7523b86738cec4b}\index{main.h@{main.h}!HAL\_TIM\_MspPostInit@{HAL\_TIM\_MspPostInit}}
+\index{HAL\_TIM\_MspPostInit@{HAL\_TIM\_MspPostInit}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{HAL\_TIM\_MspPostInit()}{HAL\_TIM\_MspPostInit()}}
+{\footnotesize\ttfamily \label{main_8h_ae70bce6c39d0b570a7523b86738cec4b} 
+void HAL\+\_\+\+TIM\+\_\+\+Msp\+Post\+Init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\+\_\+\+Handle\+Type\+Def}} \texorpdfstring{$\ast$}{*}}]{htim}{}\end{DoxyParamCaption})}
+
+TIM1 GPIO Configuration PA11 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM1\+\_\+\+CH4
+
+TIM3 GPIO Configuration PB0 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM3\+\_\+\+CH3 PB1 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM3\+\_\+\+CH4 PB4 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM3\+\_\+\+CH1 PB5 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM3\+\_\+\+CH2
+
+TIM5 GPIO Configuration PA2 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM5\+\_\+\+CH3 PA3 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM5\+\_\+\+CH4
+
+\label{doc-var-members}
+\Hypertarget{main_8h_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{main_8h_ae021034a15c38ec3070fe51cd52b2719}\index{main.h@{main.h}!distance\_cm@{distance\_cm}}
+\index{distance\_cm@{distance\_cm}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{distance\_cm}{distance\_cm}}
+{\footnotesize\ttfamily \label{main_8h_ae021034a15c38ec3070fe51cd52b2719} 
+volatile uint16\+\_\+t distance\+\_\+cm\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Distance reading from the TF-\/\+Luna LIDAR sensor (in centimeters). 
+
+Distance reading from the TF-\/\+Luna LIDAR sensor (in centimeters). \Hypertarget{main_8h_a049382970fbae2e500ec960a4b731e94}\index{main.h@{main.h}!heading@{heading}}
+\index{heading@{heading}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{heading}{heading}}
+{\footnotesize\ttfamily \label{main_8h_a049382970fbae2e500ec960a4b731e94} 
+volatile int16\+\_\+t heading\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Heading angle from the BNO055 IMU sensor (in degrees). 
+
+Heading angle from the BNO055 IMU sensor (in degrees). \Hypertarget{main_8h_a4d3d8bf9230cbc302d5d00587312141c}\index{main.h@{main.h}!intensity\_value@{intensity\_value}}
+\index{intensity\_value@{intensity\_value}!main.h@{main.h}}
+\doxysubsubsection{\texorpdfstring{intensity\_value}{intensity\_value}}
+{\footnotesize\ttfamily \label{main_8h_a4d3d8bf9230cbc302d5d00587312141c} 
+volatile uint16\+\_\+t intensity\+\_\+value\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Intensity or reflectivity value from the TF-\/\+Luna LIDAR. 
+
+Intensity or reflectivity value from the TF-\/\+Luna LIDAR. 

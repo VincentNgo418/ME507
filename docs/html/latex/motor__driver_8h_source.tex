@@ -1,0 +1,77 @@
+\doxysection{motor\+\_\+driver.\+h}
+\hypertarget{motor__driver_8h_source}{}\label{motor__driver_8h_source}\index{Core/Inc/motor\_driver.h@{Core/Inc/motor\_driver.h}}
+\mbox{\hyperlink{motor__driver_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#ifndef\ MOTOR\_DRIVER\_H}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ MOTOR\_DRIVER\_H}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{stm32f4xx__hal_8h}{stm32f4xx\_hal.h}}"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmotor}{motor}}\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structmotor_a8b9ec4d9af576a8f3e599f93adec2665}{PWM\_CHANNEL\_1}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\_HandleTypeDef}}*\ \mbox{\hyperlink{structmotor_ad89acb097dd066462ce295d7578fed9c}{htim}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00020\ \}\ \mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\_t}};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmotor__d}{motor\_d}}\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structmotor__d_a747ae51ab818a2df0a6c6bbcaa3b8ed5}{PWM\_CHANNEL\_1}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structmotor__d_a67cf0f969cc7dae4765ddbaaa1395569}{PWM\_CHANNEL\_2}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\_HandleTypeDef}}*\ \mbox{\hyperlink{structmotor__d_af491d951411468ec0d6067de40f87b8c}{htim}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{struct_t_i_m___handle_type_def}{TIM\_HandleTypeDef}}*\ \mbox{\hyperlink{structmotor__d_aa275d460ebdb6bc6c50b7a2bd5016d9d}{enc}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00030\ \}\ \mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\_dual}};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcontroller}{controller}}\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structcontroller_aa94eb5d9e1fd1ef16c32e986fa7acae8}{Kp}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structcontroller_a3f89813528742b9c3cbc00d009a423a2}{Ki}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structcontroller_a5a90275a08d21f18a7809cc64211f876}{integral}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ int32\_t\ \mbox{\hyperlink{structcontroller_a554ab32471791254081a953f62e3ed41}{setpoint}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ uint32\_t\ \mbox{\hyperlink{structcontroller_aa9d235155626be9eccef1678a91a414f}{prevTick}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ int16\_t\ \mbox{\hyperlink{structcontroller_a809bcc260585f63d3f751f1edfcb4d84}{prevPulse}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00042\ \}\ \mbox{\hyperlink{motor__driver_8h_a2d5dfc38f3db03091e82200d5e32a68d}{PI\_Controller}};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{comment}{//\ ===\ Global\ Motor\ and\ Controller\ Instances\ ===}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\_t}}\ \mbox{\hyperlink{motor__driver_8h_a0fac0915eb75dd9c6a815347cb20c053}{motor\_1}};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\_t}}\ \mbox{\hyperlink{motor__driver_8h_a6e68315fd2747522a29dd4110a23092c}{motor\_2}};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\_dual}}\ \mbox{\hyperlink{motor__driver_8h_af01b346804376b904fab1d18b5d9877f}{Pololu\_1}};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00064\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\_dual}}\ \mbox{\hyperlink{motor__driver_8h_a4dc541176b94de15561137e81a300240}{Pololu\_2}};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{motor__driver_8h_a2d5dfc38f3db03091e82200d5e32a68d}{PI\_Controller}}\ \mbox{\hyperlink{motor__driver_8h_a8f1ed4ae12eb4d5eb27912212ee05db4}{pos\_controller\_1}};}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00072\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00080\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{motor__driver_8h_a9b0c0dbf86dfe0644a51aeb8cf0246df}{set\_duty}}(\mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\_t}}*\ \mbox{\hyperlink{structmotor}{motor}},\ uint32\_t\ pulse\_1);}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00086\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{motor__driver_8h_a427a602e38665564a30ec49f36b92ae7}{motor\_brake}}(\mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\_t}}*\ \mbox{\hyperlink{structmotor}{motor}});}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00092\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{motor__driver_8h_a9dcfb75d43797a49452f4d0c5be28c8f}{motor\_disable}}(\mbox{\hyperlink{motor__driver_8h_af9204da17a4e26209efd65c04c2aadd7}{motor\_t}}*\ \mbox{\hyperlink{structmotor}{motor}});}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00100\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{motor__driver_8h_a4a656fa4d7dcbdd63d4de20e69473707}{set\_duty\_dual}}(\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\_dual}}*\ \mbox{\hyperlink{structmotor__d}{motor\_d}},\ uint32\_t\ pulse\_1,\ uint32\_t\ pulse\_2);}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00106\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{motor__driver_8h_a29cb17ab1f5e015b9bcf515adceb9089}{motor\_brake\_dual}}(\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\_dual}}*\ \mbox{\hyperlink{structmotor__d}{motor\_d}});}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00113\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{motor__driver_8h_a251d05dff9c7c1b2153c45d75164469b}{motor\_d\_update\_pos}}(\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\_dual}}*\ \mbox{\hyperlink{structmotor__d}{motor\_d}},\ \mbox{\hyperlink{motor__driver_8h_a2d5dfc38f3db03091e82200d5e32a68d}{PI\_Controller}}*\ ctrl);}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00121\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{motor__driver_8h_a4f3c276b4f350af92b418f3b132481bf}{motor\_d\_set\_pos}}(\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\_dual}}*\ \mbox{\hyperlink{structmotor__d}{motor\_d}},\ \mbox{\hyperlink{motor__driver_8h_a2d5dfc38f3db03091e82200d5e32a68d}{PI\_Controller}}*\ ctrl,\ int32\_t\ pos);}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00128\ uint32\_t\ \mbox{\hyperlink{motor__driver_8h_a61b015094d64ce29503b381f394b3a2d}{motor\_d\_get\_pos}}(\mbox{\hyperlink{motor__driver_8h_a5cc1f5a05c749af98c183a6b2d98ac25}{motor\_dual}}*\ \mbox{\hyperlink{structmotor__d}{motor\_d}});}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00133\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{motor__driver_8h_a95b91c434749ecd9050d622179549b84}{step\_motor\_backward}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00138\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{motor__driver_8h_a6bd108af9faccbba80682babf90932d4}{step\_motor\_forward}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00143\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{motor__driver_8h_a6b13b09a5c4ef671fcfeefef0e75e5a4}{launch}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00146\ \}}
+\DoxyCodeLine{00147\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ MOTOR\_DRIVER\_H}}
+
+\end{DoxyCode}

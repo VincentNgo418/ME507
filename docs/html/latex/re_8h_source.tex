@@ -1,0 +1,71 @@
+\doxysection{re.\+h}
+\hypertarget{re_8h_source}{}\label{re_8h_source}\index{Core/Inc/re.h@{Core/Inc/re.h}}
+\mbox{\hyperlink{re_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ Mini\ regex-\/module\ inspired\ by\ Rob\ Pike's\ regex\ code\ described\ in:}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ http://www.cs.princeton.edu/courses/archive/spr09/cos333/beautiful.html}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ Supports:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ \ \ '.'\ \ \ \ \ \ \ \ Dot,\ matches\ any\ character}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ \ \ '\string^'\ \ \ \ \ \ \ \ Start\ anchor,\ matches\ beginning\ of\ string}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ \ \ '\$'\ \ \ \ \ \ \ \ End\ anchor,\ matches\ end\ of\ string}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ \ \ '*'\ \ \ \ \ \ \ \ Asterisk,\ match\ zero\ or\ more\ (greedy)}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ \ \ '+'\ \ \ \ \ \ \ \ Plus,\ match\ one\ or\ more\ (greedy)}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ \ \ '?'\ \ \ \ \ \ \ \ Question,\ match\ zero\ or\ one\ (non-\/greedy)}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ \ \ '[abc]'\ \ \ \ Character\ class,\ match\ if\ one\ of\ \{'a',\ 'b',\ 'c'\}}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ \ \ '[\string^abc]'\ \ \ Inverted\ class,\ match\ if\ NOT\ one\ of\ \{'a',\ 'b',\ 'c'\}\ -\/-\/\ NOTE:\ feature\ is\ currently\ broken!}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ \ \ '[a-\/zA-\/Z]'\ Character\ ranges,\ the\ character\ set\ of\ the\ ranges\ \{\ a-\/z\ |\ A-\/Z\ \}}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ \ \ '\(\backslash\)s'\ \ \ \ \ \ \ Whitespace,\ \(\backslash\)t\ \(\backslash\)f\ \(\backslash\)r\ \(\backslash\)n\ \(\backslash\)v\ and\ spaces}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ \ \ '\(\backslash\)S'\ \ \ \ \ \ \ Non-\/whitespace}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ \ \ '\(\backslash\)w'\ \ \ \ \ \ \ Alphanumeric,\ [a-\/zA-\/Z0-\/9\_]}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *\ \ \ '\(\backslash\)W'\ \ \ \ \ \ \ Non-\/alphanumeric}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *\ \ \ '\(\backslash\)d'\ \ \ \ \ \ \ Digits,\ [0-\/9]}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ *\ \ \ '\(\backslash\)D'\ \ \ \ \ \ \ Non-\/digits}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ \_TINY\_REGEX\_C}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ \_TINY\_REGEX\_C}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#ifndef\ RE\_DOT\_MATCHES\_NEWLINE}}
+\DoxyCodeLine{00035\ \textcolor{comment}{/*\ Define\ to\ 0\ if\ you\ DON'T\ want\ '.'\ to\ match\ '\(\backslash\)r'\ +\ '\(\backslash\)n'\ */}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ RE\_DOT\_MATCHES\_NEWLINE\ 1}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00040\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\{}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{comment}{/*\ Typedef'd\ pointer\ to\ get\ abstract\ datatype.\ */}}
+\DoxyCodeLine{00046\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structregex__t}{regex\_t}}*\ \mbox{\hyperlink{re_8h_a2fedfdd50016a0186d460cb695067633}{re\_t}};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{comment}{/*\ Compile\ regex\ string\ pattern\ to\ a\ regex\_t-\/array.\ */}}
+\DoxyCodeLine{00050\ \mbox{\hyperlink{re_8h_a2fedfdd50016a0186d460cb695067633}{re\_t}}\ \mbox{\hyperlink{re_8h_a54e05fab0a3e93cc1bdf7006ec7cd251}{re\_compile}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ pattern);}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{comment}{/*\ Find\ matches\ of\ the\ compiled\ pattern\ inside\ text.\ */}}
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{re_8h_a69832eb0012cd0c9bab9a2e5fba4036a}{re\_matchp}}(\mbox{\hyperlink{re_8h_a2fedfdd50016a0186d460cb695067633}{re\_t}}\ pattern,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ text,\ \textcolor{keywordtype}{int}*\ matchlength);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{comment}{/*\ Find\ matches\ of\ the\ txt\ pattern\ inside\ text\ (will\ compile\ automatically\ first).\ */}}
+\DoxyCodeLine{00058\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{re_8h_a161aceba162e2a4339b2f565c54662ca}{re\_match}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ pattern,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ text,\ \textcolor{keywordtype}{int}*\ matchlength);}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00062\ \}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ ifndef\ \_TINY\_REGEX\_C\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}
